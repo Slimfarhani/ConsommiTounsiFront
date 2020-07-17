@@ -1,6 +1,8 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
+    @using ConsommiTounsi.Models
+    @model User
     <title>@PageData["Title"]</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,6 +12,7 @@
     @Styles.Render("~/bundles/css2")
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @{ User user = (User)Session["user"]; }
     <!--===============================================================================================-->
 </head>
 <body class="animsition">
@@ -18,7 +21,7 @@
     <div class="wrap_header fixed-header2 trans-0-4">
         <!-- Logo -->
         <a href="index.html">
-            <img src="~/Content2/images/icons/logo1.png">
+            <img src="~/Content2/images/icons/consommitounsilogo.png" style="width: 90px; height: 60px;">
         </a>
 
         <!-- Menu -->
@@ -143,7 +146,7 @@
     <!-- top noti -->
     <div class="flex-c-m size22 bg0 s-text21 pos-relative">
         Consommi Tounsi
-        
+
 
         <button class="flex-c-m pos2 size23 colorwhite eff3 trans-0-4 btn-romove-top-noti">
             <i class="fa fa-remove fs-13" aria-hidden="true"></i>
@@ -170,33 +173,52 @@
 
                 <div class="topbar-child2">
                     <span class="topbar-email">
-                        fashe@example.com
+                        @if (user != null)
+                        {
+                            @Html.DisplayFor(item => user.userName)
+                        }
+                        
                     </span>
 
-                    
+
 
                     <!--  -->
                     <div class="header-wrapicon2 m-r-13">
                         <img src="~/Content2/images/icons/icon-header-01.png" class="header-icon1 js-show-header-dropdown" alt="ICON">
                         <div class="header-cart header-dropdown" style="width:250px">
                             <ul class="header-cart-wrapitem">
-                                <li class="header-cart-item">
-                                    <div class="header-cart-wrapbtn">
-                                        <!-- Button -->
-                                        <a href="/Account/Login" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4" style="width:200px">
-                                            Login
-                                        </a>
-                                    </div>
-                                </li>
+                                @if (user == null)
+                                {
+                                    <li class="header-cart-item">
+                                        <div class="header-cart-wrapbtn">
+                                            <!-- Button -->
+                                            <a href="/Account/Login" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4" style="width:200px">
+                                                Login
+                                            </a>
+                                        </div>
+                                    </li>
 
-                                <li class="header-cart-item">
-                                    <div class="header-cart-wrapbtn">
-                                        <!-- Button -->
-                                        <a href="cart.html" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4" style="width:200px">
-                                            Register
-                                        </a>
-                                    </div>
-                                </li>
+                                    <li class="header-cart-item">
+                                        <div class="header-cart-wrapbtn">
+                                            <!-- Button -->
+                                            <a href="/Account/Register" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4" style="width:200px">
+                                                Register
+                                            </a>
+                                        </div>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li class="header-cart-item">
+                                        <div class="header-cart-wrapbtn">
+                                            <!-- Button -->
+                                            <a href="/Account/Logout" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4" style="width:200px">
+                                                Log Out
+                                            </a>
+                                        </div>
+                                    </li>
+                                }
+
 
 
                             </ul>
@@ -518,30 +540,15 @@
 
     @RenderBody()
     <!-- Banner -->
-
-
     <!-- Our product -->
-    
 
+    
 
     <!-- Banner video -->
-    
-
     <!-- Blog -->
-    
-
     <!-- Instagram -->
-   
-
     <!-- Shipping -->
-    
-
-
     <!-- Footer -->
-    
-
-
-
     <!-- Back to top -->
     <div class="btn-back-to-top bg0-hov" id="myBtn">
         <span class="symbol-btn-back-to-top">

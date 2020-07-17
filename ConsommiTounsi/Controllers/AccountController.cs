@@ -12,6 +12,8 @@ using ConsommiTounsi.Models;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using Newtonsoft.Json;
+using System.Web.SessionState;
+
 namespace ConsommiTounsi.Controllers
 {
     
@@ -86,15 +88,15 @@ namespace ConsommiTounsi.Controllers
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri("http://localhost:8080/springboot-crud-rest/api/v1/");
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            HttpResponseMessage response = client.GetAsync("user/role/"+model.userName+"/"+model.password).Result;
-            string role = response.Content.ReadAsStringAsync().Result;
-            System.Diagnostics.Debug.WriteLine("role :"+role+" response :"+response.Content.ReadAsStringAsync().Result);
-            if (!role.Equals("Visitor"))
+            HttpResponseMessage response = client.GetAsync("user/"+model.userName+"/"+model.password).Result;
+            User User = response.Content.ReadAsAsync<User>().Result;
+            Session["User"] = User;
+            var UserLoggedIn = Session["User"] as User;
+            if (UserLoggedIn != null)
             {
-                response = client.GetAsync("user/" + model.userName + "/" + model.password).Result;
-                User User = response.Content.ReadAsAsync<User>().Result;
+                System.Diagnostics.Debug.WriteLine("Role : ");
+                return Redirect("/Home/Index");
             }
-
             return View(model);
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
@@ -162,6 +164,7 @@ namespace ConsommiTounsi.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
+            
             return View();
         }
 
@@ -416,6 +419,13 @@ namespace ConsommiTounsi.Controllers
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             return RedirectToAction("Index", "Home");
+        }
+
+        [AllowAnonymous]
+        public ActionResult Logout()
+        {
+            Session["User"] = null;
+            return Redirect("/Home/Index");
         }
 
         //

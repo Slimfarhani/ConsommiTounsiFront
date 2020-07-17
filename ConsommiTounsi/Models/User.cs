@@ -17,5 +17,8 @@ namespace ConsommiTounsi.Models
         [JsonProperty("password")]
         [Required]
         public string password { get; set; }
+        [JsonProperty("role")]
+        public string role { get; set; }
+
     }
 }

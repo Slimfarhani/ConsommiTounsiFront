@@ -71,7 +71,8 @@ namespace ConsommiTounsi
 
             ));
 
-            bundles.Add(new ScriptBundle("~/bundles/js2").Include("~/Content2/vendor/jquery/jquery-3.2.1.min.js",
+            bundles.Add(new ScriptBundle("~/bundles/js2").Include(
+                "~/Content2/vendor/jquery/jquery-3.2.1.min.js",
                "~/Content2/vendor/animsition/js/animsition.min.js",
                "~/Content2/vendor/bootstrap/js/popper.js",
                "~/Content2/vendor/bootstrap/js/bootstrap.min.js",
@@ -81,9 +82,44 @@ namespace ConsommiTounsi
                "~/Content2/vendor/countdowntime/countdowntime.js",
                "~/Content2/vendor/lightbox2/js/lightbox.min.js",
                "~/Content2/vendor/sweetalert/sweetalert.min.js",
-               "~/Content2/js/main.js"
+               "~/Content2/js/main.js",
+               "~/Content2/vendor/tilt/tilt.jquery.min.js"
 
                ));
+            bundles.Add(new ScriptBundle("~/bundles/loginjs").Include(
+               "~/ContentLogin/vendor/jquery/jquery-3.2.1.min.js",
+               "~/ContentLogin/vendor/bootstrap/js/popper.js",
+               "~/ContentLogin/vendor/bootstrap/js/bootstrap.min.js",
+               "~/ContentLogin/vendor/select2/select2.min.js",
+               "~/ContentLogin/vendor/tilt/tilt.jquery.min.js",
+               "~/ContentLogin/js/main.js"
+
+               ));
+            bundles.Add(new StyleBundle("~/bundles/logincss").Include(
+               "~/ContentLogin/css/main.css",
+               "~/ContentLogin/css/util.css",
+               "~/ContentLogin/vendor/select2/select2.min.css",
+               "~/ContentLogin/vendor/css-hamburgers/hamburgers.min.css",
+               "~/ContentLogin/vendor/animate/animate.css",
+               "~/ContentLogin/fonts/font-awesome-4.7.0/css/font-awesome.min.css",
+               "~/ContentLogin/vendor/bootstrap/css/bootstrap.min.css"
+               ));
+            bundles.Add(new StyleBundle("~/bundles/registercss").Include(
+                "~/ContentRegister/vendor/mdi-font/css/material-design-iconic-font.min.css",
+                "~/ContentRegister/vendor/font-awesome-4.7/css/font-awesome.min.css",
+                "~/ContentRegister/vendor/select2/select2.min.css",
+                "~/ContentRegister/vendor/datepicker/daterangepicker.css",
+                "~/ContentRegister/css/main.css"
+               ));
+            bundles.Add(new ScriptBundle("~/bundles/registerjs").Include(
+                "~/ContentRegister/vendor/jquery/jquery.min.js",
+                "~/ContentRegister/vendor/select2/select2.min.js",
+                "~/ContentRegister/vendor/datepicker/moment.min.js",
+                "~/ContentRegister/vendor/datepicker/daterangepicker.js",
+                "~/ContentRegister/js/global.js"
+               ));
+
+
         }
     }
 }
