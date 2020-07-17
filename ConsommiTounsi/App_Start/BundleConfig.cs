@@ -8,6 +8,41 @@ namespace ConsommiTounsi
         // For more information on bundling, visit https://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
+
+            bundles.Add(new StyleBundle("~/bundles/css").Include(
+                     "~/Content/bootstrap.css",
+                     "~/Content/site.css"
+                    ));
+
+            bundles.Add(new StyleBundle("~/bundles/cssAdmin").Include(
+                       "~/ContentAdmin/vendors/bootstrap/dist/css/bootstrap.min.css",
+                     "~/ContentAdmin/vendors/font-awesome/css/font-awesome.min.css",
+                     "~/ContentAdmin/vendors/nprogress/nprogress.css",
+                     "~/ContentAdmin/vendors/bootstrap-daterangepicker/daterangepicker.css",
+                     "~/ContentAdmin/build/css/custom.min.css"
+                    ));
+
+          
+            bundles.Add(new ScriptBundle("~/bundles/jsAdmin").Include("~/ContentAdmin/vendors/jquery/dist/jquery.min.js",
+                "~/ContentAdmin/vendors/bootstrap/dist/js/bootstrap.bundle.min.js",
+                "~/ContentAdmin/vendors/fastclick/lib/fastclick.js",
+                "~/ContentAdmin/vendors/nprogress/nprogress.js",
+                "~/ContentAdmin/vendors/Chart.js/dist/Chart.min.js",
+                "~/ContentAdmin/vendors/jquery-sparkline/dist/jquery.sparkline.min.js",
+                "~/ContentAdmin/vendors/Flot/jquery.flot.js",
+                "~/ContentAdmin/vendors/Flot/jquery.flot.pie.js",
+                "~/ContentAdmin/vendors/Flot/jquery.flot.time.js",
+                "~/ContentAdmin/vendors/Flot/jquery.flot.stack.js",
+                "~/ContentAdmin/vendors/Flot/jquery.flot.resize.js",
+                "~/ContentAdmin/vendors/flot.orderbars/js/jquery.flot.orderBars.js",
+                "~/ContentAdmin/vendors/flot-spline/js/jquery.flot.spline.min.js",
+                "~/ContentAdmin/vendors/flot.curvedlines/curvedLines.js",
+                "~/ContentAdmin/vendors/DateJS/build/date.js",
+                "~/ContentAdmin/vendors/moment/min/moment.min.js",
+                "~/ContentAdmin/vendors/bootstrap-daterangepicker/daterangepicker.js",
+                "~/ContentAdmin/build/js/custom.min.js"
+
+                ));
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
 
@@ -22,35 +57,7 @@ namespace ConsommiTounsi
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js"));
 
-            bundles.Add(new StyleBundle("~/bundles/css").Include(
-                      "~/Content/bootstrap.css",
-                      "~/Content/site.css",
-                      "~/Content/vendors/bootstrap/dist/css/bootstrap.min.css",
-                      "~/Content/vendors/font-awesome/css/font-awesome.min.css",
-                      "~/Content/vendors/nprogress/nprogress.css",
-                      "~/Content/vendors/bootstrap-daterangepicker/daterangepicker.css",
-                      "~/Content/build/css/custom.min.css"));
-            
-            bundles.Add(new ScriptBundle("~/bundles/js").Include("~/Content/vendors/jquery/dist/jquery.min.js",
-                "~/Content/vendors/bootstrap/dist/js/bootstrap.bundle.min.js",
-                "~/Content/vendors/fastclick/lib/fastclick.js",
-                "~/Content/vendors/nprogress/nprogress.js",
-                "~/Content/vendors/Chart.js/dist/Chart.min.js",
-                "~/Content/vendors/jquery-sparkline/dist/jquery.sparkline.min.js",
-                "~/Content/vendors/Flot/jquery.flot.js",
-                "~/Content/vendors/Flot/jquery.flot.pie.js",
-                "~/Content/vendors/Flot/jquery.flot.time.js",
-                "~/Content/vendors/Flot/jquery.flot.stack.js",
-                "~/Content/vendors/Flot/jquery.flot.resize.js",
-                "~/Content/vendors/flot.orderbars/js/jquery.flot.orderBars.js",
-                "~/Content/vendors/flot-spline/js/jquery.flot.spline.min.js",
-                "~/Content/vendors/flot.curvedlines/curvedLines.js",
-                "~/Content/vendors/DateJS/build/date.js",
-                "~/Content/vendors/moment/min/moment.min.js",
-                "~/Content/vendors/bootstrap-daterangepicker/daterangepicker.js",
-                "~/Content/build/js/custom.min.js"
-
-                ));
+           
 
 
             bundles.Add(new StyleBundle("~/bundles/css2").Include(
