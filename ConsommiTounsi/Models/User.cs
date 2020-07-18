@@ -12,13 +12,18 @@ namespace ConsommiTounsi.Models
         [JsonProperty("userId")]
         public long userId { get; set; }
         [JsonProperty("userName")]
-        [Required]
         public string userName { get; set; }
         [JsonProperty("password")]
-        [Required]
         public string password { get; set; }
         [JsonProperty("role")]
         public string role { get; set; }
+        public string firstName { get; set; }
+        public string lastName { get; set; }
+        public string companyName { get; set; }
+        public string birthday { get; set; }
+
+        public string email { get; set; }
+        public string phone { get; set; }
 
     }
 }

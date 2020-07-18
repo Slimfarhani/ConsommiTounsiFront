@@ -277,6 +277,7 @@
   <ItemGroup>
     <Content Include="Content2\images\icons\consommitounsilogo.png" />
     <Content Include="Content2\images\icons\favicon.ico" />
+    <Content Include="Content2\images\icons\registerimage.jpg" />
     <Content Include="Content2\images\img-01.png" />
     <Content Include="Content2\vendor\tilt\tilt.jquery.min.js" />
     <Content Include="ContentAdmin\build\images\american-express.png" />
@@ -6911,15 +6912,6 @@
     <Content Include="ContentLogin\vendor\bootstrap\css\bootstrap-reboot.min.css.map" />
     <Content Include="ContentLogin\vendor\bootstrap\css\bootstrap.css.map" />
     <Content Include="ContentLogin\vendor\bootstrap\css\bootstrap.min.css.map" />
-    <Content Include="ContentRegister\vendor\font-awesome-4.7\fonts\fontawesome-webfont.eot" />
-    <Content Include="ContentRegister\vendor\font-awesome-4.7\fonts\fontawesome-webfont.ttf" />
-    <Content Include="ContentRegister\vendor\font-awesome-4.7\fonts\fontawesome-webfont.woff" />
-    <Content Include="ContentRegister\vendor\font-awesome-4.7\fonts\fontawesome-webfont.woff2" />
-    <Content Include="ContentRegister\vendor\font-awesome-4.7\fonts\FontAwesome.otf" />
-    <Content Include="ContentRegister\vendor\mdi-font\fonts\Material-Design-Iconic-Font.eot" />
-    <Content Include="ContentRegister\vendor\mdi-font\fonts\Material-Design-Iconic-Font.ttf" />
-    <Content Include="ContentRegister\vendor\mdi-font\fonts\Material-Design-Iconic-Font.woff" />
-    <Content Include="ContentRegister\vendor\mdi-font\fonts\Material-Design-Iconic-Font.woff2" />
     <Content Include="ContentAdmin\docs\fonts\fonts\fontawesome-webfont.eot" />
     <Content Include="ContentAdmin\docs\fonts\fonts\fontawesome-webfont.ttf" />
     <Content Include="ContentAdmin\docs\fonts\fonts\fontawesome-webfont.woff" />
@@ -8002,6 +7994,15 @@
     <Content Include="ContentAdmin\vendors\validator\.gitignore" />
     <Content Include="ContentAdmin\vendors\validator\package.json" />
     <Content Include="ContentAdmin\vendors\validator\README.md" />
+    <Content Include="ContentRegister\vendor\font-awesome-4.7\fonts\fontawesome-webfont.eot" />
+    <Content Include="ContentRegister\vendor\font-awesome-4.7\fonts\fontawesome-webfont.ttf" />
+    <Content Include="ContentRegister\vendor\font-awesome-4.7\fonts\fontawesome-webfont.woff" />
+    <Content Include="ContentRegister\vendor\font-awesome-4.7\fonts\fontawesome-webfont.woff2" />
+    <Content Include="ContentRegister\vendor\font-awesome-4.7\fonts\FontAwesome.otf" />
+    <Content Include="ContentRegister\vendor\mdi-font\fonts\Material-Design-Iconic-Font.eot" />
+    <Content Include="ContentRegister\vendor\mdi-font\fonts\Material-Design-Iconic-Font.ttf" />
+    <Content Include="ContentRegister\vendor\mdi-font\fonts\Material-Design-Iconic-Font.woff" />
+    <Content Include="ContentRegister\vendor\mdi-font\fonts\Material-Design-Iconic-Font.woff2" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

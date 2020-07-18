@@ -1,41 +1,92 @@
-﻿@model ConsommiTounsi.Models.RegisterViewModel
+﻿@model ConsommiTounsi.Models.User
 @{
     ViewBag.Title = "Register";
+
 }
 
-<h2>@ViewBag.Title.</h2>
+<!-- Icons font CSS-->
+@Styles.Render("~/bundles/registercss")
+<!-- Font special for pages-->
+<link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
-@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-{
-    @Html.AntiForgeryToken()
-    <h4>Create a new account.</h4>
-    <hr />
-    @Html.ValidationSummary("", new { @class = "text-danger" })
-    <div class="form-group">
-        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="Register" />
-        </div>
-    </div>
-}
 
+<div class="page-wrapper bg-gra-01 p-t-180 p-b-100 font-poppins">
+    <div class="wrapper wrapper--w780">
+        <div class="card card-3" style="height: 802px;">
+            <div class="card-heading" style="background-image: url(../../Content2/images/icons/registerimage.jpg)"></div>
+            <div class="card-body">
+                <h2 class="title">Registration Info</h2>
+                @using (Html.BeginForm("Register", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="input-group">
+                        @Html.TextBoxFor(m => m.firstName, new { @class = "input--style-3", @placeholder = "First Name" })
+                        @Html.ValidationMessageFor(m => m.firstName, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="input-group">
+                        @Html.TextBoxFor(m => m.lastName, new { @class = "input--style-3", @placeholder = "Last Name" })
+                        @Html.ValidationMessageFor(m => m.lastName, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="input-group" id="myDIV" style="display: none">
+                        @Html.TextBoxFor(m => m.companyName, new { @class = "input--style-3", @placeholder = "Company Name" })
+                        @Html.ValidationMessageFor(m => m.companyName, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="input-group">
+                        @Html.TextBoxFor(m => m.birthday, new { @class = "input--style-3 js-datepicker", @placeholder = "Birthdate" })
+                        @Html.ValidationMessageFor(m => m.birthday, "", new { @class = "text-danger" })
+                        <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
+                    </div>
+                    <div class="input-group">
+                        <div class="rs-select2 js-select-simple select--no-search" style="height: 35px;">
+
+                            @Html.DropDownListFor(m => m.role, new SelectListItem[]
+                      {
+                           new SelectListItem() { Text = "Customer", Value = "Customer" },
+                           new SelectListItem() { Text = "Supplier", Value = "Supplier" }},
+                        "Select Type",
+                        new
+                        {
+                            @onchange = "callChangefunc(this.value)"
+                        });
+
+
+
+                            <div class="select-dropdown"></div>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        @Html.TextBoxFor(m => m.email, new { @class = "input--style-3", @placeholder = "Email" })
+                        @Html.ValidationMessageFor(m => m.email, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="input-group">
+                        @Html.TextBoxFor(m => m.phone, new { @class = "input--style-3", @placeholder = "Phone" })
+                        @Html.ValidationMessageFor(m => m.phone, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="p-t-10" style="position: absolute; padding-top: 0px; bottom: 150px;">
+                        <button class="btn btn--pill btn--green" type="submit">Submit</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function callChangefunc(val) {
+        var x = document.getElementById("myDIV");
+        if (val === "Customer") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+    }
+</script>
+
+<!-- Main JS-->
+
+@Scripts.Render("~/bundles/registerjs")
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+<!-- end document-->

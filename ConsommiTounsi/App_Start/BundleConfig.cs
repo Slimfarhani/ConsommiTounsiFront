@@ -74,7 +74,7 @@ namespace ConsommiTounsi
                 "~/Content2/vendor/slick/slick.csss",
                 "~/Content2/vendor/lightbox2/css/lightbox.min.css",
                 "~/Content2/css/util.css",
-                 "~/Content2/css/main.css"
+                "~/Content2/css/main.css"
 
             ));
 
