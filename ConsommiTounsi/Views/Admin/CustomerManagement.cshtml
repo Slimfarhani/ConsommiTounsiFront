@@ -1,0 +1,73 @@
+﻿@model IEnumerable<ConsommiTounsi.Models.Customer>
+@{
+    ViewBag.Title = "CustomerManagement";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="col-md-12 col-sm-12 ">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>Customer Management <small></small></h2>
+
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card-box table-responsive">
+                        <button type="button" class="btn btn-success btn-lg" onclick="GO()">Add customer</button>
+                        <script type="text/javascript">
+                                function GO()
+                                {
+                                    
+                                        window.location.href = "@Url.Action("AddCustomer", "Admin")";
+                                
+                                }
+                        </script>
+                        <table id="datatable-buttons" class="table table-striped table-bordered" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>First name</th>
+                                    <th>Last name</th>
+                                    <th>Birthday</th>
+                                    <th>gender</th>
+                                    <th>adress</th>
+                                    <th>Login</th>
+
+                                    <th style="width: 120px">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td> @Html.DisplayFor(modelItem => item.userId)</td>
+                                        <td> @Html.DisplayFor(modelItem => item.firstName)</td>
+                                        <td> @Html.DisplayFor(modelItem => item.lastName)</td>
+                                        <td> @Html.DisplayFor(modelItem => item.birthday)</td>
+                                        <td> @Html.DisplayFor(modelItem => item.gender)</td>
+                                        <td> @Html.DisplayFor(modelItem => item.address)</td>
+                                        <td> @Html.DisplayFor(modelItem => item.userName)</td>
+
+
+
+                                        <td>
+                                            @Html.ActionLink("Edit", "Edit", new { id = item.userId }) |
+                                            @Html.ActionLink("Details", "Details", new { id = item.userId }) |
+                                            @Html.ActionLink("Delete", "Delete", new { id = item.userId })
+
+                                        </td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
