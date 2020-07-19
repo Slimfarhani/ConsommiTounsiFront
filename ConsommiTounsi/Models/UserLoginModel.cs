@@ -7,23 +7,18 @@ using System.Web;
 
 namespace ConsommiTounsi.Models
 {
-    public class User
+    public class UserLoginModel
     {
         [JsonProperty("userId")]
         public long userId { get; set; }
         [JsonProperty("userName")]
         public string userName { get; set; }
         [JsonProperty("password")]
+        [DataType(DataType.Password)]
         public string password { get; set; }
+
         [JsonProperty("role")]
         public string role { get; set; }
-        public string firstName { get; set; }
-        public string lastName { get; set; }
-        public string companyName { get; set; }
-        public string birthday { get; set; }
-
-        public string email { get; set; }
-        public string phone { get; set; }
 
     }
 }

@@ -13,6 +13,10 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using Newtonsoft.Json;
 using System.Web.SessionState;
+using System.Security.Policy;
+using System.Text;
+using Microsoft.Owin.Security.Provider;
+using System.IO;
 
 namespace ConsommiTounsi.Controllers
 {
@@ -79,7 +83,7 @@ namespace ConsommiTounsi.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(User model, string returnUrl)
+        public ActionResult Login(UserLoginModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -89,12 +93,12 @@ namespace ConsommiTounsi.Controllers
             client.BaseAddress = new Uri("http://localhost:8080/springboot-crud-rest/api/v1/");
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             HttpResponseMessage response = client.GetAsync("user/"+model.userName+"/"+model.password).Result;
-            User User = response.Content.ReadAsAsync<User>().Result;
+            UserRegisterModel User = response.Content.ReadAsAsync<UserRegisterModel>().Result;
+
             Session["User"] = User;
-            var UserLoggedIn = Session["User"] as User;
+            var UserLoggedIn = Session["User"] as UserRegisterModel;
             if (UserLoggedIn != null)
             {
-                System.Diagnostics.Debug.WriteLine("Role : ");
                 return Redirect("/Home/Index");
             }
             return View(model);
@@ -173,20 +177,64 @@ namespace ConsommiTounsi.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult Register(User model)
+        public async Task<ActionResult> Register(UserRegisterModel model, HttpPostedFileBase file)
         {
-            System.Diagnostics.Debug.WriteLine("hello"+model.email);
-            System.Diagnostics.Debug.WriteLine("hello" + model.birthday);
-            if (ModelState.IsValid)
+            
+            /*if (ModelState.IsValid)
             {
-                System.Diagnostics.Debug.WriteLine(model.phone);
-                return View(model);
-                
-            }
+                HttpClient client = new HttpClient();
+                client.BaseAddress = new Uri("http://localhost:8080/springboot-crud-rest/api/v1/");
+                model.birthdateFormatted = Convert.ToDateTime(model.birthdateString);
+                client.PostAsJsonAsync<UserRegisterModel>("customer", model).ContinueWith((postTask) => postTask.Result.EnsureSuccessStatusCode());
+
+                System.Diagnostics.Debug.WriteLine("usernametest : " + model.userName);
+
+                System.Diagnostics.Debug.WriteLine("passwordtest : " + model.password);
+                HttpResponseMessage response = client.GetAsync("user/" + model.userName + "/" + model.password).Result;
+                UserLoginModel User = response.Content.ReadAsAsync<UserLoginModel>().Result;
+
+                Session["User"] = User;
+                System.Diagnostics.Debug.WriteLine("usernametest : " + User.userName);
+                var UserLoggedIn2 = Session["User"] as UserLoginModel;
+                if (UserLoggedIn2 != null)
+                {
+                    return Redirect("/Home/Index");
+                }*/
+
+
+                if (ModelState.IsValid)
+                {
+                model.birthdateFormatted = Convert.ToDateTime(model.birthdateString);
+                model.urlImage = file.FileName;
+                var customerJson = await Task.Run(() => JsonConvert.SerializeObject(model));
+
+                HttpClient client = new HttpClient();
+                client.BaseAddress = new Uri("http://localhost:8080/springboot-crud-rest/api/v1/");
+                var content = new StringContent(customerJson.ToString(), Encoding.UTF8, "application/json");
+                HttpResponseMessage response;
+                System.Diagnostics.Debug.WriteLine(file.FileName);
+                var path = Path.Combine(Server.MapPath("~/UserImages/"), file.FileName);
+                file.SaveAs(path);
+                if (model.role.Equals("Customer"))
+                {
+
+                    response = client.PostAsync("customer/add", content).Result;
+                }
+                else { response = client.PostAsync("supplier/add", content).Result; }
+
+                UserLoginModel UserLoggedIn = new UserLoginModel();
+                UserLoggedIn.userName = model.userName;
+                UserLoggedIn.password = model.password;
+                UserLoggedIn.role = model.role;
+                return Login(UserLoggedIn);
+
+                }
+            return View(model);
 
             // If we got this far, something failed, redisplay form
-            return View(model);
+
         }
+        
 
         //
         // GET: /Account/ConfirmEmail

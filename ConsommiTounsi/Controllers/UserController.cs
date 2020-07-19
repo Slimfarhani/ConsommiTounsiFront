@@ -22,7 +22,7 @@ namespace ConsommiTounsi.Controllers
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             HttpResponseMessage response = client.GetAsync("user").Result;
             
-                IEnumerable<User> Users = response.Content.ReadAsAsync<IEnumerable<User>>().Result;
+                IEnumerable<UserLoginModel> Users = response.Content.ReadAsAsync<IEnumerable<UserLoginModel>>().Result;
             
             return View(Users);
             /*IEnumerable<User> Users = null;
@@ -53,7 +53,7 @@ namespace ConsommiTounsi.Controllers
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             HttpResponseMessage response = client.GetAsync("user/nessrine/ness").Result;
 
-            User Users = response.Content.ReadAsAsync<User>().Result;
+            UserLoginModel Users = response.Content.ReadAsAsync<UserLoginModel>().Result;
 
             return View(Users);
         }

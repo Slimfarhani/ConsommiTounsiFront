@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     @using ConsommiTounsi.Models
-    @model User
+    @model UserRegisterModel
     <title>@PageData["Title"]</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,7 +12,7 @@
     @Styles.Render("~/bundles/css2")
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-    @{ User user = (User)Session["user"]; }
+    @{ UserRegisterModel user = (UserRegisterModel)Session["User"]; }
     <!--===============================================================================================-->
 </head>
 <body class="animsition">
@@ -175,7 +175,7 @@
                     <span class="topbar-email">
                         @if (user != null)
                         {
-                            @Html.DisplayFor(item => user.role)
+                            @Html.DisplayFor(item => user.userName)
                         }
                         
                     </span>
@@ -184,7 +184,22 @@
 
                     <!--  -->
                     <div class="header-wrapicon2 m-r-13">
-                        <img src="~/Content2/images/icons/icon-header-01.png" class="header-icon1 js-show-header-dropdown" alt="ICON">
+                        @if (user == null)
+                        {
+                            <img src="~/Content2/images/icons/icon-header-01.png" class="header-icon1 js-show-header-dropdown" alt="ICON">
+                        }
+                        else
+                        {
+                            if (user.urlImage != null)
+                            {
+                                <img src="~/UserImages/@(user.urlImage) " class="header-icon1 js-show-header-dropdown" alt="ICON">
+                            }
+                            else
+                            {
+                                <img src="~/Content2/images/icons/icon-header-01.png" class="header-icon1 js-show-header-dropdown" alt="ICON">
+                            }
+
+                        }
                         <div class="header-cart header-dropdown" style="width:250px">
                             <ul class="header-cart-wrapitem">
                                 @if (user == null)
@@ -329,7 +344,7 @@
                                 <a href="product.html">Shop</a>
                             </li>
 
-                            <li class="sale-noti">
+                            <li>
                                 <a href="product.html">Sale</a>
                             </li>
 
@@ -340,19 +355,31 @@
                             <li>
                                 <a href="blog.html">Blog</a>
                             </li>
-
-                            <li>
-                                <a href="about.html">About</a>
-                            </li>
                             @if (user != null)
                             {
                                 if (Convert.ToString(user.role) == "Admin")
                                 {
-                                    <li>
+                                    <li class="sale-noti">
                                         <a href="/Admin">Admin home page</a>
                                     </li>
                                 }
+                                else if (Convert.ToString(user.role) == "Customer")
+                                {
+                                    <li class="sale-noti">
+                                        <a href="/Customer/Profile">Profile</a>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li class="sale-noti">
+                                        <a href="/Supplier/Profile">Profile</a>
+                                    </li>
+                                }
                             }
+                            <li>
+                                <a href="about.html">About</a>
+                            </li>
+
 
 
                         </ul>
@@ -535,7 +562,7 @@
                         <a href="about.html">About</a>
                     </li>
 
-                    @if (user != null)
+                    <!@if (user != null)
                     {
                         if (user.role == "Admin")
                         {
@@ -543,7 +570,7 @@
                                 <a href="contact.html">Contact</a>
                             </li>
                         }
-                    }
+                    }>
                 </ul>
             </nav>
         </div>

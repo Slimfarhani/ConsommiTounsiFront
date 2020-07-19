@@ -1,5 +1,5 @@
 ﻿@using ConsommiTounsi.Models
-@model User
+@model UserLoginModel
 @{
     ViewBag.Title = "Smart Login";
 }
@@ -15,7 +15,7 @@
         <div class="login100-pic js-tilt" data-tilt>
             <img src="~/ContentLogin/images/img-01.png" alt="IMG">
         </div>
-        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "login100-form validate-form", role = "form" }))
+        @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "login100-form validate-form", role = "form" }))
         {
             @Html.AntiForgeryToken()
             <span class="login100-form-title">
