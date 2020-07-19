@@ -20,7 +20,7 @@ namespace ConsommiTounsi.Models
         public string firstName { get; set; }
         [JsonProperty("lastName")]
         public string lastName { get; set; }
-        [JsonProperty("birthday")]
+        [JsonProperty("birthdate")]
         public string birthday { get; set; }
         [JsonProperty("mail")]
         public string mail { get; set; }

@@ -23,7 +23,7 @@ namespace ConsommiTounsi.Controllers
         {
 
             HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri("http://localhost:8080/springboot-crud-rest/customer/");
+            client.BaseAddress = new Uri("http://localhost:8080/springboot-crud-rest/api/v1/customer/");
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             HttpResponseMessage response = client.GetAsync("list").Result;
             IEnumerable<Customer> Customers = response.Content.ReadAsAsync<IEnumerable<Customer>>().Result;
@@ -50,7 +50,7 @@ namespace ConsommiTounsi.Controllers
                 System.Diagnostics.Debug.WriteLine(customerJson.ToString());
 
                 HttpClient client = new HttpClient();
-                client.BaseAddress = new Uri("http://localhost:8080/springboot-crud-rest/");
+                client.BaseAddress = new Uri("http://localhost:8080/springboot-crud-rest/api/v1/");
 
                 var content = new StringContent(customerJson.ToString(), Encoding.UTF8, "application/json");
                 System.Diagnostics.Debug.WriteLine(content.ReadAsStringAsync());
