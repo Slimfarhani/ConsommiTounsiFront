@@ -14,16 +14,33 @@ namespace ConsommiTounsi
                      "~/Content/site.css"
                     ));
 
+
             bundles.Add(new StyleBundle("~/bundles/cssAdmin").Include(
-                       "~/ContentAdmin/vendors/bootstrap/dist/css/bootstrap.min.css",
+                     "~/ContentAdmin/vendors/bootstrap/dist/css/bootstrap.min.css",
                      "~/ContentAdmin/vendors/font-awesome/css/font-awesome.min.css",
                      "~/ContentAdmin/vendors/nprogress/nprogress.css",
                      "~/ContentAdmin/vendors/bootstrap-daterangepicker/daterangepicker.css",
-                     "~/ContentAdmin/build/css/custom.min.css"
+                     "~/ContentAdmin/vendors/iCheck/skins/flat/green.cs",
+                     "~/ContentAdmin/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css",
+                     "~/ContentAdmin/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css",
+                     "~/ContentAdmin/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css",
+                     "~/ContentAdmin/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css",
+                     "~/ContentAdmin/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css",
+                     "~/ContentAdmin/build/css/custom.min.css",
+                     "~/ContentAdmin/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css",
+                     "~/ContentAdmin/vendors/pnotify/dist/pnotify.css",
+                     "~/ContentAdmin/vendors/pnotify/dist/pnotify.buttons.css",
+                     "~/ContentAdmin/vendors/google-code-prettify/bin/prettify.min.css",
+                     "~/ContentAdmin/vendors/select2/dist/css/select2.min.css",
+                     "~/ContentAdmin/vendors/switchery/dist/switchery.min.css",
+                     "~/ContentAdmin/vendors /starrr/dist/starrr.css",
+                     
+                     "~/ContentAdmin/vendors/pnotify/dist/pnotify.nonblock.css"
+                     
                     ));
 
-          
-            bundles.Add(new ScriptBundle("~/bundles/jsAdmin").Include("~/ContentAdmin/vendors/jquery/dist/jquery.min.js",
+
+                        bundles.Add(new ScriptBundle("~/bundles/jsAdmin").Include("~/ContentAdmin/vendors/jquery/dist/jquery.min.js",
                 "~/ContentAdmin/vendors/bootstrap/dist/js/bootstrap.bundle.min.js",
                 "~/ContentAdmin/vendors/fastclick/lib/fastclick.js",
                 "~/ContentAdmin/vendors/nprogress/nprogress.js",
@@ -40,10 +57,28 @@ namespace ConsommiTounsi
                 "~/ContentAdmin/vendors/DateJS/build/date.js",
                 "~/ContentAdmin/vendors/moment/min/moment.min.js",
                 "~/ContentAdmin/vendors/bootstrap-daterangepicker/daterangepicker.js",
-                "~/ContentAdmin/build/js/custom.min.js"
+                "~/ContentAdmin/build/js/custom.min.js",
+                "~/ContentAdmin/vendors/iCheck/icheck.min.js",
+                "~/ContentAdmin/vendors/datatables.net/js/jquery.dataTables.min.js",
+                "~/ContentAdmin/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js",
+                "~/ContentAdmin/vendors/datatables.net-buttons/js/dataTables.buttons.min.js",
+                "~/ContentAdmin/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js",
+                "~/ContentAdmin/vendors/datatables.net-buttons/js/buttons.flash.min.js",
+                "~/ContentAdmin/vendors/datatables.net-buttons/js/buttons.html5.min.js",
+                "~/ContentAdmin/vendors/datatables.net-buttons/js/buttons.print.min.js",
+                "~/ContentAdmin/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js",
+                "~/ContentAdmin/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js",
+                "~/ContentAdmin/vendors/datatables.net-responsive/js/dataTables.responsive.min.js",
+                "~/ContentAdmin/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js",
+                "~/ContentAdmin/vendors/datatables.net-scroller/js/dataTables.scroller.min.js",
+                "~/ContentAdmin/vendors/jszip/dist/jszip.min.js",
+                "~/ContentAdmin/vendors/pdfmake/build/pdfmake.min.js",
+                "~/ContentAdmin/vendors/pdfmake/build/vfs_fonts.js"
 
                 ));
-            bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
+
+                    
+                                 bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
