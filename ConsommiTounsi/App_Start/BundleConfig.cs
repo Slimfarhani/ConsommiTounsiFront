@@ -112,7 +112,7 @@ namespace ConsommiTounsi
                 "~/Content2/css/main.css"
 
             ));
-
+            
             bundles.Add(new ScriptBundle("~/bundles/js2").Include(
                 "~/Content2/vendor/jquery/jquery-3.2.1.min.js",
                "~/Content2/vendor/animsition/js/animsition.min.js",
@@ -127,7 +127,16 @@ namespace ConsommiTounsi
                "~/Content2/js/main.js",
                "~/Content2/vendor/tilt/tilt.jquery.min.js"
 
+
                ));
+            bundles.Add(new StyleBundle("~/bundles/productcss").Include(
+                "~/Content2/vendor/noui/nouislider.min.css"
+                ));
+            bundles.Add(new ScriptBundle("~/bundles/productjs").Include(
+               "~/Content2/vendor/noui/nouislider.min.js",
+               "~/Content2/vendor/daterangepicker/daterangepicker.js",
+               "~/Content2/vendor/daterangepicker/moment.min.js"
+                ));
             bundles.Add(new ScriptBundle("~/bundles/loginjs").Include(
                "~/ContentLogin/vendor/jquery/jquery-3.2.1.min.js",
                "~/ContentLogin/vendor/bootstrap/js/popper.js",

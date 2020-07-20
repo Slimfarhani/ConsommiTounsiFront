@@ -264,6 +264,7 @@
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\SupplierController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
@@ -275,6 +276,8 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\Participation.cs" />
+    <Compile Include="Models\Stock.cs" />
+    <Compile Include="Models\Product.cs" />
     <Compile Include="Models\UserLoginModel.cs" />
     <Compile Include="Models\UserRegisterModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -6730,6 +6733,15 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="item-02.jpg" />
+    <Content Include="ProductImages\chachia1-resized.jpg" />
+    <Content Include="ProductImages\chachia2-resized.jpg" />
+    <Content Include="ProductImages\tapis1-resized.jpg" />
+    <Content Include="ProductImages\tapis1.jpg" />
+    <Content Include="ProductImages\tapis2-resized.jpg" />
+    <Content Include="ProductImages\tapis2.jpg" />
+    <Content Include="ProductImages\verre1-resized.jpg" />
+    <Content Include="ProductImages\verre1.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content2\fonts\elegant-font\html-css\fonts\ElegantIcons.eot" />
@@ -8063,6 +8075,8 @@
     <Content Include="Views\Customer\Profile.cshtml" />
     <Content Include="Views\Admin\AddCustomer.cshtml" />
     <Content Include="Views\Admin\CustomerManagement.cshtml" />
+    <Content Include="Views\Product\Index.cshtml" />
+    <Content Include="Views\Product\_PartialStock.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

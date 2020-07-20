@@ -95,7 +95,7 @@
                         @Html.ValidationMessageFor(m => m.phone, "", new { @class = "text-danger" })
                     </div>
                     <div class="input-group">
-                        @Html.TextBox("file", null, new { type = "file" })
+                        @Html.TextBox("file", null, new { type = "file", @accept="image/*"})
                         @Html.ValidationMessageFor(model => model.urlImage, "", new { @class = "text-danger" })
                     </div>
                     
