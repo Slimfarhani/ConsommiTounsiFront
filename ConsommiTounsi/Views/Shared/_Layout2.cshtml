@@ -1,8 +1,6 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    @using ConsommiTounsi.Models
-    @model UserRegisterModel
     <title>@PageData["Title"]</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,7 +10,12 @@
     @Styles.Render("~/bundles/css2")
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-    @{ UserRegisterModel user = (UserRegisterModel)Session["User"]; }
+    @{ ConsommiTounsi.Models.UserRegisterModel user = (ConsommiTounsi.Models.UserRegisterModel)Session["User"];}
+    @{int itemNumber = 0;}
+        @if (Session["ItemNumber"] != null)
+        {
+            itemNumber = (int)Session["ItemNumber"];
+    }
     <!--===============================================================================================-->
 </head>
 <body class="animsition">
@@ -33,7 +36,7 @@
                     </li>
 
                     <li>
-                        <a href="product.html">Shop</a>
+                        <a href="/Stock/Index">Shop</a>
                     </li>
 
                     <li>
@@ -57,89 +60,136 @@
 
         <!-- Header Icon -->
         <div class="header-icons">
-            <a href="#" class="header-wrapicon1 dis-block">
-                <img src="~/Content2/images/icons/icon-header-01.png" class="header-icon1" alt="ICON">
-            </a>
+            <span class="topbar-email">
+                @if (user != null)
+                {
+                    @Html.DisplayFor(item => user.userName)
+                }
 
-            <span class="linedivide1"></span>
+            </span>
+            <div class="header-wrapicon2 m-r-13">
+                @if (user == null)
+                {
+                    <img src="~/Content2/images/icons/icon-header-01.png" class="header-icon1 js-show-header-dropdown" alt="ICON">
+                }
+                else
+                {
+                    if (user.urlImage != null)
+                    {
+                        <img src="~/UserImages/@(user.urlImage) " class="header-icon1 js-show-header-dropdown" alt="ICON">
+                    }
+                    else
+                    {
+                        <img src="~/Content2/images/icons/icon-header-01.png" class="header-icon1 js-show-header-dropdown" alt="ICON">
+                    }
 
-            <div class="header-wrapicon2">
-                <img src="~/Content2/images/icons/icon-header-02.png" class="header-icon1 js-show-header-dropdown" alt="ICON">
-                <span class="header-icons-noti">0</span>
-
-                <!-- Header cart noti -->
-                <div class="header-cart header-dropdown">
+                }
+                <div class="header-cart header-dropdown" style="width:250px">
                     <ul class="header-cart-wrapitem">
-                        <li class="header-cart-item">
-                            <div class="header-cart-item-img">
-                                <img src="~/Content2/images/item-cart-01.jpg" alt="IMG">
-                            </div>
+                        @if (user == null)
+                        {
+                            <li class="header-cart-item">
+                                <div class="header-cart-wrapbtn">
+                                    <!-- Button -->
+                                    <a href="/Account/Login" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4" style="width:200px">
+                                        Login
+                                    </a>
+                                </div>
+                            </li>
 
-                            <div class="header-cart-item-txt">
-                                <a href="#" class="header-cart-item-name">
-                                    White Shirt With Pleat Detail Back
-                                </a>
+                            <li class="header-cart-item">
+                                <div class="header-cart-wrapbtn">
+                                    <!-- Button -->
+                                    <a href="/Account/Register" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4" style="width:200px">
+                                        Register
+                                    </a>
+                                </div>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="header-cart-item">
+                                <div class="header-cart-wrapbtn">
+                                    <!-- Button -->
+                                    <a href="/Account/Logout" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4" style="width:200px">
+                                        Log Out
+                                    </a>
+                                </div>
+                            </li>
+                        }
 
-                                <span class="header-cart-item-info">
-                                    1 x $19.00
-                                </span>
-                            </div>
-                        </li>
 
-                        <li class="header-cart-item">
-                            <div class="header-cart-item-img">
-                                <img src="~/Content2/images/item-cart-02.jpg" alt="IMG">
-                            </div>
 
-                            <div class="header-cart-item-txt">
-                                <a href="#" class="header-cart-item-name">
-                                    Converse All Star Hi Black Canvas
-                                </a>
-
-                                <span class="header-cart-item-info">
-                                    1 x $39.00
-                                </span>
-                            </div>
-                        </li>
-
-                        <li class="header-cart-item">
-                            <div class="header-cart-item-img">
-                                <img src="~/Content2/images/item-cart-03.jpg" alt="IMG">
-                            </div>
-
-                            <div class="header-cart-item-txt">
-                                <a href="#" class="header-cart-item-name">
-                                    Nixon Porter Leather Watch In Tan
-                                </a>
-
-                                <span class="header-cart-item-info">
-                                    1 x $17.00
-                                </span>
-                            </div>
-                        </li>
                     </ul>
 
-                    <div class="header-cart-total">
-                        Total: $75.00
-                    </div>
 
-                    <div class="header-cart-buttons">
-                        <div class="header-cart-wrapbtn">
-                            <!-- Button -->
-                            <a href="cart.html" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
-                                View Cart
-                            </a>
-                        </div>
 
-                        <div class="header-cart-wrapbtn">
-                            <!-- Button -->
-                            <a href="#" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
-                                Check Out
-                            </a>
+
+                </div>
+            </div>
+
+            <span class="linedivide1"></span>
+            @if (user != null)
+            {
+                <div class="header-wrapicon2" id="cartdiv1">
+                    <img src="~/Content2/images/icons/icon-header-02.png" class="header-icon1 js-show-header-dropdown" alt="ICON">
+                    <span class="header-icons-noti" id="cartnumber1">@((int)Session["ItemNumber"])</span>
+
+                    <!-- Header cart noti -->
+                    <div class="header-cart header-dropdown" id="cartnotif1">
+                        <ul class="header-cart-wrapitem">
+                            @if ((IEnumerable<Domain.Entities.OrderItem>)Session["ItemsInCartNotification"] != null)
+                            {
+                                foreach (var item in (IEnumerable<Domain.Entities.OrderItem>)Session["ItemsInCartNotification"])
+                                {
+                                    <li class="header-cart-item">
+                                        <div class="header-cart-item-img">
+                                            <img src="~/ResizedProductImagesForCartNotif/@(item.ImageUrl)" alt="IMG">
+                                        </div>
+
+                                        <div class="header-cart-item-txt">
+                                            <a href="#" class="header-cart-item-name">
+                                                @(item.Name)
+                                            </a>
+
+                                            <span class="header-cart-item-info">
+                                                1 x @(item.Total)
+                                            </span>
+                                        </div>
+                                    </li>
+                                }
+                            }
+
+                        </ul>
+                        @if ((float)Session["ItemsInCartTotal"] != 0)
+                        {
+                            <div class="header-cart-total" id="cartotal1">
+                                Total: @((float)Session["ItemsInCartTotal"]) TND
+                            </div>
+                        }
+
+
+                        <div class="header-cart-buttons">
+                            <div class="header-cart-wrapbtn">
+                                <!-- Button -->
+                                <a href="cart.html" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
+                                    View Cart
+                                </a>
+                            </div>
+
+                            <div class="header-cart-wrapbtn">
+                                <!-- Button -->
+                                <a href="javascript:deleteallitemsincart();" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
+                                    Empty Cart
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            }
+
+
+
         </div>
     </div>
 
@@ -244,84 +294,64 @@
                         </div>
                     </div>
                     <span class="linedivide1"></span>
+                    @if (user != null)
+                    {
+                        <div class="header-wrapicon2 m-r-13" id="cartdiv2">
+                            <img src="~/Content2/images/icons/icon-header-02.png" class="header-icon1 js-show-header-dropdown" alt="ICON">
+                            <span class="header-icons-noti" id="cartnumber2">@((int)Session["ItemNumber"])</span>
 
-                    <div class="header-wrapicon2 m-r-13">
-                        <img src="~/Content2/images/icons/icon-header-02.png" class="header-icon1 js-show-header-dropdown" alt="ICON">
-                        <span class="header-icons-noti">0</span>
+                            <!-- Header cart noti -->
+                            <div class="header-cart header-dropdown" id="cartnotif2">
+                                <ul class="header-cart-wrapitem">
+                                    @if ((IEnumerable<Domain.Entities.OrderItem>)Session["ItemsInCartNotification"] != null)
+                                    {
+                                        foreach (var item in (IEnumerable<Domain.Entities.OrderItem>)Session["ItemsInCartNotification"])
+                                        {
+                                            <li class="header-cart-item">
+                                                <div class="header-cart-item-img">
+                                                    <img src="~/ResizedProductImagesForCartNotif/@(item.ImageUrl)" alt="IMG">
+                                                </div>
 
-                        <!-- Header cart noti -->
-                        <div class="header-cart header-dropdown">
-                            <ul class="header-cart-wrapitem">
-                                <li class="header-cart-item">
-                                    <div class="header-cart-item-img">
-                                        <img src="~/Content2/images/item-cart-01.jpg" alt="IMG">
+                                                <div class="header-cart-item-txt">
+                                                    <a href="#" class="header-cart-item-name">
+                                                        @(item.Name)
+                                                    </a>
+
+                                                    <span class="header-cart-item-info">
+                                                        1 x @(item.Total)
+                                                    </span>
+                                                </div>
+                                            </li>
+                                        }
+                                    }
+                                </ul>
+                                @if ((float)Session["ItemsInCartTotal"] != 0)
+                                {
+                                    <div class="header-cart-total" id="carttotal2">
+                                        Total: @((float)Session["ItemsInCartTotal"]) TND
                                     </div>
+                                }
 
-                                    <div class="header-cart-item-txt">
-                                        <a href="#" class="header-cart-item-name">
-                                            White Shirt With Pleat Detail Back
+
+                                <div class="header-cart-buttons">
+                                    <div class="header-cart-wrapbtn">
+                                        <!-- Button -->
+                                        <a href="cart.html" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
+                                            View Cart
                                         </a>
-
-                                        <span class="header-cart-item-info">
-                                            1 x $19.00
-                                        </span>
-                                    </div>
-                                </li>
-
-                                <li class="header-cart-item">
-                                    <div class="header-cart-item-img">
-                                        <img src="~/Content2/images/item-cart-02.jpg" alt="IMG">
                                     </div>
 
-                                    <div class="header-cart-item-txt">
-                                        <a href="#" class="header-cart-item-name">
-                                            Converse All Star Hi Black Canvas
+                                    <div class="header-cart-wrapbtn">
+                                        <!-- Button -->
+                                        <a href="javascript:deleteallitemsincart();" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
+                                            Empty Cart
                                         </a>
-
-                                        <span class="header-cart-item-info">
-                                            1 x $39.00
-                                        </span>
                                     </div>
-                                </li>
-
-                                <li class="header-cart-item">
-                                    <div class="header-cart-item-img">
-                                        <img src="~/Content2/images/item-cart-03.jpg" alt="IMG">
-                                    </div>
-
-                                    <div class="header-cart-item-txt">
-                                        <a href="#" class="header-cart-item-name">
-                                            Nixon Porter Leather Watch In Tan
-                                        </a>
-
-                                        <span class="header-cart-item-info">
-                                            1 x $17.00
-                                        </span>
-                                    </div>
-                                </li>
-                            </ul>
-
-                            <div class="header-cart-total">
-                                Total: $75.00
-                            </div>
-
-                            <div class="header-cart-buttons">
-                                <div class="header-cart-wrapbtn">
-                                    <!-- Button -->
-                                    <a href="cart.html" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
-                                        View Cart
-                                    </a>
-                                </div>
-
-                                <div class="header-cart-wrapbtn">
-                                    <!-- Button -->
-                                    <a href="#" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
-                                        Check Out
-                                    </a>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    }
+
                 </div>
             </div>
 
@@ -341,7 +371,7 @@
                             </li>
 
                             <li>
-                                <a href="product.html">Shop</a>
+                                <a href="/Stock/Index">Shop</a>
                             </li>
 
                             <li>
@@ -409,84 +439,86 @@
                     </a>
 
                     <span class="linedivide2"></span>
+                    @if (user != null)
+                    {
+                        <div class="header-wrapicon2">
+                            <img src="~/Content2/images/icons/icon-header-02.png" class="header-icon1 js-show-header-dropdown" alt="ICON">
+                            <span class="header-icons-noti">@(itemNumber)</span>
 
-                    <div class="header-wrapicon2">
-                        <img src="~/Content2/images/icons/icon-header-02.png" class="header-icon1 js-show-header-dropdown" alt="ICON">
-                        <span class="header-icons-noti">0</span>
+                            <!-- Header cart noti -->
+                            <div class="header-cart header-dropdown">
+                                <ul class="header-cart-wrapitem">
+                                    <li class="header-cart-item">
+                                        <div class="header-cart-item-img">
+                                            <img src="~/Content2/images/item-cart-01.jpg" alt="IMG">
+                                        </div>
 
-                        <!-- Header cart noti -->
-                        <div class="header-cart header-dropdown">
-                            <ul class="header-cart-wrapitem">
-                                <li class="header-cart-item">
-                                    <div class="header-cart-item-img">
-                                        <img src="~/Content2/images/item-cart-01.jpg" alt="IMG">
-                                    </div>
+                                        <div class="header-cart-item-txt">
+                                            <a href="#" class="header-cart-item-name">
+                                                White Shirt With Pleat Detail Back
+                                            </a>
 
-                                    <div class="header-cart-item-txt">
-                                        <a href="#" class="header-cart-item-name">
-                                            White Shirt With Pleat Detail Back
-                                        </a>
+                                            <span class="header-cart-item-info">
+                                                1 x $19.00
+                                            </span>
+                                        </div>
+                                    </li>
 
-                                        <span class="header-cart-item-info">
-                                            1 x $19.00
-                                        </span>
-                                    </div>
-                                </li>
+                                    <li class="header-cart-item">
+                                        <div class="header-cart-item-img">
+                                            <img src="~/Content2/images/item-cart-02.jpg" alt="IMG">
+                                        </div>
 
-                                <li class="header-cart-item">
-                                    <div class="header-cart-item-img">
-                                        <img src="~/Content2/images/item-cart-02.jpg" alt="IMG">
-                                    </div>
+                                        <div class="header-cart-item-txt">
+                                            <a href="#" class="header-cart-item-name">
+                                                Converse All Star Hi Black Canvas
+                                            </a>
 
-                                    <div class="header-cart-item-txt">
-                                        <a href="#" class="header-cart-item-name">
-                                            Converse All Star Hi Black Canvas
-                                        </a>
+                                            <span class="header-cart-item-info">
+                                                1 x $39.00
+                                            </span>
+                                        </div>
+                                    </li>
 
-                                        <span class="header-cart-item-info">
-                                            1 x $39.00
-                                        </span>
-                                    </div>
-                                </li>
+                                    <li class="header-cart-item">
+                                        <div class="header-cart-item-img">
+                                            <img src="~/Content2/images/item-cart-03.jpg" alt="IMG">
+                                        </div>
 
-                                <li class="header-cart-item">
-                                    <div class="header-cart-item-img">
-                                        <img src="~/Content2/images/item-cart-03.jpg" alt="IMG">
-                                    </div>
+                                        <div class="header-cart-item-txt">
+                                            <a href="#" class="header-cart-item-name">
+                                                Nixon Porter Leather Watch In Tan
+                                            </a>
 
-                                    <div class="header-cart-item-txt">
-                                        <a href="#" class="header-cart-item-name">
-                                            Nixon Porter Leather Watch In Tan
-                                        </a>
+                                            <span class="header-cart-item-info">
+                                                1 x $17.00
+                                            </span>
+                                        </div>
+                                    </li>
+                                </ul>
 
-                                        <span class="header-cart-item-info">
-                                            1 x $17.00
-                                        </span>
-                                    </div>
-                                </li>
-                            </ul>
-
-                            <div class="header-cart-total">
-                                Total: $75.00
-                            </div>
-
-                            <div class="header-cart-buttons">
-                                <div class="header-cart-wrapbtn">
-                                    <!-- Button -->
-                                    <a href="cart.html" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
-                                        View Cart
-                                    </a>
+                                <div class="header-cart-total">
+                                    Total: @((float)Session["ItemsInCartTotal"]) TND
                                 </div>
 
-                                <div class="header-cart-wrapbtn">
-                                    <!-- Button -->
-                                    <a href="#" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
-                                        Check Out
-                                    </a>
+                                <div class="header-cart-buttons">
+                                    <div class="header-cart-wrapbtn">
+                                        <!-- Button -->
+                                        <a href="cart.html" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
+                                            View Cart
+                                        </a>
+                                    </div>
+
+                                    <div class="header-cart-wrapbtn">
+                                        <!-- Button -->
+                                        <a onclick="deleteallitemsincart()" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
+                                            Check Out
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    }
                 </div>
 
                 <div class="btn-show-menu-mobile hamburger hamburger--squeeze">
@@ -543,7 +575,7 @@
                     </li>
 
                     <li class="item-menu-mobile">
-                        <a href="product.html">Shop</a>
+                        <a href="/Stock/Index">Shop</a>
                     </li>
 
                     <li class="item-menu-mobile">
@@ -808,6 +840,23 @@
     <script type="text/javascript" src="vendor/parallax100/parallax100.js"></script>
     <script type="text/javascript">
         $('.parallax100').parallax100();
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script>
+        function deleteallitemsincart() {
+            $.post("/Stock/DeleteAllItemsInCart", {
+            }, function (data) {
+                $("#cartnumber1").text("0");
+                $("#cartnumber2").text("0");
+                $("#cartnotif1").load(location.href + " #cartnotif1>*", "");
+                $("#cartnotif2").load(location.href + " #cartnotif2>*", "");
+                $("#cattotal1").load(location.href + " #cattotal1>*", "");
+                $("#cattotal2").load(location.href + " #cattotal2>*", "");
+
+            });
+
+
+        }
     </script>
     <!--===============================================================================================-->
 

@@ -17,11 +17,16 @@ using System.Security.Policy;
 using System.Text;
 using Microsoft.Owin.Security.Provider;
 using System.IO;
+using System.Drawing;
+using System.Drawing.Imaging;
+using Data;
+using Domain.Entities;
+using System.Collections.Generic;
 
 namespace ConsommiTounsi.Controllers
 {
-    
 
+    
     public static class F
     {
         public static string Dump(object obj)
@@ -32,6 +37,7 @@ namespace ConsommiTounsi.Controllers
     [Authorize]
     public class AccountController : Controller
     {
+        MyContext context;
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
@@ -94,9 +100,21 @@ namespace ConsommiTounsi.Controllers
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             HttpResponseMessage response = client.GetAsync("user/"+model.userName+"/"+model.password).Result;
             UserRegisterModel User = response.Content.ReadAsAsync<UserRegisterModel>().Result;
-
+            context = new MyContext();
+            
             Session["User"] = User;
             var UserLoggedIn = Session["User"] as UserRegisterModel;
+            IEnumerable<OrderItem> items;
+            Session["ItemNumber"] = context.OrderItems.Count(m => m.UserID == UserLoggedIn.userId);
+            Session["ItemsInCartNotification"] = null;
+            Session["ItemsInCartTotal"] = (float)0;
+            if ((int)Session["ItemNumber"]!=0)
+            {
+                items = context.OrderItems.OrderByDescending(o => o.OrderItemId).Where(o => o.UserID == UserLoggedIn.userId);
+                items = items.Take(3);
+                Session["ItemsInCartNotification"] = items;
+                Session["ItemsInCartTotal"]= context.OrderItems.Where(o => o.UserID == UserLoggedIn.userId).Select(o=>o.Total).Sum();
+            }
             if (UserLoggedIn != null)
             {
                 return Redirect("/Home/Index");
@@ -214,7 +232,8 @@ namespace ConsommiTounsi.Controllers
                 HttpResponseMessage response;
                 System.Diagnostics.Debug.WriteLine(file.FileName);
                 var path = Path.Combine(Server.MapPath("~/UserImages/"), file.FileName);
-                file.SaveAs(path);
+                Image image=Image.FromStream(file.InputStream, true, true);
+                image.Save(path, ImageFormat.Png);
                 if (model.role.Equals("Customer"))
                 {
 
@@ -234,6 +253,7 @@ namespace ConsommiTounsi.Controllers
             // If we got this far, something failed, redisplay form
 
         }
+
         
 
         //

@@ -265,6 +265,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\StockController.cs" />
     <Compile Include="Controllers\SupplierController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
@@ -276,8 +277,10 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\Participation.cs" />
+    <Compile Include="Models\ProductFormModel.cs" />
     <Compile Include="Models\Stock.cs" />
     <Compile Include="Models\Product.cs" />
+    <Compile Include="Models\Supplier.cs" />
     <Compile Include="Models\UserLoginModel.cs" />
     <Compile Include="Models\UserRegisterModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -335,6 +338,23 @@
     <Content Include="ContentLogin\vendor\select2\select2.min.css" />
     <Content Include="ContentLogin\vendor\select2\select2.min.js" />
     <Content Include="ContentLogin\vendor\tilt\tilt.jquery.min.js" />
+    <Content Include="ContentProduct\css\main.css" />
+    <Content Include="ContentProduct\css\main.min.css" />
+    <Content Include="ContentProduct\js\global.js" />
+    <Content Include="ContentProduct\vendor\datepicker\daterangepicker.css" />
+    <Content Include="ContentProduct\vendor\datepicker\daterangepicker.js" />
+    <Content Include="ContentProduct\vendor\datepicker\moment.min.js" />
+    <Content Include="ContentProduct\vendor\font-awesome-4.7\css\font-awesome.css" />
+    <Content Include="ContentProduct\vendor\font-awesome-4.7\css\font-awesome.min.css" />
+    <Content Include="ContentProduct\vendor\font-awesome-4.7\fonts\fontawesome-webfont.svg" />
+    <Content Include="ContentProduct\vendor\font-awesome-4.7\HELP-US-OUT.txt" />
+    <Content Include="ContentProduct\vendor\jquery\jquery.js" />
+    <Content Include="ContentProduct\vendor\jquery\jquery.min.js" />
+    <Content Include="ContentProduct\vendor\mdi-font\css\material-design-iconic-font.css" />
+    <Content Include="ContentProduct\vendor\mdi-font\css\material-design-iconic-font.min.css" />
+    <Content Include="ContentProduct\vendor\mdi-font\fonts\Material-Design-Iconic-Font.svg" />
+    <Content Include="ContentProduct\vendor\select2\select2.min.css" />
+    <Content Include="ContentProduct\vendor\select2\select2.min.js" />
     <Content Include="ContentRegister\css\main.css" />
     <Content Include="ContentRegister\images\bg-heading-03.jpg" />
     <Content Include="ContentRegister\js\global.js" />
@@ -6742,6 +6762,9 @@
     <Content Include="ProductImages\tapis2.jpg" />
     <Content Include="ProductImages\verre1-resized.jpg" />
     <Content Include="ProductImages\verre1.jpg" />
+    <Content Include="ResizedProductImagesForCartNotif\chachia1.jpg" />
+    <Content Include="ResizedProductImagesForCartNotif\chachia2.jpg" />
+    <Content Include="ResizedProductImagesForCartNotif\tapis1.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content2\fonts\elegant-font\html-css\fonts\ElegantIcons.eot" />
@@ -8021,6 +8044,15 @@
     <Content Include="ContentRegister\vendor\mdi-font\fonts\Material-Design-Iconic-Font.ttf" />
     <Content Include="ContentRegister\vendor\mdi-font\fonts\Material-Design-Iconic-Font.woff" />
     <Content Include="ContentRegister\vendor\mdi-font\fonts\Material-Design-Iconic-Font.woff2" />
+    <Content Include="ContentProduct\vendor\font-awesome-4.7\fonts\fontawesome-webfont.eot" />
+    <Content Include="ContentProduct\vendor\font-awesome-4.7\fonts\fontawesome-webfont.ttf" />
+    <Content Include="ContentProduct\vendor\font-awesome-4.7\fonts\fontawesome-webfont.woff" />
+    <Content Include="ContentProduct\vendor\font-awesome-4.7\fonts\fontawesome-webfont.woff2" />
+    <Content Include="ContentProduct\vendor\font-awesome-4.7\fonts\FontAwesome.otf" />
+    <Content Include="ContentProduct\vendor\mdi-font\fonts\Material-Design-Iconic-Font.eot" />
+    <Content Include="ContentProduct\vendor\mdi-font\fonts\Material-Design-Iconic-Font.ttf" />
+    <Content Include="ContentProduct\vendor\mdi-font\fonts\Material-Design-Iconic-Font.woff" />
+    <Content Include="ContentProduct\vendor\mdi-font\fonts\Material-Design-Iconic-Font.woff2" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -8075,11 +8107,14 @@
     <Content Include="Views\Customer\Profile.cshtml" />
     <Content Include="Views\Admin\AddCustomer.cshtml" />
     <Content Include="Views\Admin\CustomerManagement.cshtml" />
-    <Content Include="Views\Product\Index.cshtml" />
-    <Content Include="Views\Product\_PartialStock.cshtml" />
+    <Content Include="Views\Stock\Index.cshtml" />
+    <Content Include="Views\Stock\_PartialStock.cshtml" />
+    <Content Include="Views\Stock\IndexDetail.cshtml" />
+    <Content Include="Views\Product\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="ResizedProductImages\" />
     <Folder Include="UserImages\" />
   </ItemGroup>
   <ItemGroup>
@@ -8101,6 +8136,16 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Data\Data.csproj">
+      <Project>{63c10d7b-e317-454d-a4f3-8930fa3e8ec5}</Project>
+      <Name>Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Domain\Domain.csproj">
+      <Project>{8e6cfcf5-5db4-420c-9fb0-a3d3aded36e8}</Project>
+      <Name>Domain</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

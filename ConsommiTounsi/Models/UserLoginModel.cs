@@ -16,7 +16,6 @@ namespace ConsommiTounsi.Models
         [JsonProperty("password")]
         [DataType(DataType.Password)]
         public string password { get; set; }
-
         [JsonProperty("role")]
         public string role { get; set; }
 
