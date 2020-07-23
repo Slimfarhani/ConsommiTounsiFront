@@ -101,20 +101,9 @@ namespace ConsommiTounsi.Controllers
             HttpResponseMessage response = client.GetAsync("user/"+model.userName+"/"+model.password).Result;
             UserRegisterModel User = response.Content.ReadAsAsync<UserRegisterModel>().Result;
             context = new MyContext();
-            
             Session["User"] = User;
             var UserLoggedIn = Session["User"] as UserRegisterModel;
-            IEnumerable<OrderItem> items;
-            Session["ItemNumber"] = context.OrderItems.Count(m => m.UserID == UserLoggedIn.userId);
-            Session["ItemsInCartNotification"] = null;
-            Session["ItemsInCartTotal"] = (float)0;
-            if ((int)Session["ItemNumber"]!=0)
-            {
-                items = context.OrderItems.OrderByDescending(o => o.OrderItemId).Where(o => o.UserID == UserLoggedIn.userId);
-                items = items.Take(3);
-                Session["ItemsInCartNotification"] = items;
-                Session["ItemsInCartTotal"]= context.OrderItems.Where(o => o.UserID == UserLoggedIn.userId).Select(o=>o.Total).Sum();
-            }
+            UpdateCartNotification();
             if (UserLoggedIn != null)
             {
                 return Redirect("/Home/Index");
@@ -136,6 +125,25 @@ namespace ConsommiTounsi.Controllers
                     ModelState.AddModelError("", "Invalid login attempt.");
                     return View(model);
             }*/
+        }
+        public void UpdateCartNotification()
+        {
+            context = new MyContext();
+            var UserLoggedIn = Session["User"] as UserRegisterModel;
+            IEnumerable<OrderItem> items; 
+            items = context.OrderItems.OrderByDescending(o => o.OrderItemId).Where(o => o.UserID == UserLoggedIn.userId);
+            items = items.Take(3);
+            Session["ItemsInCartNotification"] = items;
+            Session["ItemNumber"] = context.OrderItems.Count(m => m.UserID == UserLoggedIn.userId);
+            try
+            {
+
+                Session["ItemsInCartTotal"] = context.OrderItems.Where(o => o.UserID == UserLoggedIn.userId).Select(o => o.Total * o.Quantity).Sum();
+            }
+            catch (Exception e)
+            {
+                Session["ItemsInCartTotal"] = (float)0;
+            }
         }
 
         //

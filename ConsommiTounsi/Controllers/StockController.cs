@@ -41,26 +41,26 @@ namespace ConsommiTounsi.Controllers
             ViewBag.stocks = stocks;
             return View();
         }
-        public ActionResult IndexDetail(string name,float price,string imageUrl )
+        public ActionResult IndexDetail(long productid,long supplierid )
         {
-            System.Diagnostics.Debug.WriteLine("name : " + name);
-            System.Diagnostics.Debug.WriteLine("price : " + price);
-            System.Diagnostics.Debug.WriteLine("image : " + imageUrl);
-            Stock stock = new Stock();
-            Product product = new Product();
-            product.productName = name;
-            stock.price = price;
-            product.imageUrl = imageUrl;
-            stock.product = product;
+
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri("http://localhost:8080/springboot-crud-rest/api/v1/");
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            HttpResponseMessage response;
+            response = client.GetAsync("stockByProductAndSupplier/" + productid + "/" + supplierid).Result;
+            Stock stock = response.Content.ReadAsAsync<Stock>().Result;
+            System.Diagnostics.Debug.WriteLine(stock.product.productName);
             return View(stock);
         }
         [HttpPost]
         [AllowAnonymous]
-        public int AddToCartFromIndex(int productid,int supplierid,float price,string name,string urlimage)
+        public int AddToCartFromIndex(int productid,int supplierid,float price,string name,string urlimage,int total)
         {
             System.Diagnostics.Debug.WriteLine("productid : " + productid);
             System.Diagnostics.Debug.WriteLine("supplierid : " + supplierid);
             System.Diagnostics.Debug.WriteLine("total : " + price);
+            System.Diagnostics.Debug.WriteLine("number : " + total);
             var UserLoggedIn = Session["User"] as UserRegisterModel;
             if (UserLoggedIn != null)
             {
@@ -68,7 +68,7 @@ namespace ConsommiTounsi.Controllers
                 OrderItem item = new OrderItem();
                 item.ProductId = productid;
                 item.SupplierId = supplierid;
-                item.Quantity = 1;
+                item.Quantity = total;
                 item.Total = price;
                 item.UserID = UserLoggedIn.userId;
                 item.Name = name;
@@ -93,7 +93,7 @@ namespace ConsommiTounsi.Controllers
             try
             {
 
-                Session["ItemsInCartTotal"] = context.OrderItems.Where(o => o.UserID == UserLoggedIn.userId).Select(o => o.Total).Sum();
+                Session["ItemsInCartTotal"] = context.OrderItems.Where(o => o.UserID == UserLoggedIn.userId).Select(o => o.Total*o.Quantity).Sum();
             }
             catch(Exception e)
             {
@@ -107,6 +107,16 @@ namespace ConsommiTounsi.Controllers
                 context.OrderItems.Remove(entity);
             context.SaveChanges();
             UpdateCartNotification();
+        }
+        public int RemoveItemFromCart(long itemid)
+        {
+            context = new MyContext();
+            System.Diagnostics.Debug.WriteLine("id : " + itemid);
+            OrderItem item = context.OrderItems.First(o=>o.OrderItemId==itemid);
+            context.OrderItems.Remove(item);
+            context.SaveChanges();
+            UpdateCartNotification();
+            return (int)Session["ItemNumber"];
         }
         public static Bitmap ResizeImage(Image image, int width, int height)
         {

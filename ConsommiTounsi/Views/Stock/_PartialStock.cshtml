@@ -40,7 +40,8 @@
                             supplierid: supplierid,
                             price: price,
                             name: name,
-                            urlimage: urlimage
+                            urlimage: urlimage,
+                            total: "1"
                         }, function (data) {
                                 $("#cartnumber1").text(data);
                                 $("#cartnumber2").text(data);
@@ -59,8 +60,8 @@
                     @Html.ActionLink(@Model.product.productName, "IndexDetail", "Stock",
             new
             {
-                name = @Model.product.productName,
-                price = @Model.price,
+                productid = @Model.product.productId,
+                supplierid = @Model.supplier.userId,
                 imageUrl = @Model.product.imageUrl
             },
             new { @class = "block2-name dis-block s-text3 p-b-5" })
