@@ -19,7 +19,6 @@ namespace ConsommiTounsi.Controllers
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             HttpResponseMessage response = client.GetAsync("stock").Result;
             IEnumerable<Stock> stocks = response.Content.ReadAsAsync<IEnumerable<Stock>>().Result;
-            System.Diagnostics.Debug.WriteLine("price "+stocks.ToList().FirstOrDefault().price);
             ViewBag.stocks = stocks;
             return View();
         }
