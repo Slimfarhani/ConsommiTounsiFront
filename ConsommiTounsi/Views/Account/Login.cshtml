@@ -22,8 +22,6 @@
                 Member Login
             </span>
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-
             <div class="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">
                 @Html.TextBoxFor(m => m.userName, new { @class = "input100", @placeholder = "Email" })
                 @Html.ValidationMessageFor(m => m.userName, "", new { @class = "text-danger" })
