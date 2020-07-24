@@ -86,7 +86,8 @@ namespace ConsommiTounsi.Controllers
         {
             context = new MyContext();
             var UserLoggedIn = Session["User"] as UserRegisterModel;
-            IEnumerable<OrderItem> items;items = context.OrderItems.OrderByDescending(o => o.OrderItemId).Where(o => o.UserID == UserLoggedIn.userId);
+            IEnumerable<OrderItem> items;
+            items = context.OrderItems.OrderByDescending(o => o.OrderItemId).Where(o => o.UserID == UserLoggedIn.userId);
             items = items.Take(3);
             Session["ItemsInCartNotification"] = items;
             Session["ItemNumber"] = context.OrderItems.Count(m => m.UserID == UserLoggedIn.userId);
@@ -118,6 +119,39 @@ namespace ConsommiTounsi.Controllers
             UpdateCartNotification();
             return (int)Session["ItemNumber"];
         }
+        public float MinusItemNumberInCart(long itemid,int number)
+        {
+            System.Diagnostics.Debug.WriteLine("number : " + number);
+            if (number > 1)
+            {
+                number--;
+            }
+            context = new MyContext();
+            System.Diagnostics.Debug.WriteLine("id : " + itemid);
+
+            var item= context.OrderItems.SingleOrDefault(o => o.OrderItemId == itemid);
+            item.Quantity = number;
+            context.SaveChanges();
+            UpdateCartNotification();
+            return item.Quantity*item.Total;
+            
+        }
+        public float PlusItemNumberInCart(long itemid, int number)
+        {
+            System.Diagnostics.Debug.WriteLine("number : " + number);
+            
+                number++;
+            context = new MyContext();
+            System.Diagnostics.Debug.WriteLine("id : " + itemid);
+
+            var item = context.OrderItems.SingleOrDefault(o => o.OrderItemId == itemid);
+            item.Quantity = number;
+            context.SaveChanges();
+            UpdateCartNotification();
+            return item.Quantity * item.Total;
+
+        }
+        
         public static Bitmap ResizeImage(Image image, int width, int height)
         {
             var destRect = new Rectangle(0, 0, width, height);

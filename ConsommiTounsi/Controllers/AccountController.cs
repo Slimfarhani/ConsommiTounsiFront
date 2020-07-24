@@ -100,6 +100,17 @@ namespace ConsommiTounsi.Controllers
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             HttpResponseMessage response = client.GetAsync("user/"+model.userName+"/"+model.password).Result;
             UserRegisterModel User = response.Content.ReadAsAsync<UserRegisterModel>().Result;
+            if ((int)User.birthdateFormatted.Day>0 && (int)User.birthdateFormatted.Day < 10)
+            {
+                User.birthdateString = "0"+User.birthdateFormatted.Day.ToString() + "/" + User.birthdateFormatted.Month.ToString() + "/" + User.birthdateFormatted.Year.ToString();
+
+            }
+            else
+            {
+                User.birthdateString = User.birthdateFormatted.Day.ToString() + "/" + User.birthdateFormatted.Month.ToString() + "/" + User.birthdateFormatted.Year.ToString();
+
+            }
+            System.Diagnostics.Debug.WriteLine(User.birthdateString);
             context = new MyContext();
             Session["User"] = User;
             var UserLoggedIn = Session["User"] as UserRegisterModel;
@@ -126,6 +137,10 @@ namespace ConsommiTounsi.Controllers
                     return View(model);
             }*/
         }
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        
         public void UpdateCartNotification()
         {
             context = new MyContext();
@@ -261,8 +276,45 @@ namespace ConsommiTounsi.Controllers
             // If we got this far, something failed, redisplay form
 
         }
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Update(UserRegisterModel model)
+        {
 
-        
+            
+               
+
+
+            if (ModelState.IsValid)
+            {
+                
+                var customerJson = await Task.Run(() => JsonConvert.SerializeObject(model));
+                UserRegisterModel user = (UserRegisterModel)Session["User"];
+                HttpClient client = new HttpClient();
+                client.BaseAddress = new Uri("http://localhost:8080/springboot-crud-rest/api/v1/");
+                var content = new StringContent(customerJson.ToString(), Encoding.UTF8, "application/json");
+                HttpResponseMessage response;
+                if (user.role.Equals("Customer"))
+                {
+
+                    response = client.PutAsync("customer/update/"+user.userId,content).Result;
+                }
+                else { response = client.PutAsync("supplier/update/" + user.userId, content).Result; }
+                
+                UserRegisterModel User = response.Content.ReadAsAsync<UserRegisterModel>().Result;
+                
+                Session["User"] = User;
+                return Redirect("/Profile/Profile");
+
+            }
+            return View(model);
+
+            // If we got this far, something failed, redisplay form
+
+        }
+
+
 
         //
         // GET: /Account/ConfirmEmail
