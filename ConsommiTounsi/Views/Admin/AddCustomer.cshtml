@@ -18,13 +18,12 @@
             <div class="x_panel">
                 <div class="x_title">
                     <h2>Customer Infos <small> Insert customer infos</small></h2>
-
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
                     <br />
 
-                    @using (Html.BeginForm("AddCustomer", "Admin", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal form-label-left", role = "form" }))
+                    @using (Html.BeginForm("AddCustomer", "Admin", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal form-label-left", @enctype = "multipart/form-data", role = "form" }))
                     {
                         @Html.AntiForgeryToken()
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -63,19 +62,17 @@
                 </label>
                 <div class="col-md-6 col-sm-6 ">
                     @Html.TextBoxFor(m => m.password, new {@type= "password", @class = "form-control", @value = "passwordonetwo" })
-                    @Html.ValidationMessageFor(m => m.password, "", new { @class = "text-danger" })
-                    
+                    @Html.ValidationMessageFor(m => m.password, "", new { @class = "text-danger" })                 
                 </div>
             </div>
-            
+           
             <div class="item form-group">
                 <label class="col-form-label col-md-3 col-sm-3 label-align" for="phone">
                     Phone <span class="required">*</span>
                 </label>
                 <div class="col-md-6 col-sm-6 ">
-                    @Html.TextBoxFor(m => m.phone, new {  @class = "form-control", @placeholder="Phone"})
+                    @Html.TextBoxFor(m => m.phone, new {  @class = "form-control", @placeholder="Phone" , @type= "tel"})
                     @Html.ValidationMessageFor(m => m.phone, "", new { @class = "text-danger" })
-                    <input type="tel" class="form-control">
                 </div>
             </div>
             <div class="item form-group">
@@ -83,8 +80,8 @@
                     E-mail <span class="required">*</span>
                 </label>
                 <div class="col-md-6 col-sm-6 ">
-                    @Html.TextBoxFor(m => m.mail, new {@type="email", @class = "form-control", @placeholder = "E-mail" })
-                    @Html.ValidationMessageFor(m => m.mail, "", new { @class = "text-danger" })
+                    @Html.TextBoxFor(m => m.email, new {@type="email", @class = "form-control", @placeholder = "E-mail" })
+                    @Html.ValidationMessageFor(m => m.email, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="item form-group">
@@ -93,26 +90,30 @@
                 </label>
                 <div class="col-md-6 col-sm-6 ">
                     @Html.TextBoxFor(m => m.address, new { @class = "form-control", @placeholder = "Adress" })
-                    @Html.ValidationMessageFor(m => m.address, "", new { @class = "text-danger" })
-                   
+                    @Html.ValidationMessageFor(m => m.address, "", new { @class = "text-danger" })           
                 </div>
             </div>
+            <div class="item form-group">
+                <label class="col-form-label col-md-3 col-sm-3 label-align" for="email">
+                    Photo :<span class="required">*</span>
+                    <a class="btn" title="Insert picture (or just drag & drop)" id="pictureBtn"><i class="fa fa-picture-o"></i></a>
+                </label>
+                <div class="col-md-6 col-sm-6 ">
+               
+                    @Html.TextBox("file", null, new { type = "file", @accept = "image/*" ,@required="true" })
+                    @Html.ValidationMessageFor(model => model.urlImage, "", new { @class = "text-danger" })
+                </div>
+                
 
-
+            </div>
             <div class="item form-group">
                 <label class="col-form-label col-md-3 col-sm-3 label-align">Gender</label>
                 <div class="col-md-6 col-sm-6 ">
-                    <div id="gender" class="btn-group" data-toggle="buttons">
-                        <label class="btn btn-secondary" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                            @Html.TextBoxFor(m => m.gender, new { @type = "radio", @name = "gender" , @value = "male" , @class="join-btn"})
-                            @Html.ValidationMessageFor(m => m.gender, "", new { @class = "text-danger" })&nbsp; Male &nbsp;
-                        </label>
-                        <label class="btn btn-primary" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                            @Html.TextBoxFor(m => m.gender, new { @type = "radio", @name = "gender", @value = "female", @class = "join-btn" })
-                            @Html.ValidationMessageFor(m => m.gender, "", new { @class = "text-danger" })&nbsp; Female &nbsp;
-                           
-                        </label>
-                    </div>
+                    M:
+                    @Html.RadioButtonFor(m => m.gender, "Male")F:
+                    @Html.RadioButtonFor(m => m.gender, "Female")
+                    @Html.ValidationMessageFor(model => model.gender, "", new { @class = "text-danger" })
+
                 </div>
             </div>
             <div class="item form-group">
@@ -120,8 +121,8 @@
                     Date Of Birth <span class="required">*</span>
                 </label>
                 <div class="col-md-6 col-sm-6 ">
-                    @Html.TextBoxFor(m => m.birthday, new { @id = "birthday", @class = "date-picker form-control", @placeholder = "dd-mm-yyyy",@required = "required", @type = "text" ,@onfocus = "this.type='date'", @onmouseover = "this.type='date'" ,@onclick = "this.type='date'", @onblur = "this.type='text'" ,@onmouseout = "timeFunctionLong(this)" })
-                    @Html.ValidationMessageFor(m => m.birthday, "", new { @class = "text-danger" })
+                    @Html.TextBoxFor(m => m.birthdateString, new { @id = "birthdate", @class = "date-picker form-control", @placeholder = "dd-mm-yyyy",@required = "required", @type = "text" ,@onfocus = "this.type='date'", @onmouseover = "this.type='date'" ,@onclick = "this.type='date'", @onblur = "this.type='text'" ,@onmouseout = "timeFunctionLong(this)" })
+                    @Html.ValidationMessageFor(m => m.birthdateString, "", new { @class = "text-danger" })
                     <script>
                         function timeFunctionLong(input) {
                             setTimeout(function () {
@@ -129,6 +130,7 @@
                             }, 60000);
                         }</script>
                 </div>
+
             </div>
                         <div class="ln_solid"></div>
                         <div class="item form-group">

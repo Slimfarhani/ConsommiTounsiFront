@@ -33,9 +33,6 @@
                         {
                             @onchange = "callChangefunc(this.value)"
                         })
-
-
-
                             <div class="select-dropdown"></div>
                         </div>
                     </div>
@@ -98,14 +95,6 @@
                         @Html.TextBox("file", null, new { type = "file", @accept="image/*"})
                         @Html.ValidationMessageFor(model => model.urlImage, "", new { @class = "text-danger" })
                     </div>
-                    
-
-
-
-
-
-
-
                     <div class="p-t-10" style="position: absolute; padding-top: 0px; bottom: 30px;">
                         <button class="btn btn--pill btn--green" type="submit">Submit</button>
                     </div>

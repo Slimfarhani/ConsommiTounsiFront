@@ -4,12 +4,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
 <div class="col-md-12 col-sm-12 ">
     <div class="x_panel">
         <div class="x_title">
             <h2>Customer Management <small></small></h2>
-
             <div class="clearfix"></div>
         </div>
         <div class="x_content">
@@ -20,9 +18,7 @@
                         <script type="text/javascript">
                                 function GO()
                                 {
-                                    
-                                        window.location.href = "@Url.Action("AddCustomer", "Admin")";
-                                
+                                    window.location.href = "@Url.Action("AddCustomer", "Admin")";
                                 }
                         </script>
                         <table id="datatable-buttons" class="table table-striped table-bordered" style="width:100%">
@@ -35,7 +31,6 @@
                                     <th>gender</th>
                                     <th>adress</th>
                                     <th>Login</th>
-
                                     <th style="width: 120px">Action</th>
                                 </tr>
                             </thead>
@@ -46,17 +41,14 @@
                                         <td> @Html.DisplayFor(modelItem => item.userId)</td>
                                         <td> @Html.DisplayFor(modelItem => item.firstName)</td>
                                         <td> @Html.DisplayFor(modelItem => item.lastName)</td>
-                                        <td> @Html.DisplayFor(modelItem => item.birthday)</td>
+                                        <td> @item.birthdateFormatted.ToString("MM/dd/yyyy")</td>
                                         <td> @Html.DisplayFor(modelItem => item.gender)</td>
                                         <td> @Html.DisplayFor(modelItem => item.address)</td>
                                         <td> @Html.DisplayFor(modelItem => item.userName)</td>
-
-
-
                                         <td>
-                                            @Html.ActionLink("Edit", "Edit", new { id = item.userId }) |
-                                            @Html.ActionLink("Details", "Details", new { id = item.userId }) |
-                                            @Html.ActionLink("Delete", "Delete", new { id = item.userId })
+                                            @Html.ActionLink("Edit", "UpdateCustomer", new { id = item.userId }) |
+                                            @Html.ActionLink("Details", "CustomerDetails", new { id =item.userId})|
+                                            @Html.ActionLink("Delete", "Delete", new { id = item.userId }, new { onclick = "return confirm('Are you sure you wish to delete this article?');" })
 
                                         </td>
                                     </tr>

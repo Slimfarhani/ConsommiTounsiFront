@@ -8077,6 +8077,8 @@
     <Content Include="Views\Admin\CustomerManagement.cshtml" />
     <Content Include="Views\Product\Index.cshtml" />
     <Content Include="Views\Product\_PartialStock.cshtml" />
+    <Content Include="Views\Admin\CustomerDetails.cshtml" />
+    <Content Include="Views\Admin\UpdateCustomer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
