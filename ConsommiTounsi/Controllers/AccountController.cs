@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Globalization;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -12,21 +10,18 @@ using ConsommiTounsi.Models;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using Newtonsoft.Json;
-using System.Web.SessionState;
-using System.Security.Policy;
 using System.Text;
-using Microsoft.Owin.Security.Provider;
 using System.IO;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Collections.Generic;
 using Data;
 using Domain.Entities;
-using System.Collections.Generic;
 
 namespace ConsommiTounsi.Controllers
 {
 
-    
+
     public static class F
     {
         public static string Dump(object obj)
