@@ -261,6 +261,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -273,11 +274,15 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Comment.cs" />
+    <Compile Include="Models\Comment_React.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\Participation.cs" />
+    <Compile Include="Models\Post.cs" />
+    <Compile Include="Models\Post_React.cs" />
     <Compile Include="Models\ProductFormModel.cs" />
     <Compile Include="Models\Stock.cs" />
     <Compile Include="Models\Product.cs" />
@@ -8113,6 +8118,7 @@
     <Content Include="Views\Stock\IndexDetail.cshtml" />
     <Content Include="Views\Product\Create.cshtml" />
     <Content Include="Views\Cart\Index.cshtml" />
+    <Content Include="Views\Blog\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
