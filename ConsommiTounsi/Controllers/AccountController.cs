@@ -95,22 +95,20 @@ namespace ConsommiTounsi.Controllers
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             HttpResponseMessage response = client.GetAsync("user/"+model.userName+"/"+model.password).Result;
             UserRegisterModel User = response.Content.ReadAsAsync<UserRegisterModel>().Result;
+            
             if ((int)User.birthdateFormatted.Day>0 && (int)User.birthdateFormatted.Day < 10)
             {
                 User.birthdateString = "0"+User.birthdateFormatted.Day.ToString() + "/" + User.birthdateFormatted.Month.ToString() + "/" + User.birthdateFormatted.Year.ToString();
-
             }
             else
             {
                 User.birthdateString = User.birthdateFormatted.Day.ToString() + "/" + User.birthdateFormatted.Month.ToString() + "/" + User.birthdateFormatted.Year.ToString();
-
             }
-            System.Diagnostics.Debug.WriteLine(User.birthdateString);
             context = new MyContext();
             Session["User"] = User;
             var UserLoggedIn = Session["User"] as UserRegisterModel;
             UpdateCartNotification();
-            if (UserLoggedIn != null)
+            if (UserLoggedIn.role != null)
             {
                 return Redirect("/Home/Index");
             }
@@ -138,6 +136,9 @@ namespace ConsommiTounsi.Controllers
         
         public void UpdateCartNotification()
         {
+            System.Diagnostics.Debug.WriteLine("helloo1");
+            UserRegisterModel user = (UserRegisterModel)Session["User"];
+            System.Diagnostics.Debug.WriteLine("role 1  : " + user.role);
             context = new MyContext();
             var UserLoggedIn = Session["User"] as UserRegisterModel;
             IEnumerable<OrderItem> items; 
@@ -147,6 +148,11 @@ namespace ConsommiTounsi.Controllers
             Session["ItemNumber"] = context.OrderItems.Count(m => m.UserID == UserLoggedIn.userId);
             try
             {
+                System.Diagnostics.Debug.WriteLine("helloo");
+                user = (UserRegisterModel) Session["User"];
+                System.Diagnostics.Debug.WriteLine("role : "+user.role);
+
+
 
                 Session["ItemsInCartTotal"] = context.OrderItems.Where(o => o.UserID == UserLoggedIn.userId).Select(o => o.Total * o.Quantity).Sum();
             }
