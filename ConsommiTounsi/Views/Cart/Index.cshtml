@@ -1,0 +1,264 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+@model IEnumerable<Domain.Entities.OrderItem>
+<link rel="icon" type="image/png" href="~/Content2/images/icons/favicon.png" />
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/Content2/vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/Content2/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/Content2/fonts/themify/themify-icons.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/Content2/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/Content2/fonts/elegant-font/html-css/style.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/Content2/vendor/animate/animate.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/Content2/vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/Content2/vendor/animsition/css/animsition.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/Content2/vendor/select2/select2.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/Content2/vendor/slick/slick.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/Content2/css/util.css">
+<link rel="stylesheet" type="text/css" href="~/Content2/css/main.css">
+<section class="bg-title-page p-t-40 p-b-50 flex-col-c-m" style="background-image: url(../../Content2/images/heading-pages-01.jpg);">
+    <h2 class="l-text2 t-center">
+        Cart
+    </h2>
+</section>
+
+<!-- Cart -->
+<section class="cart bgwhite p-t-70 p-b-100">
+    <div class="container">
+        <!-- Cart item -->
+        <div class="container-table-cart pos-relative">
+            <div class="wrap-table-shopping-cart bgwhite"id="orderitemlist">
+                <table class="table-shopping-cart">
+                    <tr class="table-head">
+                        <th class="column-1"></th>
+                        <th class="column-2">Product</th>
+                        <th class="column-3">Price</th>
+                        <th class="column-4 p-l-70">Quantity</th>
+                        <th class="column-5">Total</th>
+                    </tr>
+                    @if (Model != null)
+                    {
+                        foreach (var item in Model)
+                        {
+                            
+                            <tr class="table-row" id = "itemdivincart-@(item.OrderItemId)">
+                                <td class="column-1">
+                                    <div class="cart-img-product b-rad-4 o-f-hidden" style="cursor: pointer;" onclick="removefromcart('@(item.OrderItemId)')">
+                                        <img src="~/ProductImages/@(item.ImageUrl)" alt="IMG-PRODUCT">
+                                    </div>
+                                </td>
+                                <td class="column-2">@(item.Name)</td>
+                                <td class="column-3">@(item.Total) TND</td>
+                                <td class="column-4">
+
+                                    <div class="flex-w bo5 of-hidden w-size17">
+                                        <button class="btn-num-product-down color1 flex-c-m size7 bg8 eff2" onclick="minusitemnumberincart('@(item.OrderItemId)')">
+                                            <i class="fs-12 fa fa-minus" aria-hidden="true"></i>
+                                        </button>
+
+                                        <input class="size8 m-text18 t-center num-product" type="number" name="num-product1" value="@(item.Quantity)" id="itemnumberincart-@(item.OrderItemId)">
+
+                                        <button class="btn-num-product-up color1 flex-c-m size7 bg8 eff2" onclick="plusitemnumberincart('@(item.OrderItemId)')">
+                                            <i class="fs-12 fa fa-plus" aria-hidden="true"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                                <td class="column-5" id="itemtotalincart@(item.OrderItemId)">@(item.Total*item.Quantity) TND</td>
+                            </tr>
+                        }
+                    }
+
+
+
+                </table>
+            </div>
+        </div>
+
+        
+
+        <!-- Total -->
+        <div class="bo9 w-size18 p-l-40 p-r-40 p-t-30 p-b-38 m-t-30 m-r-0 m-l-auto p-lr-15-sm">
+            <h5 class="m-text20 p-b-24">
+                Cart Totals
+            </h5>
+
+            <!--  -->
+            <div class="flex-w flex-sb bo10 p-t-15 p-b-20">
+                <span class="s-text18 w-size19 w-full-sm">
+                    Shipping:
+                </span>
+
+                <div class="w-size20 w-full-sm">
+                    <p class="s-text8 p-b-23">
+                        There are no shipping methods available. Please double check your address, or contact us if you need any help.
+                    </p>
+
+                    <span class="s-text19">
+                        Select Shipping Method
+                    </span>
+
+                    <div class="rs2-select2 rs3-select2 rs4-select2 bo4 of-hidden w-size21 m-t-8 m-b-12">
+                        <select class="selection-2" name="country">
+                            <option>Select a country...</option>
+                            <option>US</option>
+                            <option>UK</option>
+                            <option>Japan</option>
+                        </select>
+                    </div>
+
+                    <div class="size13 bo4 m-b-12">
+                        <input class="sizefull s-text7 p-l-15 p-r-15" type="text" name="state" placeholder="State /  country">
+                    </div>
+
+                    <div class="size13 bo4 m-b-22">
+                        <input class="sizefull s-text7 p-l-15 p-r-15" type="text" name="postcode" placeholder="Postcode / Zip">
+                    </div>
+
+
+                </div>
+            </div>
+
+            <!--  -->
+            
+            <div class="flex-w flex-sb-m p-t-26 p-b-30" id="carttotalincart">
+                <span class="m-text22 w-size19 w-full-sm">
+                    Total:
+                </span>
+                @if ((float)Session["ItemsInCartTotal"] != 0)
+                {
+                    <span class="m-text21 w-size20 w-full-sm">
+                        @((float)Session["ItemsInCartTotal"]) TND
+                    </span>
+                }
+                else
+                {
+                    <span class="m-text21 w-size20 w-full-sm">
+                        0 TND
+                    </span>
+                }
+
+            </div>
+
+            <div class="size15 trans-0-4">
+                <!-- Button -->
+                <button class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4">
+                    Proceed to Checkout
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<!-- Footer -->
+<!-- Back to top -->
+<div class="btn-back-to-top bg0-hov" id="myBtn">
+    <span class="symbol-btn-back-to-top">
+        <i class="fa fa-angle-double-up" aria-hidden="true"></i>
+    </span>
+</div>
+
+<!-- Container Selection -->
+<div id="dropDownSelect1"></div>
+<div id="dropDownSelect2"></div>
+
+
+
+<!--===============================================================================================-->
+<script type="text/javascript" src="~/Content2/vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+<script type="text/javascript" src="~/Content2/vendor/animsition/js/animsition.min.js"></script>
+<!--===============================================================================================-->
+<script type="text/javascript" src="~/Content2/vendor/bootstrap/js/popper.js"></script>
+<script type="text/javascript" src="~/Content2/vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+<script type="text/javascript" src="~/Content2/vendor/select2/select2.min.js"></script>
+<script type="text/javascript">
+    $(".selection-1").select2({
+        minimumResultsForSearch: 20,
+        dropdownParent: $('#dropDownSelect1')
+    });
+
+    $(".selection-2").select2({
+        minimumResultsForSearch: 20,
+        dropdownParent: $('#dropDownSelect2')
+    });
+</script>
+<!--===============================================================================================-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script>
+    function removefromcart(itemid) {
+
+        $.post("/Stock/RemoveItemFromCart", {
+            itemid: itemid
+        }, function (data) {
+            $("#cartnumber1").text(data);
+            $("#cartnumber2").text(data);
+            $("#cartnotif1").load(location.href + " #cartnotif1>*", "");
+            $("#cartnotif2").load(location.href + " #cartnotif2>*", "");
+            $("#cattotal1").load(location.href + " #cattotal1>*", "");
+            $("#cattotal2").load(location.href + " #cattotal2>*", "");
+            $("#carttotalincart").load(location.href + " #carttotalincart>*", "");
+            $("#itemdivincart-" + itemid).remove();
+                
+
+        });
+
+
+    }
+</script>
+<script>
+    function minusitemnumberincart(itemid) {
+
+        $.post("/Stock/MinusItemNumberInCart", {
+            itemid: itemid,
+            number: $("#itemnumberincart-"+itemid).val()
+        }, function (data) {
+            $("#cartnumber1").text(@((int)Session["ItemNumber"]));
+            $("#cartnumber2").text(@((int)Session["ItemNumber"]));
+            $("#cartnotif1").load(location.href + " #cartnotif1>*", "");
+            $("#cartnotif2").load(location.href + " #cartnotif2>*", "");
+            $("#cattotal1").load(location.href + " #cattotal1>*", "");
+            $("#cattotal2").load(location.href + " #cattotal2>*", "");
+            $("#carttotalincart").load(location.href + " #carttotalincart>*", "");
+            $("#itemtotalincart" + itemid).text(data+" TND");
+        });
+
+
+    }
+</script>
+<script>
+    function plusitemnumberincart(itemid) {
+
+        $.post("/Stock/PlusItemNumberInCart", {
+            itemid: itemid,
+            number: $("#itemnumberincart-"+itemid).val()
+        }, function (data) {
+            $("#cartnumber1").text(@((int)Session["ItemNumber"]));
+            $("#cartnumber2").text(@((int)Session["ItemNumber"]));
+            $("#cartnotif1").load(location.href + " #cartnotif1>*", "");
+            $("#cartnotif2").load(location.href + " #cartnotif2>*", "");
+            $("#cattotal1").load(location.href + " #cattotal1>*", "");
+            $("#cattotal2").load(location.href + " #cattotal2>*", "");
+            $("#carttotalincart").load(location.href + " #carttotalincart>*", "");
+            $("#itemtotalincart" + itemid).text(data+" TND");
+        });
+
+
+    }
+</script>
+
+<script src="~/Content2/js/main.js"></script>

@@ -1,0 +1,125 @@
+﻿@model ConsommiTounsi.Models.UserRegisterModel
+@if ((ConsommiTounsi.Models.UserRegisterModel)Session["User"] != null)
+{
+
+
+
+    ConsommiTounsi.Models.UserRegisterModel user = (ConsommiTounsi.Models.UserRegisterModel)Session["User"];
+    @Styles.Render("~/bundles/registercss")
+    @Scripts.Render("~/bundles/registerjs")
+    @Scripts.Render("~/bundles/jqueryval")
+    
+    <link rel="icon" type="image/png" href="~/Content2/images/icons/favicon.png" />
+    <!--===============================================================================================-->
+    @Styles.Render("~/bundles/css2")
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/js2")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    <!-<!-- Font special for pages-->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <div class="col-lg-4 col-xlg-3 col-md-5">
+        <div class="card">
+            <div class="card-block">
+                <center class="m-t-30">
+                    <img src="~/UserImages/@(user.urlImage)" class="img-circle" width="150" />
+                    @if (user.role == "Customer")
+                    {
+                        <h4 class="card-title m-t-10">@(user.firstName) @(user.lastName)</h4>
+                    }
+                    else if (user.role == "Supplier")
+                    {
+                        <h4 class="card-title m-t-10">@(user.companyName)</h4>
+                    }
+
+
+                </center>
+            </div>
+        </div>
+    </div>
+    <!-- Column -->
+    <!-- Column -->
+    <div class="col-lg-8 col-xlg-9 col-md-7">
+        <div class="card">
+            <div class="card-block">
+                @using (Html.BeginForm("Update", "Account", FormMethod.Post, new { @class = "form-horizontal form-material", @enctype = "multipart/form-data", role = "form" }))
+                {
+
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    if (user.role == "Customer")
+                    {
+
+
+                        <div class="form-group">
+                            <label class="col-md-12">First Name</label>
+                            <div class="col-md-12">
+                                @Html.TextBoxFor(m => m.firstName, new { @class = "form-control form-control-line", @placeholder = "First Name", @value = user.firstName })
+                                @Html.ValidationMessageFor(m => m.firstName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-12">Last Name</label>
+                            <div class="col-md-12">
+                                @Html.TextBoxFor(m => m.lastName, new { @class = "form-control form-control-line", @placeholder = "Last Name", @value = user.lastName })
+                                @Html.ValidationMessageFor(m => m.lastName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    }
+                    else if (user.role == "Supplier")
+                    {
+                        <div class="form-group">
+                            <label class="col-md-12">Company Name</label>
+                            <div class="col-md-12">
+                                @Html.TextBoxFor(m => m.companyName, new { @class = "form-control form-control-line", @placeholder = "Company Name", @value = user.companyName })
+                                @Html.ValidationMessageFor(m => m.companyName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    }
+                    <div class="form-group">
+                        <label class="col-md-12">Password</label>
+                        <div class="col-md-12">
+                            @Html.PasswordFor(m => m.password, new { @class = "form-control form-control-line", @placeholder = "New Password" })
+                            @Html.ValidationMessageFor(m => m.password, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-12">Confirm Password</label>
+                        <div class="col-md-12">
+                            @Html.PasswordFor(m => m.confirmPassword, new { @class = "form-control form-control-line", @placeholder = "Confirm New Password" })
+                            @Html.ValidationMessageFor(m => m.confirmPassword, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-12">Email</label>
+                        <div class="col-md-12">
+                            @Html.TextBoxFor(m => m.email, new { @class = "form-control form-control-line", @placeholder = "Email", @value = user.email })
+                            @Html.ValidationMessageFor(m => m.email, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-12">Address</label>
+                        <div class="col-md-12">
+                            @Html.TextBoxFor(m => m.address, new { @class = "form-control form-control-line", @placeholder = "Address", @value = user.address })
+                            @Html.ValidationMessageFor(m => m.address, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-12">Phone</label>
+                        <div class="col-md-12">
+                            @Html.TextBoxFor(m => m.phone, new { @class = "form-control form-control-line", @placeholder = "Phone", @value = user.phone })
+                            @Html.ValidationMessageFor(m => m.phone, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <button class="btn btn-success" type="submit">Update Profile</button>
+                        </div>
+                    </div>}
+            </div>
+        </div>
+    </div>
+}

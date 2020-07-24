@@ -1,0 +1,168 @@
+﻿@model ConsommiTounsi.Models.ProductFormModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+
+<link href="~/ContentProduct/vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
+<link href="~/ContentProduct/vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
+<!-- Font special for pages-->
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
+
+<!-- Vendor CSS-->
+<link href="~/ContentProduct/vendor/select2/select2.min.css" rel="stylesheet" media="all">
+<link href="~/ContentProduct/vendor/datepicker/daterangepicker.css" rel="stylesheet" media="all">
+
+<!-- Main CSS-->
+<link href="~/ContentProduct/css/main.css" rel="stylesheet" media="all">
+
+<div class="page-wrapper bg-gra-03 p-t-45 p-b-50">
+    <div class="wrapper wrapper--w790">
+        <div class="card card-5">
+            <div class="card-heading">
+                <h2 class="title">Create your product</h2>
+            </div>
+            <div class="card-body">
+                @using (Html.BeginForm("Create", "Product", FormMethod.Post, new { @class= "form-horizontal", @enctype = "multipart/form-data", role = "form" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-row m-b-55">
+                        @Html.LabelFor(model => model.product.productName, htmlAttributes: new { @class = "name" })
+                        <div class="value">
+                            <div class="input-group">
+                                @Html.TextBoxFor(m => m.product.productName, new { @class = "input--style-5", @placeholder = "Product Name" })
+                                @Html.ValidationMessageFor(m => m.product.productName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+
+                        @Html.LabelFor(model => model.product.description, htmlAttributes: new { @class = "name" })
+                        <div class="value">
+                            <div class="input-group">
+                                @Html.TextBoxFor(m => m.product.description, new { @class = "input--style-5", @placeholder = "Description" })
+                                @Html.ValidationMessageFor(m => m.product.description, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+
+                        @Html.LabelFor(model => model.product.mesure, htmlAttributes: new { @class = "name" })
+                        <div class="value">
+                            <div class="input-group">
+                                @Html.TextBoxFor(m => m.product.mesure, new { @class = "input--style-5", @placeholder = "Mesure" })
+                                @Html.ValidationMessageFor(m => m.product.mesure, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+
+                        @Html.LabelFor(model => model.product.weight, htmlAttributes: new { @class = "name" })
+                        <div class="value">
+                            <div class="input-group">
+                                @Html.TextBoxFor(m => m.product.weight, new { @class = "input--style-5", @placeholder = "Weight" })
+                                @Html.ValidationMessageFor(m => m.product.weight, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+
+                        @Html.LabelFor(model => model.product.barCode, htmlAttributes: new { @class = "name" })
+                        <div class="value">
+                            <div class="input-group">
+                                @Html.TextBoxFor(m => m.product.barCode, new { @class = "input--style-5", @placeholder = "Bar Code" })
+                                @Html.ValidationMessageFor(m => m.product.barCode, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+
+                        @Html.LabelFor(model => model.product.imageUrl, htmlAttributes: new { @class = "name" })
+                        <div class="value">
+                            <div class="input-group">
+                                @Html.TextBox("file", null, new { type = "file", @accept = "image/*", @class = "input--style-5" })
+                                @Html.ValidationMessageFor(m => m.product.imageUrl, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-row p-t-20">
+                        <label class="label label--block">Do you want to add it to your stock ?</label>
+                        <div class="p-t-15">
+                            <label class="radio-container m-r-55">
+                                Yes
+                                @Html.RadioButton("Confirmation", "Yes", new { @name = "exist", @onchange = "callChangefunc(this.value)" })
+                                <span class="checkmark"></span>
+                            </label>
+                            <label class="radio-container">
+                                No
+                                @Html.RadioButton("Confirmation", "No", new { @checked = "checked", @name = "exist", @onchange = "callChangefunc(this.value)" })
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div id="myDIV11" style="display: none">
+                            @Html.LabelFor(model => model.stock.price, htmlAttributes: new { @class = "name" })
+                        </div>
+                        <div class="value" id="myDIV12" style="display: none">
+                            <div class="input-group">
+                                @Html.TextBoxFor(m => m.stock.price, new { @class = "input--style-5", @placeholder = "Price" })
+                                @Html.ValidationMessageFor(m => m.stock.price, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div id="myDIV21" style="display: none">
+                            @Html.LabelFor(model => model.stock.quantity, htmlAttributes: new { @class = "name" })
+                        </div>
+                        <div class="value" id="myDIV22" style="display: none">
+                            <div class="input-group">
+                                @Html.TextBoxFor(m => m.stock.quantity, new { @class = "input--style-5", @placeholder = "Quantity" })
+                                @Html.ValidationMessageFor(m => m.stock.quantity, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <button class="btn btn--radius-2 btn--red" type="submit">Create</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function callChangefunc(val) {
+        var x11 = document.getElementById("myDIV11");
+        var x12 = document.getElementById("myDIV12");
+        var x21 = document.getElementById("myDIV21");
+        var x22 = document.getElementById("myDIV22");
+        if (val === "Yes") {
+            x11.style.display = "block";
+            x12.style.display = "block";
+            x21.style.display = "block";
+            x22.style.display = "block";
+        } else {
+            x11.style.display = "none";
+            x12.style.display = "none";
+            x21.style.display = "none";
+            x22.style.display = "none";
+        }
+    }
+</script>
+
+<!-- Jquery JS-->
+<script src="~/ContentProduct/vendor/jquery/jquery.min.js"></script>
+<!-- Vendor JS-->
+<script src="~/ContentProduct/vendor/select2/select2.min.js"></script>
+<script src="~/ContentProduct/vendor/datepicker/moment.min.js"></script>
+<script src="~/ContentProduct/vendor/datepicker/daterangepicker.js"></script>
+
+<!-- Main JS-->
+<script src="~/ContentProduct/js/global.js"></script>
