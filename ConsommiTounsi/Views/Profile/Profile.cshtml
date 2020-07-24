@@ -1,0 +1,91 @@
+﻿
+@{
+    ViewBag.Title = "Profile";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+@{ 
+    ConsommiTounsi.Models.UserRegisterModel user = (ConsommiTounsi.Models.UserRegisterModel)Session["User"];
+}
+<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="~/ContentProfile/css/style.css">
+<link rel="icon" type="image/png" sizes="16x16" href="~/TestProfil/assets/images/favicon.png">
+<!-- Bootstrap Core CSS -->
+<link href="~/TestProfil/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<!-- Custom CSS -->
+<link href="~/TestProfil/css/style.css" rel="stylesheet">
+<!-- You can change the theme colors from here -->
+<link href="~/TestProfil/css/colors/blue.css" id="theme" rel="stylesheet">
+<div class="wrapper d-flex align-items-stretch">
+    <nav id="sidebar" style="background: #e65540;">
+        <div class="p-4 pt-5">
+            <ul class="list-unstyled components mb-5">
+                <li class="active">
+                    <a href="/Profile/Profile">My Profile</a>
+                </li>
+                @if (user!=null && user.role == "Customer")
+                {
+                <li class="active">
+                    <a href="javascript:profilecart()">My Cart</a>
+                </li>
+
+                }
+                
+                <li>
+                    <a href="#">My Orders</a>
+                </li>
+                <li>
+                    <a href="#">My Participations</a>
+                </li>
+            </ul>
+
+
+
+        </div>
+    </nav>
+
+    <!-- Page Content  -->
+    <div id="content" class="p-4 p-md-5">
+
+
+
+        <div class="container-fluid">
+            <!-- ============================================================== -->
+            <!-- Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- End Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Start Page Content -->
+            <!-- ============================================================== -->
+            <!-- Row -->
+            <div class="row" id="contentprofile">
+                <!-- Column -->
+                @Html.Partial("ProfileUser");
+                <!-- Column -->
+            </div>
+            <!-- Row -->
+            <!-- ============================================================== -->
+            <!-- End PAge Content -->
+            <!-- ============================================================== -->
+        </div>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+
+<script>
+    function profilecart() {
+        $.get("/Profile/ProfileCart", function (data) {
+            $("#contentprofile").html(data);
+            $(".animsition-loading-1").css("display", "none");
+            
+        });
+    }
+</script>
+<script src="~/ContentProfile/js/jquery.min.js"></script>
+<script src="~/ContentProfile/js/popper.js"></script>
+<script src="~/ContentProfile/js/bootstrap.min.js"></script>
+<script src="~/ContentProfile/js/main.js"></script>

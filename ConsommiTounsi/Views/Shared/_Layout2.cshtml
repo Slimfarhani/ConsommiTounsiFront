@@ -46,7 +46,27 @@
                     <li>
                         <a href="blog.html">Blog</a>
                     </li>
-
+                    @if (user != null)
+                    {
+                        if (Convert.ToString(user.role) == "Admin")
+                        {
+                            <li class="sale-noti">
+                                <a href="/Admin">Admin home page</a>
+                            </li>
+                        }
+                        else if (Convert.ToString(user.role) == "Customer")
+                        {
+                            <li class="sale-noti">
+                                <a href="/Profile/Profile">Profile</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="sale-noti">
+                                <a href="/Profile/Profile">Profile</a>
+                            </li>
+                        }
+                    }
                     <li>
                         <a href="about.html">About</a>
                     </li>
@@ -165,6 +185,12 @@
                         {
                             <div class="header-cart-total" id="cartotal1">
                                 Total: @((float)Session["ItemsInCartTotal"]) TND
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="header-cart-total" id="cartotal1">
+                                Total: 0 TND
                             </div>
                         }
 
@@ -331,6 +357,12 @@
                                         Total: @((float)Session["ItemsInCartTotal"]) TND
                                     </div>
                                 }
+                                else
+                                {
+                                    <div class="header-cart-total" id="carttotal2">
+                                        Total: 0 TND
+                                    </div>
+                                }
 
 
                                 <div class="header-cart-buttons">
@@ -396,13 +428,13 @@
                                 else if (Convert.ToString(user.role) == "Customer")
                                 {
                                     <li class="sale-noti">
-                                        <a href="/Customer/Profile">Profile</a>
+                                        <a href="/Profile/Profile">Profile</a>
                                     </li>
                                 }
                                 else
                                 {
                                     <li class="sale-noti">
-                                        <a href="/Supplier/Profile">Profile</a>
+                                        <a href="/Profile/Profile">Profile</a>
                                     </li>
                                 }
                             }
@@ -869,7 +901,6 @@
                 $("#cartnotif2").load(location.href + " #cartnotif2>*", "");
                 $("#cattotal1").load(location.href + " #cattotal1>*", "");
                 $("#cattotal2").load(location.href + " #cattotal2>*", "");
-                $("#orderitemlist").load(location.href + " #orderitemlist>*", "");
 
             });
 
