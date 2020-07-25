@@ -261,16 +261,21 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\BlogController.cs" />
+    <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\ProfileController.cs" />
+    <Compile Include="Controllers\StockController.cs" />
     <Compile Include="Controllers\SupplierController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Comment_React.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -340,6 +345,23 @@
     <Content Include="ContentLogin\vendor\select2\select2.min.css" />
     <Content Include="ContentLogin\vendor\select2\select2.min.js" />
     <Content Include="ContentLogin\vendor\tilt\tilt.jquery.min.js" />
+    <Content Include="ContentProduct\css\main.css" />
+    <Content Include="ContentProduct\css\main.min.css" />
+    <Content Include="ContentProduct\js\global.js" />
+    <Content Include="ContentProduct\vendor\datepicker\daterangepicker.css" />
+    <Content Include="ContentProduct\vendor\datepicker\daterangepicker.js" />
+    <Content Include="ContentProduct\vendor\datepicker\moment.min.js" />
+    <Content Include="ContentProduct\vendor\font-awesome-4.7\css\font-awesome.css" />
+    <Content Include="ContentProduct\vendor\font-awesome-4.7\css\font-awesome.min.css" />
+    <Content Include="ContentProduct\vendor\font-awesome-4.7\fonts\fontawesome-webfont.svg" />
+    <Content Include="ContentProduct\vendor\font-awesome-4.7\HELP-US-OUT.txt" />
+    <Content Include="ContentProduct\vendor\jquery\jquery.js" />
+    <Content Include="ContentProduct\vendor\jquery\jquery.min.js" />
+    <Content Include="ContentProduct\vendor\mdi-font\css\material-design-iconic-font.css" />
+    <Content Include="ContentProduct\vendor\mdi-font\css\material-design-iconic-font.min.css" />
+    <Content Include="ContentProduct\vendor\mdi-font\fonts\Material-Design-Iconic-Font.svg" />
+    <Content Include="ContentProduct\vendor\select2\select2.min.css" />
+    <Content Include="ContentProduct\vendor\select2\select2.min.js" />
     <Content Include="ContentRegister\css\main.css" />
     <Content Include="ContentRegister\images\bg-heading-03.jpg" />
     <Content Include="ContentRegister\js\global.js" />
@@ -8026,6 +8048,15 @@
     <Content Include="ContentRegister\vendor\mdi-font\fonts\Material-Design-Iconic-Font.ttf" />
     <Content Include="ContentRegister\vendor\mdi-font\fonts\Material-Design-Iconic-Font.woff" />
     <Content Include="ContentRegister\vendor\mdi-font\fonts\Material-Design-Iconic-Font.woff2" />
+    <Content Include="ContentProduct\vendor\font-awesome-4.7\fonts\fontawesome-webfont.eot" />
+    <Content Include="ContentProduct\vendor\font-awesome-4.7\fonts\fontawesome-webfont.ttf" />
+    <Content Include="ContentProduct\vendor\font-awesome-4.7\fonts\fontawesome-webfont.woff" />
+    <Content Include="ContentProduct\vendor\font-awesome-4.7\fonts\fontawesome-webfont.woff2" />
+    <Content Include="ContentProduct\vendor\font-awesome-4.7\fonts\FontAwesome.otf" />
+    <Content Include="ContentProduct\vendor\mdi-font\fonts\Material-Design-Iconic-Font.eot" />
+    <Content Include="ContentProduct\vendor\mdi-font\fonts\Material-Design-Iconic-Font.ttf" />
+    <Content Include="ContentProduct\vendor\mdi-font\fonts\Material-Design-Iconic-Font.woff" />
+    <Content Include="ContentProduct\vendor\mdi-font\fonts\Material-Design-Iconic-Font.woff2" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -8081,7 +8112,6 @@
     <Content Include="Views\Admin\AddCustomer.cshtml" />
     <Content Include="Views\Admin\CustomerManagement.cshtml" />
     <Content Include="Views\Product\Index.cshtml" />
-    <Content Include="Views\Product\_PartialStock.cshtml" />
     <Content Include="Views\Admin\CustomerDetails.cshtml" />
     <Content Include="Views\Admin\UpdateCustomer.cshtml" />
     <Content Include="Views\Product\IndexDetail.cshtml" />
@@ -8089,6 +8119,14 @@
     <Content Include="Views\Admin\AddSupplier.cshtml" />
     <Content Include="Views\Admin\SupplierDetails.cshtml" />
     <Content Include="Views\Admin\UpdateSupplier.cshtml" />
+    <Content Include="Views\Blog\Index.cshtml" />
+    <Content Include="Views\Cart\Index.cshtml" />
+    <Content Include="Views\Profile\Profile.cshtml" />
+    <Content Include="Views\Profile\ProfileCart.cshtml" />
+    <Content Include="Views\Profile\ProfileUser.cshtml" />
+    <Content Include="Views\Stock\Index.cshtml" />
+    <Content Include="Views\Stock\IndexDetail.cshtml" />
+    <Content Include="Views\Stock\_PartialStock.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
