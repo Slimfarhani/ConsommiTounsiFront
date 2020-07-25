@@ -16,12 +16,10 @@ namespace ConsommiTounsi.Controllers
         }
         public new ActionResult Profile()
         {
-            System.Diagnostics.Debug.WriteLine("HELLOOOOOO !!!!");
-
+            
             UserRegisterModel user = (UserRegisterModel) Session["User"];
             System.Diagnostics.Debug.WriteLine(user.role);
             System.Diagnostics.Debug.WriteLine(user.companyName);
-            System.Diagnostics.Debug.WriteLine("HELLOOOOOO !!!!");
 
 
 

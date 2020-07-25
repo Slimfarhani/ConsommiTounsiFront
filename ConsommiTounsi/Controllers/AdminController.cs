@@ -88,7 +88,7 @@ namespace ConsommiTounsi.Controllers
             response = client.GetAsync("supplier/search/" + id).Result;
             Supplier supplier = response.Content.ReadAsAsync<Supplier>().Result;
             
-            response = client.GetAsync("stockBySupplier/26").Result;
+            response = client.GetAsync("stockBySupplier/"+supplier.userId).Result;
             
 
             IEnumerable<Stock> stocks = response.Content.ReadAsAsync<IEnumerable<Stock>>().Result;
