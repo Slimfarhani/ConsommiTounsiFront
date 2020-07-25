@@ -135,14 +135,14 @@ else
                                         </ul>
                                     </li>
                                 }
-                                else if (user.role == "supplier")
+                                else if (user.role == "Supplier")
                                 {
                                     <li><a href="/Supplier"><i class="fa fa-home"></i> Home <span class="label label-success pull-right"></span></a></li>
                                     <li>
                                         <a><i class="fa fa-user"></i>Event Management<span class="fa fa-chevron-down"></span></a>
                                         <ul class="nav child_menu">
-                                            <li><a href="#">Add Event</a></li>
-                                            <li><a href="#">My Events</a></li>
+                                            <li><a href="/event/AddEvent">Add Event</a></li>
+                                            <li><a href="@Url.Action("DisplaySupplierEvents", "Event", new {id=user.userId})">My Events</a></li>
                                         </ul>
                                     </li>
                                     <li>
