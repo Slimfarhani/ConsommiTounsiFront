@@ -9,15 +9,15 @@ namespace ConsommiTounsi.Models
     public class Post
     {
         
-        [JsonProperty("PostId")]
+        [JsonProperty("postId")]
         public long PostId { get; set; }
-        [JsonProperty("Title")]
+        [JsonProperty("title")]
         public string Title { get; set; }
-        [JsonProperty("Content")]
+        [JsonProperty("content")]
         public string Content { get; set; }
-        [JsonProperty("RatingTotal")]
+        [JsonProperty("ratingTotal")]
         public int RatingTotal { get; set; }
-        [JsonProperty("RatingNumber")]
+        [JsonProperty("ratingNumber")]
         public int RatingNumber { get; set; }
     }
 }
