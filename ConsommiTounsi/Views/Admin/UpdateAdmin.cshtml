@@ -1,0 +1,99 @@
+﻿@model ConsommiTounsi.Models.AdminUpdateModel
+@{
+    ViewBag.Title = "UpdateAdmin";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{ ConsommiTounsi.Models.UserRegisterModel user = (ConsommiTounsi.Models.UserRegisterModel)Session["User"];}
+@if (user != null)
+{
+    if (user.role == "Admin")
+    {
+
+        <div class="">
+            <div class="page-title">
+                <div class="title_left">
+                    <h3>Update Admin</h3>
+                </div>
+
+            </div>
+            <div class="clearfix"></div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12 ">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>Customer Infos <small> Insert customer infos</small></h2>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <br />
+
+                            @using (Html.BeginForm("UpdateAdmin", "Admin", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal form-label-left", @enctype = "multipart/form-data", role = "form" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                                @Html.TextBoxFor(m => m.userId, new { @class = "form-control", @placeholder = "First Name", @type = "hidden" })
+                                @Html.TextBoxFor(m => m.OldPasswordVerif, new { @class = "form-control", @placeholder = "First Name", @type = "hidden" })
+
+                                <div class="item form-group">
+                                    <label for="login" class="col-form-label col-md-3 col-sm-3 label-align">Login</label>
+                                    <div class="col-md-6 col-sm-6 ">
+                                        @Html.TextBoxFor(m => m.userName, new { @class = "form-control", @placeholder = "Login" })
+                                        @Html.ValidationMessageFor(m => m.userName, "", new { @class = "text-danger" })
+
+                                    </div>
+                                </div>
+                                <div class="item form-group">
+                                    <label class="col-form-label col-md-3 col-sm-3 label-align" for="last-name">
+                                        Old password <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 ">
+                                        @Html.TextBoxFor(m => m.OldPassword, new { @type = "password", @class = "form-control", @value = "passwordonetwo" })
+                                        @Html.ValidationMessageFor(m => m.OldPassword, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="item form-group">
+                                    <label class="col-form-label col-md-3 col-sm-3 label-align" for="last-name">
+                                        New Password <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 ">
+                                        @Html.TextBoxFor(m => m.password, new { @type = "password", @class = "form-control", @value = "passwordonetwo" })
+                                        @Html.ValidationMessageFor(m => m.password, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="item form-group">
+                                    <label class="col-form-label col-md-3 col-sm-3 label-align" for="last-name">
+                                        Confirm new password <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 ">
+                                        @Html.TextBoxFor(m => m.confirmPassword, new { @type = "password", @class = "form-control", @value = "passwordonetwo" })
+                                        @Html.ValidationMessageFor(m => m.confirmPassword, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+
+                                <div class="ln_solid"></div>
+                                <div class="item form-group">
+                                    <div class="col-md-6 col-sm-6 offset-md-3">
+                                        <button type="button" class="btn btn-primary" onclick="GO()">Cancel</button>
+                                        <script type="text/javascript">
+                                function GO()
+                                {
+                                    window.location.href = "@Url.Action("Index", "Admin")";
+                                }
+                                        </script>
+
+                                        <button type="submit" class="btn btn-success">Update</button>
+                                    </div>
+                                </div>
+
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+}

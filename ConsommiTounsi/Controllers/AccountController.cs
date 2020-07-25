@@ -105,6 +105,7 @@ namespace ConsommiTounsi.Controllers
                 User.birthdateString = User.birthdateFormatted.Day.ToString() + "/" + User.birthdateFormatted.Month.ToString() + "/" + User.birthdateFormatted.Year.ToString();
             }
             context = new MyContext();
+            User.password = model.password;
             Session["User"] = User;
             var UserLoggedIn = Session["User"] as UserRegisterModel;
             UpdateCartNotification();

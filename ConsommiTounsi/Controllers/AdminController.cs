@@ -22,7 +22,52 @@ namespace ConsommiTounsi.Controllers
         {
             return View();
         }
+        public ActionResult UpdateAdmin()
+        {
+            try
+            {
+                AdminUpdateModel admin = new AdminUpdateModel();
+                UserRegisterModel session = (UserRegisterModel)Session["user"];
 
+                admin.OldPasswordVerif = session.password;
+                System.Diagnostics.Debug.WriteLine(admin.OldPasswordVerif);
+
+                admin.userId = session.userId;
+                admin.userName = session.userName;
+                admin.role = session.role;
+                return View(admin);
+            }
+            catch(System.NullReferenceException e)
+            {
+                return View("Index");
+            }
+
+            
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> UpdateAdmin(AdminUpdateModel model)
+        {
+
+
+            if (ModelState.IsValid)
+            {
+                
+
+                    var adminJson = await Task.Run(() => JsonConvert.SerializeObject(model));
+                    HttpClient client = new HttpClient();
+                    client.BaseAddress = new Uri("http://localhost:8080/springboot-crud-rest/api/v1/");
+                    var content = new StringContent(adminJson.ToString(), Encoding.UTF8, "application/json");
+                    System.Diagnostics.Debug.WriteLine(content.ReadAsStringAsync());
+                    HttpResponseMessage response = client.PutAsync("admin/update/" + model.userId, content).Result;
+                    System.Diagnostics.Debug.WriteLine(response);
+                    return RedirectToAction("/index");
+             
+            }
+
+            return View(model);
+        }
         public ActionResult CustomerDetails( long id)
         {
             HttpClient client = new HttpClient();
@@ -37,11 +82,18 @@ namespace ConsommiTounsi.Controllers
         public ActionResult SupplierDetails(long id)
         {
             HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri("http://localhost:8080/springboot-crud-rest/api/v1/supplier/");
+            client.BaseAddress = new Uri("http://localhost:8080/springboot-crud-rest/api/v1/");
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             HttpResponseMessage response;
-            response = client.GetAsync("search/" + id).Result;
+            response = client.GetAsync("supplier/search/" + id).Result;
             Supplier supplier = response.Content.ReadAsAsync<Supplier>().Result;
+            
+            response = client.GetAsync("stockBySupplier/26").Result;
+            
+
+            IEnumerable<Stock> stocks = response.Content.ReadAsAsync<IEnumerable<Stock>>().Result;
+            System.Diagnostics.Debug.WriteLine("supplier : " + stocks.FirstOrDefault().supplier.userId);
+            ViewBag.stocks = stocks;
             return View(supplier);
 
         }
