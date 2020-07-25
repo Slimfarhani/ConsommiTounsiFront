@@ -1,0 +1,124 @@
+﻿@model IEnumerable<ConsommiTounsi.Models.Stock>
+
+
+<link rel="icon" type="image/png" href="~/Content2/images/icons/favicon.png" />
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/Content2/vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/Content2/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/Content2/fonts/themify/themify-icons.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/Content2/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/Content2/fonts/elegant-font/html-css/style.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/Content2/vendor/animate/animate.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/Content2/vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/Content2/vendor/animsition/css/animsition.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/Content2/vendor/select2/select2.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/Content2/vendor/slick/slick.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/Content2/css/util.css">
+<link rel="stylesheet" type="text/css" href="~/Content2/css/main.css">
+
+<div class="container-table-cart pos-relative">
+    <div class="wrap-table-shopping-cart bgwhite" id="orderitemlist">
+        <table class="table-shopping-cart">
+            <tr class="table-head">
+                <th class="column-1"></th>
+                <th class="column-2">Product</th>
+                <th class="column-3">Price</th>
+                <th class="column-4 p-l-70">Quantity</th>
+            </tr>
+            @if (Model != null)
+            {
+                foreach (var item in Model)
+                {
+
+                    <tr class="table-row" id="itemdivincart-@(item.supplier.userId)-@(item.product.productId)">
+                        <td class="column-1">
+                            <div class="cart-img-product b-rad-4 o-f-hidden" style="cursor: pointer;" onclick="removefromstock('@(item.supplier.userId)','@(item.product.productId)')">
+                                <img src="~/ProductImages/@(item.product.imageUrl)" alt="IMG-PRODUCT">
+                            </div>
+                        </td>
+                        <td class="column-2" style="padding-left: 10px;">@(item.product.productName)</td>
+                        <td class="column-3">@(item.price) TND</td>
+                        <td class="column-4" style="padding-left: 100px;">@(item.quantity)</td>
+                    </tr>
+                }
+            }
+
+
+
+        </table>
+    </div>
+</div>
+<div class="bo9 w-size18 p-l-40 p-r-40 p-t-30 p-b-38 m-t-30 m-r-0 m-l-auto p-lr-15-sm">
+
+    <!--  -->
+    <!--  -->
+
+    <div class="header-cart-wrapbtn" style="width: 255px;">
+        <!-- Button -->
+        <a href="/Stock/StockCartIndex" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4" onclick="updateallstock()">
+            Update Stock
+        </a>
+    </div>
+
+    
+</div>
+<script type="text/javascript" src="~/Content2/vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+<script type="text/javascript" src="~/Content2/vendor/animsition/js/animsition.min.js"></script>
+<!--===============================================================================================-->
+<script type="text/javascript" src="~/Content2/vendor/bootstrap/js/popper.js"></script>
+<script type="text/javascript" src="~/Content2/vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+<script type="text/javascript" src="~/Content2/vendor/select2/select2.min.js"></script>
+<script type="text/javascript">
+    $(".selection-1").select2({
+        minimumResultsForSearch: 20,
+        dropdownParent: $('#dropDownSelect1')
+    });
+
+    $(".selection-2").select2({
+        minimumResultsForSearch: 20,
+        dropdownParent: $('#dropDownSelect2')
+    });
+</script>
+<!--===============================================================================================-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script>
+    function removefromstock(supplierid, productid) {
+
+        $.post("/Stock/RemoveStock", {
+            productid: productid
+        }, function (data) {
+            $("#itemdivincart-" + supplierid + "-" + productid).remove();
+
+
+        });
+
+
+    }
+</script>
+<script>
+    function updateallstock() {
+
+        $.post("/Stock/UpdateAllStock", {
+        }, function (data) {
+
+
+        });
+
+
+    }
+</script>
+
+
+<script src="~/Content2/js/main.js"></script>

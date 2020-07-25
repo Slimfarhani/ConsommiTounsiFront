@@ -13,7 +13,7 @@ namespace Domain.Entities
         public long SupplierId { get; set; }
         public long UserID { get; set; }
         public int Quantity { get; set; }
-        public float Total { get; set; }
+        public float Price { get; set; }
         public string Name { get; set; }
         public string ImageUrl { get; set; }
     }

@@ -13,10 +13,10 @@ namespace ConsommiTounsi.Models
         [JsonProperty("quantity")]
 
         [DisplayName("Quantity")]
-        public long quantity { get; set; }
+        public long? quantity { get; set; }
         [JsonProperty("price")]
         [DisplayName("Price")]
-        public float price { get; set; }
+        public float? price { get; set; }
         [JsonProperty("product")]
         public Product product { get; set; }
         [JsonProperty("supplier")]

@@ -114,11 +114,30 @@ namespace ConsommiTounsi.Controllers
             context = new MyContext();
             Session["User"] = User;
             var UserLoggedIn = Session["User"] as UserRegisterModel;
-            UpdateCartNotification();
-            if (UserLoggedIn != null)
+            if (UserLoggedIn.role.Equals("Customer"))
             {
-                return Redirect("/Home/Index");
+                UpdateCartNotification();
+                if (UserLoggedIn != null)
+                {
+                    return Redirect("/Home/Index");
+                }
             }
+            else if (UserLoggedIn.role.Equals("Supplier"))
+            {
+                UpdateStockCartNotification();
+                if (UserLoggedIn != null)
+                {
+                    return Redirect("/Home/Index");
+                }
+            }
+            else
+            {
+                if (UserLoggedIn != null)
+                {
+                    return Redirect("/Home/Index");
+                }
+            }
+            
             return View(model);
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
@@ -145,7 +164,7 @@ namespace ConsommiTounsi.Controllers
         {
             context = new MyContext();
             var UserLoggedIn = Session["User"] as UserRegisterModel;
-            IEnumerable<OrderItem> items; 
+            IEnumerable<OrderItem> items;
             items = context.OrderItems.OrderByDescending(o => o.OrderItemId).Where(o => o.UserID == UserLoggedIn.userId);
             items = items.Take(3);
             Session["ItemsInCartNotification"] = items;
@@ -153,11 +172,33 @@ namespace ConsommiTounsi.Controllers
             try
             {
 
-                Session["ItemsInCartTotal"] = context.OrderItems.Where(o => o.UserID == UserLoggedIn.userId).Select(o => o.Total * o.Quantity).Sum();
+                Session["ItemsInCartTotal"] = context.OrderItems.Where(o => o.UserID == UserLoggedIn.userId).Select(o => o.Price * o.Quantity).Sum();
             }
             catch (Exception e)
             {
                 Session["ItemsInCartTotal"] = (float)0;
+            }
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public void UpdateStockCartNotification()
+        {
+            context = new MyContext();
+            var UserLoggedIn = Session["User"] as UserRegisterModel;
+            IEnumerable<StockItem> items;
+            items = context.StockItems.OrderByDescending(o => o.StockItemId).Where(o => o.UserID == UserLoggedIn.userId);
+            items = items.Take(3);
+            Session["StockItemsInStockCartNotification"] = items;
+            Session["StockItemNumber"] = context.StockItems.Count(m => m.UserID == UserLoggedIn.userId);
+            try
+            {
+
+                Session["StockItemsInStockCartTotal"] = context.StockItems.Where(o => o.UserID == UserLoggedIn.userId).Select(o => o.Price * o.Quantity).Sum();
+            }
+            catch (Exception e)
+            {
+                Session["StockItemsInStockCartTotal"] = (float)0;
             }
         }
 
