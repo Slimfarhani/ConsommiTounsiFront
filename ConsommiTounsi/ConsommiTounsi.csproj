@@ -8068,6 +8068,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="UserImages\admin.png" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -8127,10 +8128,10 @@
     <Content Include="Views\Stock\Index.cshtml" />
     <Content Include="Views\Stock\IndexDetail.cshtml" />
     <Content Include="Views\Stock\_PartialStock.cshtml" />
+    <Content Include="Views\Admin\PageNotFound.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="UserImages\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

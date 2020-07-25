@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 
 namespace ConsommiTounsi.Controllers
 {
@@ -75,32 +76,42 @@ namespace ConsommiTounsi.Controllers
         public async Task<ActionResult> UpdateCustomer(Customer  model, HttpPostedFileBase file )
         {
 
-
+            
             if (ModelState.IsValid)
             {
-                if(file != null)
-                { 
-                    var newFileName = file.FileName + model.userName + Path.GetExtension(file.FileName);
-                    model.urlImage = newFileName;
-                    var path = Path.Combine(Server.MapPath("~/UserImages/"), newFileName);
-                    file.SaveAs(path);
+                if (verifLogin(model.userName))
+                {
+
+
+                    if (file != null)
+                    {
+                        var newFileName = file.FileName + model.userName + Path.GetExtension(file.FileName);
+                        model.urlImage = newFileName;
+                        var path = Path.Combine(Server.MapPath("~/UserImages/"), newFileName);
+                        file.SaveAs(path);
+                    }
+
+
+                    model.birthdateFormatted = Convert.ToDateTime(model.birthdateString);
+                    var customerJson = await Task.Run(() => JsonConvert.SerializeObject(model));
+                    System.Diagnostics.Debug.WriteLine(customerJson.ToString());
+
+
+                    HttpClient client = new HttpClient();
+                    client.BaseAddress = new Uri("http://localhost:8080/springboot-crud-rest/api/v1/");
+
+                    var content = new StringContent(customerJson.ToString(), Encoding.UTF8, "application/json");
+                    System.Diagnostics.Debug.WriteLine(content.ReadAsStringAsync());
+                    HttpResponseMessage response = client.PutAsync("customer/update/" + model.userId, content).Result;
+
+                    System.Diagnostics.Debug.WriteLine(response);
+                    return RedirectToAction("/customermanagement");
                 }
-              
-              
-                model.birthdateFormatted = Convert.ToDateTime(model.birthdateString);
-                var customerJson = await Task.Run(() => JsonConvert.SerializeObject(model));
-                System.Diagnostics.Debug.WriteLine(customerJson.ToString());
-                
-               
-                HttpClient client = new HttpClient();
-                client.BaseAddress = new Uri("http://localhost:8080/springboot-crud-rest/api/v1/");
-
-                var content = new StringContent(customerJson.ToString(), Encoding.UTF8, "application/json");
-                System.Diagnostics.Debug.WriteLine(content.ReadAsStringAsync());
-                HttpResponseMessage response = client.PutAsync("customer/update/"+model.userId, content).Result;
-
-                System.Diagnostics.Debug.WriteLine(response);
-                return RedirectToAction("/customermanagement");
+                else
+                {
+                    ViewData["errorLogin"] = "Login already exists";
+                    return View(model);
+                }
 
             }
            
@@ -115,28 +126,36 @@ namespace ConsommiTounsi.Controllers
 
             if (ModelState.IsValid)
             {
-                if (file != null)
+                if (verifLogin(model.userName))
                 {
-                    var newFileName = file.FileName + model.userName + Path.GetExtension(file.FileName);
-                    model.urlImage = newFileName;
-                    var path = Path.Combine(Server.MapPath("~/UserImages/"), newFileName);
-                    file.SaveAs(path);
+                    if (file != null)
+                    {
+                        var newFileName = file.FileName + model.userName + Path.GetExtension(file.FileName);
+                        model.urlImage = newFileName;
+                        var path = Path.Combine(Server.MapPath("~/UserImages/"), newFileName);
+                        file.SaveAs(path);
+                    }
+
+
+                    var supplierJson = await Task.Run(() => JsonConvert.SerializeObject(model));
+                    System.Diagnostics.Debug.WriteLine(supplierJson.ToString());
+
+
+                    HttpClient client = new HttpClient();
+                    client.BaseAddress = new Uri("http://localhost:8080/springboot-crud-rest/api/v1/");
+
+                    var content = new StringContent(supplierJson.ToString(), Encoding.UTF8, "application/json");
+                    System.Diagnostics.Debug.WriteLine(content.ReadAsStringAsync());
+                    HttpResponseMessage response = client.PutAsync("supplier/update/" + model.userId, content).Result;
+
+                    System.Diagnostics.Debug.WriteLine(response);
+                    return RedirectToAction("/suppliermanagement");
                 }
-
-
-                var supplierJson = await Task.Run(() => JsonConvert.SerializeObject(model));
-                System.Diagnostics.Debug.WriteLine(supplierJson.ToString());
-
-
-                HttpClient client = new HttpClient();
-                client.BaseAddress = new Uri("http://localhost:8080/springboot-crud-rest/api/v1/");
-
-                var content = new StringContent(supplierJson.ToString(), Encoding.UTF8, "application/json");
-                System.Diagnostics.Debug.WriteLine(content.ReadAsStringAsync());
-                HttpResponseMessage response = client.PutAsync("supplier/update/" + model.userId, content).Result;
-
-                System.Diagnostics.Debug.WriteLine(response);
-                return RedirectToAction("/suppliermanagement");
+                else
+                {
+                    ViewData["errorLogin"] = "Login already exists";
+                    return View(model);
+                }
 
             }
 
@@ -211,23 +230,31 @@ namespace ConsommiTounsi.Controllers
             
             if (ModelState.IsValid)
             {
+                if (verifLogin(model.userName))
+                {
 
-                var newFileName = file.FileName+model.userName + Path.GetExtension(file.FileName);
-                model.urlImage = newFileName;
-                //model.birthdateFormatted = Convert.ToDateTime(model.birthdateString);
-                var customerJson = await Task.Run(() => JsonConvert.SerializeObject(model));
-                System.Diagnostics.Debug.WriteLine(customerJson.ToString());
-                var path = Path.Combine(Server.MapPath("~/UserImages/"), newFileName);
-                file.SaveAs(path);
-                HttpClient client = new HttpClient();
-                client.BaseAddress = new Uri("http://localhost:8080/springboot-crud-rest/api/v1/");
+                    var newFileName = file.FileName + model.userName + Path.GetExtension(file.FileName);
+                    model.urlImage = newFileName;
+                    //model.birthdateFormatted = Convert.ToDateTime(model.birthdateString);
+                    var customerJson = await Task.Run(() => JsonConvert.SerializeObject(model));
+                    System.Diagnostics.Debug.WriteLine(customerJson.ToString());
+                    var path = Path.Combine(Server.MapPath("~/UserImages/"), newFileName);
+                    file.SaveAs(path);
+                    HttpClient client = new HttpClient();
+                    client.BaseAddress = new Uri("http://localhost:8080/springboot-crud-rest/api/v1/");
 
-                var content = new StringContent(customerJson.ToString(), Encoding.UTF8, "application/json");
-                System.Diagnostics.Debug.WriteLine(content.ReadAsStringAsync());
-                HttpResponseMessage response = client.PostAsync("customer/add", content).Result;
-                
-                System.Diagnostics.Debug.WriteLine(response);
-                return RedirectToAction("/customermanagement");
+                    var content = new StringContent(customerJson.ToString(), Encoding.UTF8, "application/json");
+                    System.Diagnostics.Debug.WriteLine(content.ReadAsStringAsync());
+                    HttpResponseMessage response = client.PostAsync("customer/add", content).Result;
+
+                    System.Diagnostics.Debug.WriteLine(response);
+                    return RedirectToAction("/customermanagement");
+                }
+                else
+                {
+                    ViewData["errorLogin"] = "Login already exists";
+                    return View(model);
+                }
            
             }
             return View(model);
@@ -243,29 +270,56 @@ namespace ConsommiTounsi.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> AddSupplier(Supplier model, HttpPostedFileBase file)
         {
+         
 
             if (ModelState.IsValid)
             {
+                if (verifLogin(model.userName))
+                {
+                    var newFileName = file.FileName + model.userName + Path.GetExtension(file.FileName);
+                    model.urlImage = newFileName;
+                    //model.birthdateFormatted = Convert.ToDateTime(model.birthdateString);
+                    var supplierJson = await Task.Run(() => JsonConvert.SerializeObject(model));
+                    System.Diagnostics.Debug.WriteLine(supplierJson.ToString());
+                    var path = Path.Combine(Server.MapPath("~/UserImages/"), newFileName);
+                    file.SaveAs(path);
+                    HttpClient client = new HttpClient();
+                    client.BaseAddress = new Uri("http://localhost:8080/springboot-crud-rest/api/v1/");
 
-                var newFileName = file.FileName + model.userName + Path.GetExtension(file.FileName);
-                model.urlImage = newFileName;
-                //model.birthdateFormatted = Convert.ToDateTime(model.birthdateString);
-                var supplierJson = await Task.Run(() => JsonConvert.SerializeObject(model));
-                System.Diagnostics.Debug.WriteLine(supplierJson.ToString());
-                var path = Path.Combine(Server.MapPath("~/UserImages/"), newFileName);
-                file.SaveAs(path);
-                HttpClient client = new HttpClient();
-                client.BaseAddress = new Uri("http://localhost:8080/springboot-crud-rest/api/v1/");
+                    var content = new StringContent(supplierJson.ToString(), Encoding.UTF8, "application/json");
+                    System.Diagnostics.Debug.WriteLine(content.ReadAsStringAsync());
+                    HttpResponseMessage response = client.PostAsync("supplier/add", content).Result;
 
-                var content = new StringContent(supplierJson.ToString(), Encoding.UTF8, "application/json");
-                System.Diagnostics.Debug.WriteLine(content.ReadAsStringAsync());
-                HttpResponseMessage response = client.PostAsync("supplier/add", content).Result;
+                    System.Diagnostics.Debug.WriteLine(response);
+                    return RedirectToAction("/suppliermanagement");
+                }
+                else
+                {
+                    ViewData["errorLogin"] = "Login already exists";
+                    return View(model);
+                }
 
-                System.Diagnostics.Debug.WriteLine(response);
-                return RedirectToAction("/suppliermanagement");
 
             }
+       
             return View(model);
+        }
+
+        public Boolean verifLogin(String login )
+        {
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri("http://localhost:8080/springboot-crud-rest/api/v1/verifyuser/");
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            HttpResponseMessage response;
+            response = client.GetAsync(login).Result;
+            Boolean valid = response.Content.ReadAsAsync<Boolean>().Result;
+
+            return valid;
+
+        }
+        public ActionResult PageNotFound()
+        {
+            return View();
         }
 
     }

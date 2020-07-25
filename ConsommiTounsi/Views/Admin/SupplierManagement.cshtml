@@ -3,66 +3,69 @@
     ViewBag.Title = "SupplierManagement";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@{ ConsommiTounsi.Models.UserRegisterModel user = (ConsommiTounsi.Models.UserRegisterModel)Session["User"];}
+@if (user != null)
+{
+    if (user.role == "Admin")
+    {
 
-<h2>SupplierManagement</h2>
-
-
-<div class="col-md-12 col-sm-12 ">
-    <div class="x_panel">
-        <div class="x_title">
-            <h2>Customer Management <small></small></h2>
-            <div class="clearfix"></div>
-        </div>
-        <div class="x_content">
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="card-box table-responsive">
-                        <button type="button" class="btn btn-success btn-lg" onclick="GO()">Add supplier</button>
-                        <script type="text/javascript">
+        <div class="col-md-12 col-sm-12 ">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Supplier Management <small></small></h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="card-box table-responsive">
+                                <button type="button" class="btn btn-success btn-lg" onclick="GO()">Add supplier</button>
+                                <script type="text/javascript">
                                 function GO()
                                 {
                                     window.location.href = "@Url.Action("AddSupplier", "Admin")";
                                 }
-                        </script>
-                        <table id="datatable-buttons" class="table table-striped table-bordered" style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th>Id</th>
-                                    <th>Company name</th>
-                                    <th>Address</th>
-                                    <th>E-mail</th>
-                                    <th>Phone</th>
-                                  
-                                    <th>Login</th>
-                                    <th style="width: 120px">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var item in Model)
-                                {
-                                    <tr>
-                                        <td> @Html.DisplayFor(modelItem => item.userId)</td>
-                                        <td> @Html.DisplayFor(modelItem => item.Name)</td>
-                                        <td> @Html.DisplayFor(modelItem => item.address)</td>
-                                        <td> @Html.DisplayFor(modelItem => item.mail)</td>
-                                        <td> @Html.DisplayFor(modelItem => item.phone)</td>
-                                        
-                                        <td> @Html.DisplayFor(modelItem => item.userName)</td>
-                                        <td>
-                                            @Html.ActionLink("Edit", "UpdateSupplier", new { id = item.userId }) |
-                                            @Html.ActionLink("Details", "SupplierDetails", new { id = item.userId })|
-                                            @Html.ActionLink("Delete", "DeleteSupplier", new { id = item.userId }, new { onclick = "return confirm('Are you sure you wish to delete this article?');" })
+                                </script>
+                                <table id="datatable-buttons" class="table table-striped table-bordered" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Company name</th>
+                                            <th>Address</th>
+                                            <th>E-mail</th>
+                                            <th>Phone</th>
+                                            <th>Login</th>
+                                            <th style="width: 120px">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model)
+                                        {
+                                            <tr>
+                                                <td> @Html.DisplayFor(modelItem => item.userId)</td>
+                                                <td> @Html.DisplayFor(modelItem => item.Name)</td>
+                                                <td> @Html.DisplayFor(modelItem => item.address)</td>
+                                                <td> @Html.DisplayFor(modelItem => item.mail)</td>
+                                                <td> @Html.DisplayFor(modelItem => item.phone)</td>
 
-                                        </td>
-                                    </tr>
-                                }
+                                                <td> @Html.DisplayFor(modelItem => item.userName)</td>
+                                                <td>
+                                                    @Html.ActionLink("Edit", "UpdateSupplier", new { id = item.userId }) |
+                                                    @Html.ActionLink("Details", "SupplierDetails", new { id = item.userId })|
+                                                    @Html.ActionLink("Delete", "DeleteSupplier", new { id = item.userId }, new { onclick = "return confirm('Are you sure you wish to delete this article?');" })
 
-                            </tbody>
-                        </table>
+                                                </td>
+                                            </tr>
+                                        }
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
+
             </div>
         </div>
-
-    </div>
-</div>
+        }
+    }

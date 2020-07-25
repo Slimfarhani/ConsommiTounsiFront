@@ -1,5 +1,11 @@
 ﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h2>Home page</h2>
-
+@{ ConsommiTounsi.Models.UserRegisterModel user = (ConsommiTounsi.Models.UserRegisterModel)Session["User"];}
+@if (user != null)
+{
+    if (user.role == "Admin")
+    {
+        <h2>Home page</h2>
+    }
+}

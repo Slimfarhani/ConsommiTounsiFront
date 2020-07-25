@@ -5,7 +5,11 @@
 }
 
 @model ConsommiTounsi.Models.Customer
-
+@{ ConsommiTounsi.Models.UserRegisterModel user = (ConsommiTounsi.Models.UserRegisterModel)Session["User"];}
+@if (user != null)
+{
+    if (user.role == "Admin")
+    {
 
     <div class="">
         <div class="page-title">
@@ -201,3 +205,5 @@
             </div>
         </div>
     </div>
+        }
+    }
