@@ -6757,6 +6757,7 @@
     <Content Include="ContentAdmin\vendors\validator\index.html" />
     <Content Include="ContentAdmin\vendors\validator\multifield.js" />
     <Content Include="ContentAdmin\vendors\validator\validator.js" />
+    <Content Include="EventImages\sahra.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />

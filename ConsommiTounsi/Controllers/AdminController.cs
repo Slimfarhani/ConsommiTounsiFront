@@ -17,6 +17,7 @@ namespace ConsommiTounsi.Controllers
 {
     public class AdminController : Controller
     {
+        
         // GET: Admin
         public ActionResult Index()
         {
@@ -35,6 +36,7 @@ namespace ConsommiTounsi.Controllers
                 admin.userId = session.userId;
                 admin.userName = session.userName;
                 admin.role = session.role;
+                admin.OldUserName = admin.userName;
                 return View(admin);
             }
             catch(System.NullReferenceException e)
@@ -53,7 +55,9 @@ namespace ConsommiTounsi.Controllers
 
             if (ModelState.IsValid)
             {
-                
+
+                if (verifLogin(model.userName) || model.userName == model.OldUserName)
+                {
 
                     var adminJson = await Task.Run(() => JsonConvert.SerializeObject(model));
                     HttpClient client = new HttpClient();
@@ -63,7 +67,13 @@ namespace ConsommiTounsi.Controllers
                     HttpResponseMessage response = client.PutAsync("admin/update/" + model.userId, content).Result;
                     System.Diagnostics.Debug.WriteLine(response);
                     return RedirectToAction("/index");
-             
+                }
+                else
+                {
+                    ViewData["errorLogin"] = "Login already exists";
+                    return View(model);
+                }
+
             }
 
             return View(model);
@@ -97,6 +107,7 @@ namespace ConsommiTounsi.Controllers
             return View(supplier);
 
         }
+        String updateUsername;
         public ActionResult UpdateCustomer( int id)
         {
 
@@ -107,6 +118,7 @@ namespace ConsommiTounsi.Controllers
                 response = client1.GetAsync("search/" + id).Result;
                 Customer customer = response.Content.ReadAsAsync<Customer>().Result;
             customer.birthdateString = customer.birthdateFormatted.ToString();
+            customer.OldUserName = customer.userName;
             return View(customer);
             
         }
@@ -119,7 +131,9 @@ namespace ConsommiTounsi.Controllers
             HttpResponseMessage response;
             response = client1.GetAsync("search/" + id).Result;
             Supplier supplier = response.Content.ReadAsAsync<Supplier>().Result;
+            supplier.OldUserName = supplier.userName;
             return View(supplier);
+
 
         }
         [HttpPost]
@@ -131,7 +145,7 @@ namespace ConsommiTounsi.Controllers
             
             if (ModelState.IsValid)
             {
-                if (verifLogin(model.userName))
+                if (verifLogin(model.userName) || model.userName == model.OldUserName)
                 {
 
 
@@ -178,7 +192,7 @@ namespace ConsommiTounsi.Controllers
 
             if (ModelState.IsValid)
             {
-                if (verifLogin(model.userName))
+                if (verifLogin(model.userName) ||  model.userName == model.OldUserName)
                 {
                     if (file != null)
                     {

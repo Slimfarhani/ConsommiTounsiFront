@@ -26,5 +26,6 @@ namespace ConsommiTounsi.Models
         [Compare("OldPasswordVerif", ErrorMessage = "Wrong password, Type again !")]
         public string OldPassword { get; set; }
         public string OldPasswordVerif { get; set; }
+        public string OldUserName { get; set; }
     }
 }

@@ -47,5 +47,6 @@ namespace ConsommiTounsi.Models
         [JsonProperty("urlImage")]
 
         public string urlImage { get; set; }
+        public string OldUserName { get; set; }
     }
 }

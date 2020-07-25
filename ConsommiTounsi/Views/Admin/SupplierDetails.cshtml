@@ -8,6 +8,7 @@
 @{ ConsommiTounsi.Models.UserRegisterModel user = (ConsommiTounsi.Models.UserRegisterModel)Session["User"];}
 @{ IEnumerable<ConsommiTounsi.Models.Stock> stocks = (IEnumerable<ConsommiTounsi.Models.Stock>)ViewBag.stocks; }
 
+
 @if (user != null)
 {
     if (user.role == "Admin")
@@ -46,12 +47,12 @@
                                     </li>
 
                                     <li class="m-top-xs">
-                                        <i class="fa fa-mail-forward user-profile-icon"></i>@Model.mail
+                                        <i class="fa fa-inbox user-profile-icon"></i>@Model.mail
 
                                     </li>
                                 </ul>
 
-                                <a class="btn btn-success"><i class="fa fa-edit m-right-xs"></i>Edit Profile</a>
+                                <a class="btn btn-success" href="@Url.Action("UpdateSupplier", "Admin",new { id = Model.userId })"><i class="fa fa-edit m-right-xs"></i>Edit Profile</a>
                                 <br />
 
 
@@ -117,20 +118,21 @@
                                                         <li>
                                                             <img src="~/ProductImages/@stock.product.imageUrl" class="avatar" alt="Avatar">
                                                             <div class="message_date">
-                                                                <h3 class="date text-info">24</h3>
-                                                                <p class="month">May</p>
+                                                                <h3 class="date text-info">@stock.price DT</h3>
+                                                                <p class="month">@stock.quantity  piece in stock</p>
                                                             </div>
                                                             <div class="message_wrapper">
-                                                                <h4 class="heading">Desmond Davison</h4>
-                                                                <blockquote class="message">Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua butcher retro keffiyeh dreamcatcher synth.</blockquote>
+                                                                <h4 class="heading">@stock.product.productName</h4>
+                                                                <blockquote class="message">@stock.product.description</blockquote>
                                                                 <br />
+
                                                                 <p class="url">
                                                                     <span class="fs1 text-info" aria-hidden="true" data-icon=""></span>
-                                                                    <a href="#"><i class="fa fa-paperclip"></i> User Acceptance Test.doc </a>
+                                                                    Category : @stock.product.category
                                                                 </p>
                                                             </div>
                                                         </li>
-                                                       
+
                                                     }
                                                 }
                                             </ul>

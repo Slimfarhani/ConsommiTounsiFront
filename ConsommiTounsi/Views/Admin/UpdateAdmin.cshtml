@@ -34,13 +34,14 @@
 
                                 @Html.TextBoxFor(m => m.userId, new { @class = "form-control", @placeholder = "First Name", @type = "hidden" })
                                 @Html.TextBoxFor(m => m.OldPasswordVerif, new { @class = "form-control", @placeholder = "First Name", @type = "hidden" })
+                                @Html.TextBoxFor(m => m.OldUserName, new { @class = "form-control", @placeholder = "First Name", @type = "hidden" })
 
                                 <div class="item form-group">
                                     <label for="login" class="col-form-label col-md-3 col-sm-3 label-align">Login</label>
                                     <div class="col-md-6 col-sm-6 ">
                                         @Html.TextBoxFor(m => m.userName, new { @class = "form-control", @placeholder = "Login" })
                                         @Html.ValidationMessageFor(m => m.userName, "", new { @class = "text-danger" })
-
+                                        <div class="text-danger">@ViewData["errorLogin"]</div>
                                     </div>
                                 </div>
                                 <div class="item form-group">
