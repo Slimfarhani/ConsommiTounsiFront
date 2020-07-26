@@ -25,6 +25,8 @@ namespace ConsommiTounsi.Controllers
             client.BaseAddress = new Uri("http://localhost:8080/springboot-crud-rest/api/v1/");
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             HttpResponseMessage response;
+            System.Diagnostics.Debug.Write("searchsearch "+searchString);
+
             if (!String.IsNullOrEmpty(searchString))
             {
                 System.Diagnostics.Debug.Write("searchsearch");
@@ -37,7 +39,6 @@ namespace ConsommiTounsi.Controllers
             }
 
             IEnumerable<Stock> stocks = response.Content.ReadAsAsync<IEnumerable<Stock>>().Result;
-            System.Diagnostics.Debug.WriteLine("supplier : " + stocks.FirstOrDefault().supplier.userId);
             ViewBag.stocks = stocks;
             return View();
         }

@@ -52,13 +52,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
-    <Compile Include="Migrations\202007221557379_mig1.cs" />
-    <Compile Include="Migrations\202007221557379_mig1.designer.cs">
-      <DependentUpon>202007221557379_mig1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202007222050289_mig2.cs" />
-    <Compile Include="Migrations\202007222050289_mig2.designer.cs">
-      <DependentUpon>202007222050289_mig2.cs</DependentUpon>
+    <Compile Include="Migrations\202007251205253_bgmo.cs" />
+    <Compile Include="Migrations\202007251205253_bgmo.designer.cs">
+      <DependentUpon>202007251205253_bgmo.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="MyContext.cs" />
@@ -75,11 +71,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202007221557379_mig1.resx">
-      <DependentUpon>202007221557379_mig1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202007222050289_mig2.resx">
-      <DependentUpon>202007222050289_mig2.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202007251205253_bgmo.resx">
+      <DependentUpon>202007251205253_bgmo.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
