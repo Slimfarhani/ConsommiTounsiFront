@@ -33,6 +33,7 @@
                 <th class="column-2" style="padding-left: 80px;">Order Number</th>
                 <th class="column-3">Total</th>
                 <th class="column-4 p-l-70">Quantity</th>
+                <th class="column-5 p-l-70">Actions</th>
             </tr>
             @if (Model != null)
             {
@@ -40,7 +41,7 @@
                 {
 
         <tr class="table-row" id="itemdivincart-@(order.orderId)">
-            
+
 
             <td class="column-2 main_menu" style="padding-left: 10px;">
 
@@ -48,18 +49,34 @@
                     <li>
                         <a href="#">@(order.orderId)</a>
                         <ul class="sub_menu">
-                            @foreach (ConsommiTounsi.Models.Order_Detail detail in order.details )
+                            @foreach (ConsommiTounsi.Models.Order_Detail detail in order.details)
                             {
                                 <li><a href="index.html">@(detail.product.productName) :   @(detail.quantity) x @(detail.price)</a></li>
                             }
 
                         </ul>
-                        <li/>
-                    </ul>
+                    <li />
+                </ul>
 
             </td>
-                <td class="column-3">@(order.total) TND</td>
-                <td class="column-4" style="padding-left: 100px;">@(order.itemNumber)</td>
+            <td class="column-3">@(order.total) TND</td>
+            <td class="column-4" style="padding-left: 100px;">@(order.itemNumber)</td>
+            <td class="column-4" style="padding-left: 50px;padding-right: 100px;">
+                <a href="#">
+                    <i class="fa fa-times fa-2x" aria-hidden="true"></i>
+                </a>
+                &nbsp;
+                <a href="#">
+                    <i class="fa fa-list-alt fa-2x" aria-hidden="true"></i>
+                </a>
+                &nbsp;
+                <a href="#">
+                    
+                    <i class="fa fa-comments fa-2x" aria-hidden="true"></i>
+                </a>
+
+
+            </td>
         </tr>
                 }
             }
