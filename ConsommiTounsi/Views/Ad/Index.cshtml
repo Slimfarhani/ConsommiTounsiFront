@@ -1,0 +1,77 @@
+﻿@model IEnumerable<ConsommiTounsi.Models.Ad>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="col-md-12 col-sm-12 ">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>List of ads <small></small></h2>
+
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card-box table-responsive">
+                        <button type="button" class="btn btn-success btn-lg" onclick="GO()">Create Ad</button>
+                        <script type="text/javascript">
+                                function GO()
+                                {
+                                    
+                                        window.location.href = "@Url.Action("Create", "Ad")";
+                                
+                                }
+                        </script>
+                        <table id="datatable-buttons" class="table table-striped table-bordered" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Start date</th>
+                                    <th>End date</th>
+                                    <th>Estimated view number</th>
+                                    <th>Actual view number</th>
+                                    <th>Cost</th>
+                                    <th>Type</th>
+                                    <th>IsValid</th>
+                                    <th>Supplier</th>
+
+                                    <th style="width: 120px">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                <tr>
+                                    <td> @Html.DisplayFor(modelItem => item.title)</td>
+                                    <td> @Html.DisplayFor(modelItem => item.startDateFormatted)</td>
+                                    <td> @Html.DisplayFor(modelItem => item.endDateFormatted)</td>
+                                    <td> @Html.DisplayFor(modelItem => item.estimatedViewNumber)</td>
+                                    <td> @Html.DisplayFor(modelItem => item.actualViewNumber)</td>
+                                    <td> @Html.DisplayFor(modelItem => item.cost)</td>
+                                    <td> @Html.DisplayFor(modelItem => item.type)</td>
+                                    <td> @Html.DisplayFor(modelItem => item.isValid)</td>
+                                    <td> @Html.DisplayFor(modelItem => item.supplier.userName)</td>
+
+
+
+                                    <td>
+                                        @Html.ActionLink("Edit", "Edit", new { id = item.adId }) |
+                                        <!--@Html.ActionLink("Details", "Details", new { id = item.adId }) |-->
+                                        @Html.ActionLink("Delete", "Delete", new { id = item.adId })
+
+                                    </td>
+                                </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
