@@ -266,6 +266,7 @@
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\StockController.cs" />
@@ -278,10 +279,11 @@
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Comment_React.cs" />
     <Compile Include="Models\Customer.cs" />
-    <Compile Include="Models\CustomerPost.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Order.cs" />
+    <Compile Include="Models\Order_Detail.cs" />
+    <Compile Include="Models\Order_State.cs" />
     <Compile Include="Models\Participation.cs" />
     <Compile Include="Models\Post.cs" />
     <Compile Include="Models\Post_React.cs" />
@@ -295,11 +297,11 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\aspnet-Solution.Web-20200410065114.mdf" />
-    <Content Include="Content2\images\blog.jpg" />
     <Content Include="Content2\images\icons\consommitounsilogo.png" />
     <Content Include="Content2\images\icons\favicon.ico" />
     <Content Include="Content2\images\icons\registerimage.jpg" />
+    <Content Include="Content2\images\icons\stock-icon.png" />
+    <Content Include="Content2\images\icons\stock-icon2.png" />
     <Content Include="Content2\images\img-01.png" />
     <Content Include="Content2\vendor\tilt\tilt.jquery.min.js" />
     <Content Include="ContentAdmin\build\images\american-express.png" />
@@ -8907,11 +8909,17 @@
     <Content Include="Views\Profile\Profile.cshtml" />
     <Content Include="Views\Profile\ProfileUser.cshtml" />
     <Content Include="Views\Profile\ProfileCart.cshtml" />
+    <Content Include="Views\Order\Create.cshtml" />
+    <Content Include="Views\Stock\StockCartIndex.cshtml" />
+    <Content Include="Views\Stock\UpdateStock.cshtml" />
+    <Content Include="Views\Stock\ProfileStock.cshtml" />
+    <Content Include="Views\Order\IndexCustomer.cshtml" />
     <Content Include="Views\Blog\Index.cshtml" />
-    <Content Include="Views\Blog\BlogDetail.cshtml" />
-    <Content Include="Views\Blog\AddPost.cshtml" />
+    <Content Include="Views\Blog\PostCreate.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="PostImages\" />
     <Folder Include="ResizedProductImages\" />
     <Folder Include="UserImages\" />
   </ItemGroup>
