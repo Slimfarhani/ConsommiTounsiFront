@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
@@ -20,6 +21,20 @@ namespace ConsommiTounsi.Controllers
         public ActionResult Index()
         {
             return View();
+        }
+        public ActionResult IndexCustomer()
+        {
+
+            HttpClient client = new HttpClient();
+            var UserLoggedIn = (UserRegisterModel)Session["User"];
+            client.BaseAddress = new Uri("http://localhost:8080/springboot-crud-rest/api/v1/");
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            HttpResponseMessage response;
+            System.Diagnostics.Debug.Write("simplesimple");
+            response = client.GetAsync("orderbycustomer/" + UserLoggedIn.userId).Result;
+
+            IEnumerable<Order> orders = response.Content.ReadAsAsync<IEnumerable<Order>>().Result;
+            return PartialView(orders);
         }
         public async Task<ActionResult> Create()
         {

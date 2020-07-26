@@ -8913,9 +8913,13 @@
     <Content Include="Views\Stock\StockCartIndex.cshtml" />
     <Content Include="Views\Stock\UpdateStock.cshtml" />
     <Content Include="Views\Stock\ProfileStock.cshtml" />
+    <Content Include="Views\Order\IndexCustomer.cshtml" />
+    <Content Include="Views\Blog\Index.cshtml" />
+    <Content Include="Views\Blog\PostCreate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="PostImages\" />
     <Folder Include="ResizedProductImages\" />
     <Folder Include="UserImages\" />
   </ItemGroup>

@@ -114,6 +114,10 @@ namespace ConsommiTounsi.Controllers
             context = new MyContext();
             Session["User"] = User;
             var UserLoggedIn = Session["User"] as UserRegisterModel;
+            if (UserLoggedIn.role == null)
+            {
+                return View();
+            }
             if (UserLoggedIn.role.Equals("Customer"))
             {
                 UpdateCartNotification();

@@ -37,6 +37,12 @@
                         <a href="javascript:profilestock()">My Stock</a>
                     </li>
                 }
+                @if (user != null && user.role == "Customer")
+                {
+                    <li>
+                        <a href="javascript:profileorder()">My Orders</a>
+                    </li>
+                }
                 <li>
                     <a href="#">My Participations</a>
                 </li>
@@ -90,6 +96,15 @@
 <script>
     function profilestock() {
         $.get("/Stock/ProfileStock", function (data) {
+            $("#contentprofile").html(data);
+            $(".animsition-loading-1").css("display", "none");
+
+        });
+    }
+</script>
+<script>
+    function profileorder() {
+        $.get("/Order/IndexCustomer", function (data) {
             $("#contentprofile").html(data);
             $(".animsition-loading-1").css("display", "none");
 
