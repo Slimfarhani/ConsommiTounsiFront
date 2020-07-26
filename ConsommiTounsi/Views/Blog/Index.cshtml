@@ -4,6 +4,7 @@
     Layout = "~/Views/Shared/_Layout2.cshtml";
 }
 @model IEnumerable<ConsommiTounsi.Models.Post>
+
 <head>
     <title>Blog</title>
     <meta charset="UTF-8">
@@ -36,29 +37,8 @@
     <!--===============================================================================================-->
 </head>
 <!-- Title Page -->
-<table>
-    <tr>
-        <td>
-            Title
-        </td>
-        <td>
-            Content
-        </td>
-    </tr>
-    @foreach (ConsommiTounsi.Models.Post var in Model)
-    {<tr>
-        <td>
-            @(var.Title)
-        </td>
-        <td>
-            @(var.Content)
-        </td>
-        </tr>
-    }
 
-
-</table>
-<section class="bg-title-page p-t-40 p-b-50 flex-col-c-m" style="background-image: url(images/heading-pages-05.jpg);">
+<section class="bg-title-page p-t-40 p-b-50 flex-col-c-m" style="background-image: url(Content2/images/blog.jpg);">
     <h2 class="l-text2 t-center">
         Blog
     </h2>
@@ -70,47 +50,55 @@
             <div class="col-md-8 col-lg-9 p-b-75">
                 <div class="p-r-50 p-r-0-lg">
                     <!-- item blog -->
-                    <div class="item-blog p-b-80">
-                        <a href="blog-detail.html" class="item-blog-img pos-relative dis-block hov-img-zoom">
-                            <img src="images/blog-04.jpg" alt="IMG-BLOG">
+                    @if (Model != null)
+                    {
+                        foreach (ConsommiTounsi.Models.Post var in Model)
+                        {
+                            <div class="item-blog p-b-80">
+                                <a href="blog-detail.html" class="item-blog-img pos-relative dis-block hov-img-zoom">
+                                    <img src="images/blog-04.jpg" alt="IMG-BLOG">
 
-                            <span class="item-blog-date dis-block flex-c-m pos1 size17 bg4 s-text1">
-                                28 Dec, 2018
-                            </span>
-                        </a>
-                        <div class="item-blog-txt p-t-33">
-                            <h4 class="p-b-11">
-                                <a href="blog-detail.html" class="m-text24">
-                                    Black Friday Guide: Best Sales & Discount Codes
+                                    <span class="item-blog-date dis-block flex-c-m pos1 size17 bg4 s-text1">
+                                        28 Dec, 2018
+                                    </span>
                                 </a>
-                            </h4>
+                                <div class="item-blog-txt p-t-33">
+                                    <h4 class="p-b-11">
+                                        <a href="blog-detail.html" class="m-text24">
 
-                            <div class="s-text8 flex-w flex-m p-b-21">
-                                <span>
-                                    By Admin
-                                    <span class="m-l-3 m-r-6">|</span>
-                                </span>
+                                            <tr>
+                                                <td>
+                                                    @(var.Title)
+                                                </td>
+                                            </tr>
 
-                                <span>
-                                    Cooking, Food
-                                    <span class="m-l-3 m-r-6">|</span>
-                                </span>
+                                        </a>
+                                    </h4>
 
-                                <span>
-                                    8 Comments
-                                </span>
+                                    <div class="s-text8 flex-w flex-m p-b-21">
+                                        <span>
+
+                                     
+                                            <span class="m-l-3 m-r-6">|</span>
+                                        </span>
+
+                                        <span>
+                                            8 Comments
+                                        </span>
+                                    </div>
+
+                                    <p class="p-b-12">
+                                        @(var.Content)
+                                    </p>
+                                    <a href="blog-detail.html" class="s-text20">
+                                        Continue Reading
+                                        <i class="fa fa-long-arrow-right m-l-8" aria-hidden="true"></i>
+                                    </a>
+                                </div>
                             </div>
-
-                            <p class="p-b-12">
-                                Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce eget dictum tortor. Donec dictum vitae sapien eu varius
-                            </p>
-
-                            <a href="blog-detail.html" class="s-text20">
-                                Continue Reading
-                                <i class="fa fa-long-arrow-right m-l-8" aria-hidden="true"></i>
-                            </a>
-                        </div>
-                    </div>
+                        }
+                    }
+                    
                     <!-- Pagination -->
                     <div class="pagination flex-m flex-w p-r-50">
                         <a href="#" class="item-pagination flex-c-m trans-0-4 active-pagination">1</a>
@@ -122,28 +110,28 @@
                     <h4 class="m-text25 p-b-14">
                         Leave a Post
                     </h4>
+                    @using (Html.BeginForm("Addpost", "Customer", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal form-label-left", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <textarea class="dis-block s-text7 size18 bo12 p-l-18 p-r-18 p-t-13 m-b-20" name="comment" placeholder="Post..."></textarea>
 
-                    <p class="s-text8 p-b-40">
-                        Your email address will not be published. Required fields are marked *
-                    </p>
+                        <div class="bo12 of-hidden size19 m-b-20">
+                            <input class="sizefull s-text7 p-l-18 p-r-18" type="text" name="name" placeholder="Name *">
+                        </div>
 
-                    <textarea class="dis-block s-text7 size18 bo12 p-l-18 p-r-18 p-t-13 m-b-20" name="comment" placeholder="Post..."></textarea>
+                        <div class="bo12 of-hidden size19 m-b-20">
+                            <input class="sizefull s-text7 p-l-18 p-r-18" type="text" name="email" placeholder="Email *">
+                        </div>
 
-                    <div class="bo12 of-hidden size19 m-b-20">
-                        <input class="sizefull s-text7 p-l-18 p-r-18" type="text" name="name" placeholder="Name *">
-                    </div>
-
-                    <div class="bo12 of-hidden size19 m-b-20">
-                        <input class="sizefull s-text7 p-l-18 p-r-18" type="text" name="email" placeholder="Email *">
-                    </div>
-
-                    <div class="w-size24">
-                        <!-- Button -->
-                        <button class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
-                            Post your Blog
-                        </button>
-                    </div>
-                </form>
+                        <div class="w-size24">
+                            <!-- Button -->
+                            <button class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
+                                Post your Blog
+                            </button>
+                        </div>
+                    }
+                    </form>
 
                 <div class="col-md-4 col-lg-3 p-b-75">
                     <div class="rightbar">
@@ -155,7 +143,10 @@
                         <i class="fa fa-angle-double-up" aria-hidden="true"></i>
                     </span>
                 </div>
-
+</div>
+            </div>
+        </div>
+    </section>
                 <!-- Container Selection -->
                 <div id="dropDownSelect1"></div>
                 <div id="dropDownSelect2"></div>

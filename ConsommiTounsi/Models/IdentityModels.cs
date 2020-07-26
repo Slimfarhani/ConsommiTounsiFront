@@ -29,5 +29,7 @@ namespace ConsommiTounsi.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<ConsommiTounsi.Models.Post> Posts { get; set; }
     }
 }

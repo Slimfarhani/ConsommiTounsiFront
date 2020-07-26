@@ -19,5 +19,8 @@ namespace ConsommiTounsi.Models
         public int RatingTotal { get; set; }
         [JsonProperty("ratingNumber")]
         public int RatingNumber { get; set; }
+        [JsonProperty("custmer")]
+        public Customer customer { get; set; }
+        
     }
 }

@@ -37,7 +37,6 @@ namespace ConsommiTounsi.Controllers
             }
 
             IEnumerable<Stock> stocks = response.Content.ReadAsAsync<IEnumerable<Stock>>().Result;
-            System.Diagnostics.Debug.WriteLine("supplier : " + stocks.FirstOrDefault().supplier.userId);
             ViewBag.stocks = stocks;
             return View();
         }

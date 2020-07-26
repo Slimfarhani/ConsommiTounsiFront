@@ -1,0 +1,97 @@
+﻿@model ConsommiTounsi.Models.Post
+
+@{
+    ViewBag.Title = "AddPost";
+}
+
+<div class="">
+    <div class="page-title">
+        <div class="title_left">
+            <h3>Add Post</h3>
+        </div>
+    </div>
+</div>
+<div class="clearfix"></div>
+<div class="row">
+    <div class="col-md-12 col-sm-12 ">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2> <small> Insert Your Post Details</small></h2>
+
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="x_content">
+    <br />
+
+    @using (Html.BeginForm("Addpost", "Customer", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal form-label-left", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="item-form-group">
+            <label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">
+                @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+            </label>
+            <div class="col-md-6 col-sm-6 ">
+                @Html.TextBoxFor(model => model.Title, new { @class = "form-control", @placeholder = "Title" })
+                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="item-form-group">
+            <label class="col-form-label col-md-3 col-sm-3 label-align" for="Content">
+                @Html.LabelFor(model => model.Content, htmlAttributes: new { @class = "control-label col-md-2" })
+            </label>
+            <div class="col-md-6 col-sm-6 ">
+                @Html.TextBoxFor(model => model.Content, new { @class = "form-control", @placeholder = "Content" })
+                @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="item-form-group">
+            <label class="col-form-label col-md-3 col-sm-3 label-align" for="Content">
+                @Html.LabelFor(model => model.RatingTotal, htmlAttributes: new { @class = "control-label col-md-2" })
+            </label>
+            <div class="col-md-6 col-sm-6 ">
+                @Html.TextBoxFor(model => model.RatingTotal, new { @class = "form-control", @placeholder = "RatingTotal" })
+                @Html.ValidationMessageFor(model => model.RatingTotal, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="item-form-group">
+            <label class="col-form-label col-md-3 col-sm-3 label-align" for="Content">
+                @Html.LabelFor(model => model.RatingNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+            </label>
+            <div class="col-md-6 col-sm-6 ">
+                @Html.TextBoxFor(model => model.RatingTotal, new { @class = "form-control", @placeholder = "RatingNumber" })
+                @Html.ValidationMessageFor(model => model.RatingNumber, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+        <div class="ln_solid"></div>
+        <div class="item form-group">
+            <div class="col-md-6 col-sm-6 offset-md-3">
+                <button class="btn btn-primary" type="button">Cancel</button>
+                <button class="btn btn-primary" type="reset">Reset</button>
+                <button type="submit" class="btn btn-success">Submit</button>
+            </div>
+        </div>
+
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
