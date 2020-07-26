@@ -1,0 +1,80 @@
+﻿@model ConsommiTounsi.Models.Ad
+@{
+    ViewBag.Title = "ValidateAd";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h4>Are you sure that you want to validate this ad ?</h4>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.type)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.type)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.cost)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cost)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.startDateFormatted)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.startDateFormatted)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.endDateFormatted)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.endDateFormatted)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.estimatedViewNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.estimatedViewNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.actualViewNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.actualViewNumber)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm("Validate", "Ad", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal form-label-left", @enctype = "multipart/form-data", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <a href="@Url.Action("ManageAds", "Ad")">
+                <input type="button" value="Cancel" class="btn btn-primary" />
+            </a>
+            <input type="submit" value="Validate" class="btn btn-success" />
+        </div>
+    }
+</div>

@@ -1,0 +1,62 @@
+﻿@model IEnumerable<ConsommiTounsi.Models.Ad>
+@{
+    ViewBag.Title = "SupplierAds";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" type="text/css" href="~/Content2/vendor/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="~/Content2/vendor/slick/slick.css">
+<link rel="stylesheet" type="text/css" href="~/Content2/css/util.css">
+<link rel="stylesheet" type="text/css" href="~/Content2/css/main.css">
+
+<section class="relateproduct bgwhite p-t-45 p-b-138">
+    <div class="container">
+        <div class="sec-title p-b-60">
+            <h3 class="m-text5 t-center">
+                Ads
+            </h3>
+        </div>
+
+        <div class="wrap-slick2">
+            <div class="slick2">
+                @foreach (var item in Model)
+                {
+                <a href="@Url.Action("Details", "Ad", new { adId = item.adId,title = item.title,type = item.type,cost = item.cost,imageUrl = item.imageUrl,actualViewNumber = item.actualViewNumber,endDateFormatted = item.endDateFormatted })" class="block2 dis-block s-text3 p-b-5">
+                    <div class="item-slick2 p-l-15 p-r-15">
+                        <div class="block2">
+                            <div class="block2-img wrap-pic-w of-hidden pos-relative block2-label">
+                                @if (item.imageUrl != null)
+                                {
+                                    <img src="~/ResizedAdImages/@(item.imageUrl)" />
+                                }
+                                else {<img src="~/Content2/images/item-02.jpg" alt="AD"> }
+                                
+                                <!---->
+                            </div>
+
+                            <div class="block2-txt p-t-20">
+                                <span class="block2-price m-text6 p-r-5">
+                                    Title : @item.title
+                                </span><br />
+                                <span class="block2 m-text6 p-r-5">
+                                    Cost : @item.cost
+                                </span><br />
+                                <span class="block2 m-text6 p-r-5">
+                                    Actual View Number : @item.actualViewNumber
+                                </span><br />
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                }
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<script type="text/javascript" src="~/Content2/vendor/jquery/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="~/Content2/vendor/slick/slick.min.js"></script>
+<script type="text/javascript" src="~/Content2/js/slick-custom.js"></script>
+
+

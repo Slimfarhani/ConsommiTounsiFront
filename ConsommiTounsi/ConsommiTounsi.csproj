@@ -279,15 +279,18 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\AdminUpdateModel.cs" />
-    <Compile Include="Models\BlockUserModel.cs" />
-    <Compile Include="Models\Comment.cs" />
-    <Compile Include="Models\Comment_React.cs" />
+	  <Compile Include="Models\AdminUpdateModel.cs" />
+	  <Compile Include="Models\AdViews.cs" />
+	  <Compile Include="Models\BlockUserModel.cs" />
+	  <Compile Include="Models\Comment.cs" />
+	  <Compile Include="Models\Comment_React.cs" />
 	  <Compile Include="Models\Ad.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\Event.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\ModelKPI.cs" />
+    <Compile Include="Models\ModelProductSales.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\OrderForm.cs" />
     <Compile Include="Models\Order_Detail.cs" />
@@ -306,6 +309,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AdImages\bannieres_ad.jpg" />
     <Content Include="Content2\images\icons\consommitounsilogo.png" />
     <Content Include="Content2\images\icons\favicon.ico" />
     <Content Include="Content2\images\icons\registerimage.jpg" />
@@ -6784,6 +6788,10 @@
     <Content Include="ProductImages\tapis2.jpg" />
     <Content Include="ProductImages\verre1-resized.jpg" />
     <Content Include="ProductImages\verre1.jpg" />
+    <Content Include="ResizedAdImages\bannieres_ad.jpg" />
+    <Content Include="ResizedProductImagesForCartNotif\chachia1.jpg" />
+    <Content Include="ResizedProductImagesForCartNotif\chachia2.jpg" />
+    <Content Include="ResizedProductImagesForCartNotif\tapis1.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content2\fonts\elegant-font\html-css\fonts\ElegantIcons.eot" />
@@ -8155,8 +8163,13 @@
     <Content Include="Views\Stock\IndexDetail.cshtml" />
     <Content Include="Views\Product\Create.cshtml" />
     <Content Include="Views\Ad\Create.cshtml" />
-    <Content Include="Views\Ad\Index.cshtml" />
     <Content Include="Views\Ad\Edit.cshtml" />
+	  <Content Include="Views\Ad\ManageSupplierAds.cshtml" />
+	  <Content Include="Views\Ad\SupplierAds.cshtml" />
+	  <Content Include="Views\Ad\Details.cshtml" />
+	  <Content Include="Views\Ad\ManageAds.cshtml" />
+	  <Content Include="Views\Ad\Delete.cshtml" />
+	  <Content Include="Views\Ad\Validate.cshtml" />
     <Content Include="Views\Stock\IndexByCategory.cshtml" />
     <Content Include="Views\Product\IndexByCategory.cshtml" />
 	 <Content Include="Views\Admin\PageNotFound.cshtml" />

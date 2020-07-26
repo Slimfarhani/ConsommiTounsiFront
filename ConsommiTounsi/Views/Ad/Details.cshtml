@@ -1,0 +1,62 @@
+﻿@model ConsommiTounsi.Models.Ad
+@{
+    ViewBag.Title = "SupplierAds";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" type="text/css" href="~/Content2/vendor/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="~/Content2/vendor/slick/slick.css">
+<link rel="stylesheet" type="text/css" href="~/Content2/css/util.css">
+<link rel="stylesheet" type="text/css" href="~/Content2/css/main.css">
+
+<section class="relateproduct bgwhite p-t-45 p-b-138">
+    <div class="container">
+        <div class="sec-title p-b-60">
+            <h3 class="m-text5 t-center">
+                @Model.title
+            </h3>
+        </div>
+
+        <div class="wrap-slick2">
+            <div class="slick-active">
+                <div class="item-slick2 p-l-120 p-r-120">
+                    <div class="block2">
+                        <div class="block2-img wrap-pic-w of-hidden pos-relative block2-label">
+                            
+                            @if (Model.imageUrl != null)
+                            {
+                                <img src="~/ResizedAdImages/@Model.imageUrl" />
+                            }
+                            else
+                            {<img src="~/Content2/images/item-02.jpg" alt="AD">}
+                            <!--<img src="~/AdImages/bannieres_ad.jpg" style="padding-top:30px;" />-->
+                        </div>
+
+                        <div class="block2-txt p-t-20">
+                            <span class="block2 m-text6 p-r-5">
+                                Cost : @Model.cost
+                            </span><br />
+                            <span class="block2 m-text6 p-r-5">
+                                Type : @Model.type
+                            </span><br />
+                            <span class="block2 m-text6 p-r-5">
+                                End Date : @Model.endDateFormatted
+                            </span><br />
+                            <span class="block2 m-text6 p-r-5">
+                                Actual View Number : @Model.actualViewNumber
+                            </span><br />
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<script type="text/javascript" src="~/Content2/vendor/jquery/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="~/Content2/vendor/slick/slick.min.js"></script>
+<script type="text/javascript" src="~/Content2/js/slick-custom.js"></script>
+
+
