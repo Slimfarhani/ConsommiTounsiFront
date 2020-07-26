@@ -119,5 +119,9 @@ namespace ConsommiTounsi.Controllers
             return item.Quantity * item.Price;
 
         }
+        public void SelectZone(string zone)
+        {
+            Session["zone"] = zone;
+        }
     }
 }

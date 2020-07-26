@@ -8,6 +8,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
@@ -18,9 +19,26 @@ namespace ConsommiTounsi.Controllers
     public class ProductController : Controller
     {
         // GET: Product
-        public ActionResult Index()
+        public ActionResult Index(string searchString)
         {
-            return View();
+            
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri("http://localhost:8080/springboot-crud-rest/api/v1/");
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            HttpResponseMessage response = client.GetAsync("product").Result;
+            IEnumerable<Product> products = response.Content.ReadAsAsync<IEnumerable<Product>>().Result;
+
+            return View(products);
+        }
+        public ActionResult IndexByCategory(string category)
+        {
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri("http://localhost:8080/springboot-crud-rest/api/v1/");
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            HttpResponseMessage response = client.GetAsync("product").Result;
+            IEnumerable<Product> products = response.Content.ReadAsAsync<IEnumerable<Product>>().Result;
+            products = products.Where(s => s.category.ToString() == category);
+            return View(products);
         }
         [AllowAnonymous]
         public ActionResult Create()

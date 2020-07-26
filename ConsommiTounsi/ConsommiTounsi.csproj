@@ -282,6 +282,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Order.cs" />
+    <Compile Include="Models\OrderForm.cs" />
     <Compile Include="Models\Order_Detail.cs" />
     <Compile Include="Models\Order_State.cs" />
     <Compile Include="Models\Participation.cs" />
@@ -8916,6 +8917,10 @@
     <Content Include="Views\Order\IndexCustomer.cshtml" />
     <Content Include="Views\Blog\Index.cshtml" />
     <Content Include="Views\Blog\PostCreate.cshtml" />
+    <Content Include="Views\Product\Index.cshtml" />
+    <Content Include="Views\Product\_PartialProduct.cshtml" />
+    <Content Include="Views\Stock\IndexByCategory.cshtml" />
+    <Content Include="Views\Product\IndexByCategory.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

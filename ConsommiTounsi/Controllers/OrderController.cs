@@ -69,10 +69,25 @@ namespace ConsommiTounsi.Controllers
             var content = new StringContent(orderJson.ToString(), Encoding.UTF8, "application/json");
             HttpResponseMessage response;
             response = client.PostAsync("order", content).Result;
+            if (Session["zone"] != null)
+            {
+
+                string zone = (string)Session["zone"];
+                System.Diagnostics.Debug.WriteLine(zone);
+                Order orderwithid = response.Content.ReadAsAsync<Order>().Result;
+                HttpClient client1 = new HttpClient();
+                client1.BaseAddress = new Uri("http://localhost:8080/springboot-crud-rest/api/v1/");
+                var content1 = new StringContent("", Encoding.UTF8, "application/json");
+                HttpResponseMessage response1;
+                response1 = client1.PostAsync("Delivery/" + orderwithid.orderId + "/" + zone, content1).Result;
+            }
+
+            
             foreach (var entity in context.OrderItems.Where(o => o.UserID == UserLoggedIn.userId))
                 context.OrderItems.Remove(entity);
             context.SaveChanges();
             UpdateCartNotification();
+            Session["zone"] = null;
             return View();
         }
         public void UpdateCartNotification()

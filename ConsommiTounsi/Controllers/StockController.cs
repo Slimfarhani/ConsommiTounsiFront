@@ -42,6 +42,21 @@ namespace ConsommiTounsi.Controllers
             ViewBag.stocks = stocks;
             return View();
         }
+        public ActionResult IndexByCategory(string category)
+        {
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri("http://localhost:8080/springboot-crud-rest/api/v1/");
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            HttpResponseMessage response;
+            
+                response = client.GetAsync("stock").Result;
+            
+
+            IEnumerable<Stock> stocks = response.Content.ReadAsAsync<IEnumerable<Stock>>().Result;
+            stocks = stocks.Where(s => s.product.category.ToString() == category);
+            ViewBag.stocks = stocks;
+            return View();
+        }
         public ActionResult IndexDetail(long productid,long supplierid )
         {
 

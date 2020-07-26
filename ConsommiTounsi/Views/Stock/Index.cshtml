@@ -31,35 +31,20 @@
                     </h4>
 
                     <ul class="p-b-54">
-                        <li class="p-t-4">
-                            <a href="#" class="s-text13 active1">
-                                All
-                            </a>
-                        </li>
 
-                        <li class="p-t-4">
-                            <a href="#" class="s-text13">
-                                Women
-                            </a>
-                        </li>
+                        @foreach (string val in Enum.GetNames(typeof(ConsommiTounsi.Models.Categories)))
+                        {
 
-                        <li class="p-t-4">
-                            <a href="#" class="s-text13">
-                                Men
-                            </a>
-                        </li>
+                            <li class="p-t-4">
 
-                        <li class="p-t-4">
-                            <a href="#" class="s-text13">
-                                Kids
-                            </a>
-                        </li>
+                                @Html.ActionLink(val, "IndexByCategory", "Stock", new
+                           {
+                               category = val,
+                           }, new { @class = "s-text13 active1" })
+                            </li>
+                        }
 
-                        <li class="p-t-4">
-                            <a href="#" class="s-text13">
-                                Accesories
-                            </a>
-                        </li>
+
                     </ul>
                     <div class="header-cart-wrapbtn" style="width: 255px;">
                         <!-- Button -->

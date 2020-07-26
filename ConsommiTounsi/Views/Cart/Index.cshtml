@@ -110,21 +110,17 @@
                     </span>
 
                     <div class="rs2-select2 rs3-select2 rs4-select2 bo4 of-hidden w-size21 m-t-8 m-b-12">
-                        <select class="selection-2" name="country">
-                            <option>Select a country...</option>
-                            <option>US</option>
-                            <option>UK</option>
-                            <option>Japan</option>
+                        <select class="selection-2" id="zone" name="country" onchange="javascript:selectzone()">
+                            <option value="Shop">Shop</option>
+                            <option value="Ariana">Ariana</option>
+                            <option value="Marsa">Marsa</option>
+                            <option value="Mannouba">Mannouba</option>
+                            <option value="Rades">Rades</option>
+                            <option value="Lac">Lac</option>
                         </select>
                     </div>
 
-                    <div class="size13 bo4 m-b-12">
-                        <input class="sizefull s-text7 p-l-15 p-r-15" type="text" name="state" placeholder="State /  country">
-                    </div>
-
-                    <div class="size13 bo4 m-b-22">
-                        <input class="sizefull s-text7 p-l-15 p-r-15" type="text" name="postcode" placeholder="Postcode / Zip">
-                    </div>
+                    
 
 
                 </div>
@@ -156,7 +152,7 @@
 
             <div class="size15 trans-0-4">
                 <!-- Button -->
-                <button class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4" type="submit">
+                <button class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4" type="submit" onclick="javascript:selectzone()">
                     Confirm Order
                 </button>
             </div>
@@ -257,6 +253,18 @@
             $("#cattotal2").load(location.href + " #cattotal2>*", "");
             $("#carttotalincart").load(location.href + " #carttotalincart>*", "");
             $("#itemtotalincart" + itemid).text(data+" TND");
+        });
+
+
+    }
+</script>
+<script>
+    function selectzone() {
+
+        $.post("/Cart/SelectZone", {
+            zone: $("#zone").val()
+        }, function (data) {
+            
         });
 
 

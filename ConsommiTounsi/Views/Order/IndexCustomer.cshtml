@@ -1,1 +1,110 @@
-﻿
+﻿@model IEnumerable<ConsommiTounsi.Models.Order>
+
+
+<link rel="icon" type="image/png" href="~/Content2/images/icons/favicon.png" />
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/Content2/vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/Content2/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/Content2/fonts/themify/themify-icons.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/Content2/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/Content2/fonts/elegant-font/html-css/style.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/Content2/vendor/animate/animate.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/Content2/vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/Content2/vendor/animsition/css/animsition.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/Content2/vendor/select2/select2.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/Content2/vendor/slick/slick.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/Content2/css/util.css">
+<link rel="stylesheet" type="text/css" href="~/Content2/css/main.css">
+
+<div class="container-table-cart pos-relative">
+    <div class="wrap-table-shopping-cart bgwhite" id="orderitemlist">
+        <table class="table-shopping-cart">
+            <tr class="table-head">
+                <th class="column-2" style="padding-left: 80px;">Order Number</th>
+                <th class="column-3">Total</th>
+                <th class="column-4 p-l-70">Quantity</th>
+            </tr>
+            @if (Model != null)
+            {
+                foreach (var order in Model)
+                {
+
+        <tr class="table-row" id="itemdivincart-@(order.orderId)">
+            
+
+            <td class="column-2 main_menu" style="padding-left: 10px;">
+
+                <ul class="main_menu">
+                    <li>
+                        <a href="#">@(order.orderId)</a>
+                        <ul class="sub_menu">
+                            @foreach (ConsommiTounsi.Models.Order_Detail detail in order.details )
+                            {
+                                <li><a href="index.html">@(detail.product.productName) :   @(detail.quantity) x @(detail.price)</a></li>
+                            }
+
+                        </ul>
+                        <li/>
+                    </ul>
+
+            </td>
+                <td class="column-3">@(order.total) TND</td>
+                <td class="column-4" style="padding-left: 100px;">@(order.itemNumber)</td>
+        </tr>
+                }
+            }
+
+
+
+        </table>
+    </div>
+</div>
+<script type="text/javascript" src="~/Content2/vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+<script type="text/javascript" src="~/Content2/vendor/animsition/js/animsition.min.js"></script>
+<!--===============================================================================================-->
+<script type="text/javascript" src="~/Content2/vendor/bootstrap/js/popper.js"></script>
+<script type="text/javascript" src="~/Content2/vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+<script type="text/javascript" src="~/Content2/vendor/select2/select2.min.js"></script>
+<script type="text/javascript">
+    $(".selection-1").select2({
+        minimumResultsForSearch: 20,
+        dropdownParent: $('#dropDownSelect1')
+    });
+
+    $(".selection-2").select2({
+        minimumResultsForSearch: 20,
+        dropdownParent: $('#dropDownSelect2')
+    });
+</script>
+<!--===============================================================================================-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script>
+    function removefromstock(supplierid, productid) {
+
+        $.post("/Stock/RemoveStock", {
+            productid: productid
+        }, function (data) {
+            $("#itemdivincart-" + supplierid + "-" + productid).remove();
+
+
+        });
+
+
+    }
+</script>
+
+
+
+<script src="~/Content2/js/main.js"></script>
