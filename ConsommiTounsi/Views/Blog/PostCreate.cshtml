@@ -1,0 +1,86 @@
+﻿@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+@model ConsommiTounsi.Models.Post
+
+<link href="~/ContentProduct/vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
+<link href="~/ContentProduct/vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
+<!-- Font special for pages-->
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
+
+<!-- Vendor CSS-->
+<link href="~/ContentProduct/vendor/select2/select2.min.css" rel="stylesheet" media="all">
+<link href="~/ContentProduct/vendor/datepicker/daterangepicker.css" rel="stylesheet" media="all">
+
+<!-- Main CSS-->
+<link href="~/ContentProduct/css/main.css" rel="stylesheet" media="all">
+
+<div class="page-wrapper bg-gra-03 p-t-45 p-b-50">
+    <div class="wrapper wrapper--w790">
+        <div class="card card-5">
+            <div class="card-heading">
+                <h2 class="title">Create your Post</h2>
+            </div>
+            <div class="card-body">
+                @using (Html.BeginForm("PostCreate", "Blog", FormMethod.Post, new { @class = "form-horizontal", @enctype = "multipart/form-data", role = "form" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-row m-b-55">
+                        @Html.LabelFor(m => m.Title, htmlAttributes: new { @class = "name" })
+                        <div class="value">
+                            <div class="input-group">
+                                @Html.TextBoxFor(m => m.Title, new { @class = "input--style-5", @placeholder = "Title" })
+                                @Html.ValidationMessageFor(m => m.Title, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+
+                        @Html.LabelFor(model => model.Content, htmlAttributes: new { @class = "name" })
+                        <div class="value">
+                            <div class="input-group">
+                                @Html.TextBoxFor(m => m.Content, new { @class = "input--style-5", @placeholder = "Content" })
+                                @Html.ValidationMessageFor(m => m.Content, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+
+                        @Html.LabelFor(model => model.imageUrl, htmlAttributes: new { @class = "name" })
+                        <div class="value">
+                            <div class="input-group">
+                                @Html.TextBox("file", null, new { type = "file", @accept = "image/*", @class = "input--style-5" })
+                                @Html.ValidationMessageFor(m => m.imageUrl, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+                    <div>
+                        <button class="btn btn--radius-2 btn--red" type="submit">Create</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Jquery JS-->
+<script src="~/ContentProduct/vendor/jquery/jquery.min.js"></script>
+<!-- Vendor JS-->
+<script src="~/ContentProduct/vendor/select2/select2.min.js"></script>
+<script src="~/ContentProduct/vendor/datepicker/moment.min.js"></script>
+<script src="~/ContentProduct/vendor/datepicker/daterangepicker.js"></script>
+
+<!-- Main JS-->
+<script src="~/ContentProduct/js/global.js"></script>
+
+
+
