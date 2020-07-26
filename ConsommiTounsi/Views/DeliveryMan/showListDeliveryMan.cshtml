@@ -1,0 +1,152 @@
+﻿
+@{
+    ViewBag.Title = "showListDeliveryMan";
+}
+
+
+@{ IEnumerable<ConsommiTounsi.Models.DeliveryManModel> deliveryMans = (IEnumerable<ConsommiTounsi.Models.DeliveryManModel>)ViewBag.DeliveryManModels; }
+<link rel="icon" type="image/png" href="~/Content2/images/icons/favicon.png" />
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/Content2/vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/Content2/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/Content2/fonts/themify/themify-icons.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/Content2/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/Content2/fonts/elegant-font/html-css/style.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/Content2/vendor/animate/animate.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/Content2/vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/Content2/vendor/animsition/css/animsition.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/Content2/vendor/select2/select2.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/Content2/vendor/slick/slick.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/Content2/css/util.css">
+<link rel="stylesheet" type="text/css" href="~/Content2/css/main.css">
+<section class="bg-title-page p-t-40 p-b-50 flex-col-c-m" style="background-image: url(../../Content2/images/heading-pages-01.jpg);">
+    <h2 class="l-text2 t-center">
+        Cart
+    </h2>
+</section>
+
+
+<section class="cart bgwhite p-t-70 p-b-100">
+    <!-- Cart item -->
+    @using (Html.BeginForm("RegisterDeliveryMan", "DeliveryMan", FormMethod.Post, new { @class = "login100-form validate-form", role = "form" }))
+    {
+        <div class="container-table-cart pos-relative">
+            <div class="wrap-table-shopping-cart bgwhite" id="orderitemlist">
+                <table class="table-shopping-cart">
+                    <tr class="table-head">
+                        <th class="column-1">Name</th>
+                        <th class="column-2">Sector</th>
+                        <th class="column-3">Phone number</th>
+                        <th class="column-4">Stat</th>
+                        <th class="column-5"></th>
+
+                    </tr>
+                    @if (deliveryMans != null)
+                    {
+                        foreach (var item in deliveryMans)
+                        {
+                            <tr class="table-row">
+
+                                <td class="column-1">@(item.Name)</td>
+                                <td class="column-2">@(item.DeliveryZone) </td>
+                                <td class="column-3">@(item.NumTel) </td>
+                                <td class="column-4">@(item.State) </td>
+                                <td class="column-5">
+                                    <div class="size10 trans-0-4 m-t-10 m-b-10">
+                                        <!-- Button -->
+                                        <button class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4">
+                                            Delete Delivery Man
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+
+
+
+                </table>
+            </div>
+        </div>
+    }
+       
+
+
+
+
+            <div class="size15 trans-0-4">
+                <!-- Button -->
+                <button class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4">
+                    Proceed to Checkout
+                </button>
+            </div>
+        </div>
+    </section>
+
+
+
+<!-- Footer -->
+<!-- Back to top -->
+<div class="btn-back-to-top bg0-hov" id="myBtn">
+    <span class="symbol-btn-back-to-top">
+        <i class="fa fa-angle-double-up" aria-hidden="true"></i>
+    </span>
+</div>
+
+<!-- Container Selection -->
+<div id="dropDownSelect1"></div>
+<div id="dropDownSelect2"></div>
+
+
+
+<!--===============================================================================================-->
+<script type="text/javascript" src="~/Content2/vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+<script type="text/javascript" src="~/Content2/vendor/animsition/js/animsition.min.js"></script>
+<!--===============================================================================================-->
+<script type="text/javascript" src="~/Content2/vendor/bootstrap/js/popper.js"></script>
+<script type="text/javascript" src="~/Content2/vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+<script type="text/javascript" src="~/Content2/vendor/select2/select2.min.js"></script>
+<script type="text/javascript">
+    $(".selection-1").select2({
+        minimumResultsForSearch: 20,
+        dropdownParent: $('#dropDownSelect1')
+    });
+
+    $(".selection-2").select2({
+        minimumResultsForSearch: 20,
+        dropdownParent: $('#dropDownSelect2')
+    });
+</script>
+<!--===============================================================================================-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script>
+    function removefromcartnotif(itemid) {
+        $.post("/Stock/RemoveItemFromCart", {
+            itemid: itemid
+        }, function (data) {
+            $("#cartnumber1").text(data);
+            $("#cartnumber2").text(data);
+            $("#cartnotif1").load(location.href + " #cartnotif1>*", "");
+            $("#cartnotif2").load(location.href + " #cartnotif2>*", "");
+            $("#cattotal1").load(location.href + " #cattotal1>*", "");
+            $("#cattotal2").load(location.href + " #cattotal2>*", "");
+            $("#orderitemlist").load(location.href + " #orderitemlist>*", "");
+
+        });
+
+
+    }
+</script>
+<script src="~/Content2/js/main.js"></script>

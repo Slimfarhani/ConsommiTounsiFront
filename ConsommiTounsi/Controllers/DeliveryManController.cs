@@ -36,10 +36,10 @@ namespace ConsommiTounsi.Controllers
         {
             return View();
         }
-        public ActionResult RegisterDeliveryMan()
+        public ActionResult UpdateDeliveryMan(DeliveryManModel DeliveryManModel)
         {
+            ViewBag.DeliveryManModels = DeliveryManModel;
             return View();
-
         }
 
 
@@ -60,7 +60,7 @@ namespace ConsommiTounsi.Controllers
                 client.BaseAddress = new Uri("http://localhost:8080/springboot-crud-rest/api/v1/");
                 var content = new StringContent(DeliveryManJson.ToString(), Encoding.UTF8, "application/json");
                 HttpResponseMessage response;
- 
+
                 response = client.PostAsync("DeliveryMan/add", content).Result;
 
             }
@@ -85,6 +85,27 @@ namespace ConsommiTounsi.Controllers
         }
 
         public ActionResult ListDeliveryMan(string searchString)
+        {
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri("http://localhost:8080/springboot-crud-rest/api/v1/");
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            HttpResponseMessage response;
+            System.Diagnostics.Debug.Write("searchsearch " + searchString);
+
+            {
+                System.Diagnostics.Debug.Write("simplesimple");
+                response = client.GetAsync("DeliveryMan/getAll").Result;
+            }
+
+            IEnumerable<DeliveryManModel> DeliveryManModels = response.Content.ReadAsAsync<IEnumerable<DeliveryManModel>>().Result;
+            ViewBag.DeliveryManModels = DeliveryManModels;
+            return View();
+        }
+
+
+
+
+        public ActionResult showListDeliveryMan(string searchString)
         {
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri("http://localhost:8080/springboot-crud-rest/api/v1/");

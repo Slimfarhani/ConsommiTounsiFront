@@ -263,6 +263,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\CartController.cs" />
+    <Compile Include="Controllers\ComplaintController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\DeliveryController.cs" />
     <Compile Include="Controllers\DeliveryManController.cs" />
@@ -8123,11 +8124,14 @@
     <Content Include="Views\DeliveryMan\ListDeliveryMan.cshtml" />
     <Content Include="Views\DeliveryMan\_PartialDeliveryMan.cshtml" />
     <Content Include="Views\DeliveryMan\IndexDetail.cshtml" />
+    <Content Include="Views\DeliveryMan\showListDeliveryMan.cshtml" />
+    <Content Include="Views\DeliveryMan\UpdateDeliveryMan.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="ResizedProductImages\" />
     <Folder Include="UserImages\" />
+    <Folder Include="Views\Complaint\" />
     <Folder Include="Views\Delivery\" />
   </ItemGroup>
   <ItemGroup>

@@ -17,5 +17,7 @@ namespace ConsommiTounsi.Models
         public string NumTel { get; set; }
         [JsonProperty("deliveryZone")]
         public string DeliveryZone { get; set; }
+        [JsonProperty("state")]
+        public string State { get; set; }
     }
 }
