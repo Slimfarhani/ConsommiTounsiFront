@@ -11,7 +11,7 @@ namespace ConsommiTounsi.Models
     {
         [JsonProperty("userId")]
         [Required]
-        public string userId { get; set; }
+        public long userId { get; set; }
 
         [JsonProperty("name")]
         [Required]

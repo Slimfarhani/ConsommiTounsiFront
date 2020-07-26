@@ -107,8 +107,8 @@ namespace ConsommiTounsi.Controllers
 
             IEnumerable<Stock> stocks = response.Content.ReadAsAsync<IEnumerable<Stock>>().Result;
             ViewBag.stocks = stocks;
-            System.Diagnostics.Debug.WriteLine("supplier is blocked : " + Isblocked(supplier.userId));
-            ViewBag.IsBlocked = Isblocked(supplier.userId);
+            System.Diagnostics.Debug.WriteLine("supplier is blocked : " + Isblocked(""+supplier.userId));
+            ViewBag.IsBlocked = Isblocked(""+supplier.userId);
 
             return View(supplier);
 

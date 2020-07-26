@@ -81,7 +81,7 @@ namespace ConsommiTounsi.Controllers
                 UserRegisterModel currentUser = (UserRegisterModel)Session["User"];
                 System.Diagnostics.Debug.WriteLine("current user id "+currentUser.userId);
 
-                supplier.userId = currentUser.userId.ToString();
+                supplier.userId = currentUser.userId;
                 System.Diagnostics.Debug.WriteLine("supplier  id " + supplier.userId);
                 model.Supplier = supplier;
                 var customerJson = await Task.Run(() => JsonConvert.SerializeObject(model));
