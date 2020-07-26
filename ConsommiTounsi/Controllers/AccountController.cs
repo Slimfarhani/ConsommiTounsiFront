@@ -79,6 +79,29 @@ namespace ConsommiTounsi.Controllers
             return View();
         }
 
+        public Boolean Isblocked(string id)
+        {
+            HttpClient client2 = new HttpClient();
+            client2.BaseAddress = new Uri("http://localhost:8080/springboot-crud-rest/api/v1/");
+            client2.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            HttpResponseMessage response2;
+            response2 = client2.GetAsync("blocked/"+id).Result;
+            Boolean valid;
+            try
+            {
+                valid = response2.Content.ReadAsAsync<Boolean>().Result;
+
+            }
+            catch (Exception e)
+            {
+                valid = false;
+            }
+
+            System.Diagnostics.Debug.WriteLine("valid  : " + response2.ToString());
+
+            return valid;
+
+        }
         //
         // POST: /Account/Login
         [HttpPost]
@@ -90,13 +113,19 @@ namespace ConsommiTounsi.Controllers
             {
                 return View(model);
             }
+           
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri("http://localhost:8080/springboot-crud-rest/api/v1/");
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             HttpResponseMessage response = client.GetAsync("user/"+model.userName+"/"+model.password).Result;
             UserRegisterModel User = response.Content.ReadAsAsync<UserRegisterModel>().Result;
-            
-            if ((int)User.birthdateFormatted.Day>0 && (int)User.birthdateFormatted.Day < 10)
+            System.Diagnostics.Debug.WriteLine("user  : " + User.userId);
+            if (Isblocked(User.userId.ToString()))
+            {
+                ViewData["error"] = "User is blocked until "+User.blockdate.Substring(0,10);
+                return View(model);
+            }
+                if ((int)User.birthdateFormatted.Day>0 && (int)User.birthdateFormatted.Day < 10)
             {
                 User.birthdateString = "0"+User.birthdateFormatted.Day.ToString() + "/" + User.birthdateFormatted.Month.ToString() + "/" + User.birthdateFormatted.Year.ToString();
             }
@@ -137,9 +166,9 @@ namespace ConsommiTounsi.Controllers
         
         public void UpdateCartNotification()
         {
-            System.Diagnostics.Debug.WriteLine("helloo1");
+            
             UserRegisterModel user = (UserRegisterModel)Session["User"];
-            System.Diagnostics.Debug.WriteLine("role 1  : " + user.role);
+           
             context = new MyContext();
             var UserLoggedIn = Session["User"] as UserRegisterModel;
             IEnumerable<OrderItem> items; 

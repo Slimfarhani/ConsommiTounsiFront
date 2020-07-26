@@ -42,6 +42,8 @@ namespace ConsommiTounsi.Models
         public string urlImage { get; set; }
         [Compare("password", ErrorMessage = "Confirm password doesn't match, Type again !")]
         public string confirmPassword { get; set; }
+        [JsonProperty("blocked")]
+        public String blockdate { get; set; }
 
     }
 }

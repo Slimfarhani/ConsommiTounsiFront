@@ -33,7 +33,18 @@ namespace ConsommiTounsi.Controllers
             response = client.GetAsync("events/search/" + id).Result;
             Event Event = response.Content.ReadAsAsync<Event>().Result;
             response = client.GetAsync("events/Donations/"+id).Result;
-            string donation = response.Content.ReadAsAsync<string>().Result;
+            string donation;
+            try
+            {
+
+                donation = response.Content.ReadAsAsync<string>().Result;
+
+            }
+            catch (Exception e)
+            {
+                ViewBag.donation = "0";
+                return View(Event);
+            }
             if (donation != null)
             {
                 ViewBag.donation = donation;

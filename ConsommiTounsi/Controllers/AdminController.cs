@@ -86,6 +86,10 @@ namespace ConsommiTounsi.Controllers
             HttpResponseMessage response;
             response = client.GetAsync("search/" + id).Result;
             Customer customer= response.Content.ReadAsAsync<Customer>().Result;
+          
+            System.Diagnostics.Debug.WriteLine("supplier is blocked : " + Isblocked(customer.userId.ToString()));
+
+            ViewBag.IsBlocked = Isblocked(customer.userId.ToString());
             return View(customer);
            
         }
@@ -102,12 +106,14 @@ namespace ConsommiTounsi.Controllers
             
 
             IEnumerable<Stock> stocks = response.Content.ReadAsAsync<IEnumerable<Stock>>().Result;
-            System.Diagnostics.Debug.WriteLine("supplier : " + stocks.FirstOrDefault().supplier.userId);
             ViewBag.stocks = stocks;
+            System.Diagnostics.Debug.WriteLine("supplier is blocked : " + Isblocked(supplier.userId));
+            ViewBag.IsBlocked = Isblocked(supplier.userId);
+
             return View(supplier);
 
         }
-        String updateUsername;
+
         public ActionResult UpdateCustomer( int id)
         {
 
@@ -383,11 +389,82 @@ namespace ConsommiTounsi.Controllers
             return valid;
 
         }
+        public Boolean Isblocked(string id)
+        {
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri("http://localhost:8080/springboot-crud-rest/api/v1/blocked/");
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            HttpResponseMessage response;
+            response = client.GetAsync(id).Result;
+            Boolean valid = response.Content.ReadAsAsync<Boolean>().Result;
+            return valid;
+
+        }
         public ActionResult PageNotFound()
         {
             return View();
         }
+        public ActionResult BlockUser(long id )
+        {
+            BlockUserModel blockUserModel = new BlockUserModel();
+            blockUserModel.userId = id;
+            return View(blockUserModel);
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> BlockUser(BlockUserModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                    DateTime localDate = DateTime.Now;
+                    if(model.Blockdate < localDate)
+                {
+                    ViewData["error"] = "Login already exists";
+
+                }
+                else
+                {
+
+                
+                    var USerJson = await Task.Run(() => JsonConvert.SerializeObject(model));
+                    HttpClient client = new HttpClient();
+                    client.BaseAddress = new Uri("http://localhost:8080/springboot-crud-rest/api/v1/");
+                    var content = new StringContent(USerJson.ToString(), Encoding.UTF8, "application/json");
+                    System.Diagnostics.Debug.WriteLine(content.ReadAsStringAsync());
+                    HttpResponseMessage response = client.PutAsync("admin/update/" + model.userId, content).Result;
+                    System.Diagnostics.Debug.WriteLine(response);
+                    return RedirectToAction("/index");
+                }
+            }
+
+            return View(model);
+
+        }
+        public async Task<ActionResult> UnblockUser( long id)
+        {
+          
+                DateTime localDate = DateTime.Now;
+
+
+                    BlockUserModel model = new BlockUserModel();
+
+            model.userId = id;
+   
+                    var USerJson = await Task.Run(() => JsonConvert.SerializeObject(model));
+                    HttpClient client = new HttpClient();
+                    client.BaseAddress = new Uri("http://localhost:8080/springboot-crud-rest/api/v1/");
+                    var content = new StringContent(USerJson.ToString(), Encoding.UTF8, "application/json");
+                    System.Diagnostics.Debug.WriteLine(content.ReadAsStringAsync());
+                    HttpResponseMessage response = client.PutAsync("admin/update/" + model.userId, content).Result;
+                    System.Diagnostics.Debug.WriteLine(response);
+                    return RedirectToAction("/index");
+                
+   
+
+        }
 
     }
+
 
 }

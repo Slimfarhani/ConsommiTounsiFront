@@ -278,6 +278,7 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminUpdateModel.cs" />
+    <Compile Include="Models\BlockUserModel.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Comment_React.cs" />
     <Compile Include="Models\Customer.cs" />
@@ -8139,10 +8140,10 @@
     <Content Include="Views\Event\List.cshtml" />
     <Content Include="Views\Event\DisplaySupplierEvents.cshtml" />
     <Content Include="Views\Event\EventDetails.cshtml" />
+    <Content Include="Views\Admin\BlockUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="EventImages\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
