@@ -287,6 +287,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\Participation.cs" />
+    <Compile Include="Models\ParticipationId.cs" />
     <Compile Include="Models\Post.cs" />
     <Compile Include="Models\Post_React.cs" />
     <Compile Include="Models\ProductFormModel.cs" />
@@ -8140,7 +8141,11 @@
     <Content Include="Views\Event\List.cshtml" />
     <Content Include="Views\Event\DisplaySupplierEvents.cshtml" />
     <Content Include="Views\Event\EventDetails.cshtml" />
-    <Content Include="Views\Admin\BlockUser.cshtml" />
+    <Content Include="Views\Event\DisplayAdminEvents.cshtml" />
+    <Content Include="Views\Event\DisplayClientEvents.cshtml" />
+    <Content Include="Views\Event\ParticipateEvent.cshtml" />
+	<Content Include="Views\Admin\BlockUser.cshtml" />
+  
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,65 @@
+﻿@model IEnumerable<ConsommiTounsi.Models.Event>
+@{
+    ViewBag.Title = "DisplayClientEvents";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+@{ ConsommiTounsi.Models.UserRegisterModel user = (ConsommiTounsi.Models.UserRegisterModel)Session["User"];}
+
+<section class="bgwhite p-t-55 p-b-65">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-sm-6 col-md-8 col-lg-9 p-b-50">
+
+                <!-- Product -->
+                @foreach (var item in Model)
+                {
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6 col-lg-4 p-b-50">
+                            <!-- Block2 -->
+                            <div class="block2">
+                                <div class="block2-img wrap-pic-w of-hidden pos-relative ">
+                                    <img src="~/EventImages/@item.UrlImage" alt="IMG-PRODUCT">
+
+                                    <div class="block2-overlay trans-0-4">
+
+                                        <div class="block2-btn-addcart w-size1 trans-0-4">
+                                            <!-- Button -->
+                                            @if (user != null)
+                                            {
+                                                if (user.role == "Customer")
+                                                {
+                                                    <a class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4" href="@Url.Action("ParticipateEvent", "Event", new { id = item.EventId })"> Participate</a>
+
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <a class="flex-c-m size1 bg4 bo-rad-23 hov1 s-text1 trans-0-4" href="@Url.Action("ParticipateEvent", "Event", new { id = item.EventId })"> Details</a>
+
+                                            }
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="block2-txt p-t-20">
+                                    <a href="@Url.Action("ParticipateEvent", "Event", new { id = item.EventId })" class="block2-name dis-block s-text3 p-b-5">
+                                        @item.Title
+                                    </a>
+
+                                    <span class="block2-price m-text6 p-r-5">
+                                        @item.StartDatedateFormatted.ToString("dd/MM/yyyy")-@item.EndDatedateFormatted.ToString("dd/MM/yyyy")
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</section>
