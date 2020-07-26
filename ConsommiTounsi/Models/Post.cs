@@ -8,7 +8,7 @@ namespace ConsommiTounsi.Models
 {
     public class Post
     {
-        
+
         [JsonProperty("postId")]
         public long PostId { get; set; }
         [JsonProperty("title")]
@@ -19,8 +19,9 @@ namespace ConsommiTounsi.Models
         public int RatingTotal { get; set; }
         [JsonProperty("ratingNumber")]
         public int RatingNumber { get; set; }
-        [JsonProperty("custmer")]
-        public Customer customer { get; set; }
-        
+        [JsonProperty("user")]
+        public UserRegisterModel User { get; set; }
+        [JsonProperty("urlImage")]
+        public string imageUrl { get; set; }
     }
 }
