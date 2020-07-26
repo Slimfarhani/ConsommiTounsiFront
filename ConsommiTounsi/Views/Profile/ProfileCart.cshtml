@@ -46,7 +46,7 @@
                             </div>
                         </td>
                         <td class="column-2">@(item.Name)</td>
-                        <td class="column-3">@(item.Total) TND</td>
+                        <td class="column-3">@(item.Price) TND</td>
                         <td class="column-4">
 
                             <div class="flex-w bo5 of-hidden w-size17">
@@ -61,7 +61,7 @@
                                 </button>
                             </div>
                         </td>
-                        <td class="column-5" id="itemtotalincart@(item.OrderItemId)">@(item.Total*item.Quantity) TND</td>
+                        <td class="column-5" id="itemtotalincart@(item.OrderItemId)">@(item.Price*item.Quantity) TND</td>
                     </tr>
                 }
             }
@@ -164,7 +164,7 @@
 <script>
     function removefromcart(itemid) {
 
-        $.post("/Stock/RemoveItemFromCart", {
+        $.post("/Cart/RemoveItemFromCart", {
             itemid: itemid
         }, function (data) {
             $("#cartnumber1").text(data);
@@ -185,7 +185,7 @@
 <script>
     function minusitemnumberincart(itemid) {
 
-        $.post("/Stock/MinusItemNumberInCart", {
+        $.post("/Cart/MinusItemNumberInCart", {
             itemid: itemid,
             number: $("#itemnumberincart-"+itemid).val()
         }, function (data) {
@@ -205,7 +205,7 @@
 <script>
     function plusitemnumberincart(itemid) {
 
-        $.post("/Stock/PlusItemNumberInCart", {
+        $.post("/Cart/PlusItemNumberInCart", {
             itemid: itemid,
             number: $("#itemnumberincart-"+itemid).val()
         }, function (data) {

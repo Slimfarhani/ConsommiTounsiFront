@@ -12,13 +12,15 @@ using System.Drawing.Imaging;
 using Data;
 using Domain.Entities;
 using Newtonsoft.Json;
+using System.Threading.Tasks;
+using System.Text;
 
 namespace ConsommiTounsi.Controllers
 {
     public class StockController : Controller
     {
-        // GET: Product
         MyContext context;
+        // GET: Product
         public ActionResult Index(string searchString)
         {
             HttpClient client = new HttpClient();
@@ -37,7 +39,21 @@ namespace ConsommiTounsi.Controllers
             }
 
             IEnumerable<Stock> stocks = response.Content.ReadAsAsync<IEnumerable<Stock>>().Result;
-            System.Diagnostics.Debug.WriteLine("supplier : " + stocks.FirstOrDefault().supplier.userId);
+            ViewBag.stocks = stocks;
+            return View();
+        }
+        public ActionResult IndexByCategory(string category)
+        {
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri("http://localhost:8080/springboot-crud-rest/api/v1/");
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            HttpResponseMessage response;
+            
+                response = client.GetAsync("stock").Result;
+            
+
+            IEnumerable<Stock> stocks = response.Content.ReadAsAsync<IEnumerable<Stock>>().Result;
+            stocks = stocks.Where(s => s.product.category.ToString() == category);
             ViewBag.stocks = stocks;
             return View();
         }
@@ -53,73 +69,77 @@ namespace ConsommiTounsi.Controllers
             System.Diagnostics.Debug.WriteLine(stock.product.productName);
             return View(stock);
         }
-        [HttpPost]
-        [AllowAnonymous]
-        public int AddToCartFromIndex(int productid,int supplierid,float price,string name,string urlimage,int total)
+        public ActionResult StockCartIndex()
+        {
+            context = new MyContext();
+            var UserLoggedIn = (UserRegisterModel)Session["User"];
+            IEnumerable<StockItem> items = context.StockItems.OrderByDescending(o => o.StockItemId).Where(o => o.UserID == UserLoggedIn.userId);
+            return View(items);
+        }
+        public int AddToStockCartFromIndex(int productid, float price, string name, string urlimage, int total)
         {
             System.Diagnostics.Debug.WriteLine("productid : " + productid);
-            System.Diagnostics.Debug.WriteLine("supplierid : " + supplierid);
             System.Diagnostics.Debug.WriteLine("total : " + price);
             System.Diagnostics.Debug.WriteLine("number : " + total);
             var UserLoggedIn = Session["User"] as UserRegisterModel;
             if (UserLoggedIn != null)
             {
                 context = new MyContext();
-                OrderItem item = new OrderItem();
+                StockItem item = new StockItem();
                 item.ProductId = productid;
-                item.SupplierId = supplierid;
                 item.Quantity = total;
-                item.Total = price;
+                item.Price = price;
                 item.UserID = UserLoggedIn.userId;
                 item.Name = name;
                 item.ImageUrl = urlimage;
-                context.OrderItems.Add(item);
+                context.StockItems.Add(item);
                 context.SaveChanges();
-                UpdateCartNotification();
-                return (int)Session["ItemNumber"];
+                UpdateStockCartNotification();
+                return (int)Session["StockItemNumber"];
             }
-            return (int)Session["ItemNumber"];
+            return (int)Session["StockItemNumber"];
 
 
         }
-        public void UpdateCartNotification()
+        public void UpdateStockCartNotification()
         {
             context = new MyContext();
             var UserLoggedIn = Session["User"] as UserRegisterModel;
-            IEnumerable<OrderItem> items;
-            items = context.OrderItems.OrderByDescending(o => o.OrderItemId).Where(o => o.UserID == UserLoggedIn.userId);
+            IEnumerable<StockItem> items;
+            items = context.StockItems.OrderByDescending(o => o.StockItemId).Where(o => o.UserID == UserLoggedIn.userId);
             items = items.Take(3);
-            Session["ItemsInCartNotification"] = items;
-            Session["ItemNumber"] = context.OrderItems.Count(m => m.UserID == UserLoggedIn.userId);
+            Session["StockItemsInStockCartNotification"] = items;
+            Session["StockItemNumber"] = context.StockItems.Count(m => m.UserID == UserLoggedIn.userId);
             try
             {
 
-                Session["ItemsInCartTotal"] = context.OrderItems.Where(o => o.UserID == UserLoggedIn.userId).Select(o => o.Total*o.Quantity).Sum();
+                Session["StockItemsInStockCartTotal"] = context.StockItems.Where(o => o.UserID == UserLoggedIn.userId).Select(o => o.Price * o.Quantity).Sum();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                Session["ItemsInCartTotal"] = (float)0;
+                Session["StockItemsInStockCartTotal"] = (float)0;
             }
         }
-        public void DeleteAllItemsInCart()
+        public void DeleteAllStockItemsInStockCart()
         {
             context = new MyContext();
-            foreach (var entity in context.OrderItems)
-                context.OrderItems.Remove(entity);
+            var UserLoggedIn = Session["User"] as UserRegisterModel;
+            foreach (var entity in context.StockItems.Where(o => o.UserID == UserLoggedIn.userId))
+                context.StockItems.Remove(entity);
             context.SaveChanges();
-            UpdateCartNotification();
+            UpdateStockCartNotification();
         }
-        public int RemoveItemFromCart(long itemid)
+        public int RemoveStockItemFromStockCart(long itemid)
         {
             context = new MyContext();
             System.Diagnostics.Debug.WriteLine("id : " + itemid);
-            OrderItem item = context.OrderItems.First(o=>o.OrderItemId==itemid);
-            context.OrderItems.Remove(item);
+            StockItem item = context.StockItems.First(o => o.StockItemId == itemid);
+            context.StockItems.Remove(item);
             context.SaveChanges();
-            UpdateCartNotification();
-            return (int)Session["ItemNumber"];
+            UpdateStockCartNotification();
+            return (int)Session["StockItemNumber"];
         }
-        public float MinusItemNumberInCart(long itemid,int number)
+        public float MinusStockItemNumberInStockCart(long itemid, int number)
         {
             System.Diagnostics.Debug.WriteLine("number : " + number);
             if (number > 1)
@@ -129,52 +149,128 @@ namespace ConsommiTounsi.Controllers
             context = new MyContext();
             System.Diagnostics.Debug.WriteLine("id : " + itemid);
 
-            var item= context.OrderItems.SingleOrDefault(o => o.OrderItemId == itemid);
+            var item = context.StockItems.SingleOrDefault(o => o.StockItemId == itemid);
             item.Quantity = number;
             context.SaveChanges();
-            UpdateCartNotification();
-            return item.Quantity*item.Total;
-            
+            UpdateStockCartNotification();
+            return item.Quantity * item.Price;
+
         }
-        public float PlusItemNumberInCart(long itemid, int number)
+        public float PlusStockItemNumberInStockCart(long itemid, int number)
         {
             System.Diagnostics.Debug.WriteLine("number : " + number);
-            
-                number++;
+
+            number++;
             context = new MyContext();
             System.Diagnostics.Debug.WriteLine("id : " + itemid);
 
-            var item = context.OrderItems.SingleOrDefault(o => o.OrderItemId == itemid);
+            var item = context.StockItems.SingleOrDefault(o => o.StockItemId == itemid);
             item.Quantity = number;
             context.SaveChanges();
-            UpdateCartNotification();
-            return item.Quantity * item.Total;
+            UpdateStockCartNotification();
+            return item.Quantity * item.Price;
 
         }
-        
-        public static Bitmap ResizeImage(Image image, int width, int height)
+        public float UpdateStockInStockCart(long itemid,float price)
         {
-            var destRect = new Rectangle(0, 0, width, height);
-            var destImage = new Bitmap(width, height);
+            
+            context = new MyContext();
+            System.Diagnostics.Debug.WriteLine("id : " + itemid);
 
-            destImage.SetResolution(image.HorizontalResolution, image.VerticalResolution);
-
-            using (var graphics = Graphics.FromImage(destImage))
-            {
-                graphics.CompositingMode = CompositingMode.SourceCopy;
-                graphics.CompositingQuality = CompositingQuality.HighQuality;
-                graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                graphics.SmoothingMode = SmoothingMode.HighQuality;
-                graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
-
-                using (var wrapMode = new ImageAttributes())
-                {
-                    wrapMode.SetWrapMode(WrapMode.TileFlipXY);
-                    graphics.DrawImage(image, destRect, 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, wrapMode);
-                }
-            }
-            return destImage;
+            var item = context.StockItems.SingleOrDefault(o => o.StockItemId == itemid);
+            item.Price = price;
+            context.SaveChanges();
+            UpdateStockCartNotification();
+            return item.Quantity * item.Price;
         }
+        public async Task<ActionResult> UpdateStock()
+        {
+            System.Diagnostics.Debug.WriteLine("here");
+            var UserLoggedIn = (UserRegisterModel)Session["User"];
+            context = new MyContext();
+            IEnumerable<StockItem> items = context.StockItems.OrderByDescending(o => o.StockItemId).Where(o => o.UserID == UserLoggedIn.userId);
+            List<Stock> stocks = new List<Stock>();
+            foreach (StockItem item in items)
+            {
+                Product product = new Product();
+                product.productId = item.ProductId;
+                Supplier supplier = new Supplier();
+                supplier.userId = item.UserID;
+                Stock stock = new Stock();
+                stock.price = item.Price;
+                stock.quantity = item.Quantity;
+                stock.supplier = supplier;
+                stock.product = product;
+                stocks.Add(stock);
+            }
+            
+            var stocksJson = await Task.Run(() => JsonConvert.SerializeObject(stocks));
+
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri("http://localhost:8080/springboot-crud-rest/api/v1/");
+            var content = new StringContent(stocksJson.ToString(), Encoding.UTF8, "application/json");
+            HttpResponseMessage response;
+            response = client.PostAsync("updatestockfromcart", content).Result;
+            foreach (var entity in context.StockItems.Where(o => o.UserID == UserLoggedIn.userId))
+                context.StockItems.Remove(entity);
+            context.SaveChanges();
+            UpdateStockCartNotification();
+            return View();
+        }
+        public ActionResult ProfileStock()
+        {
+            HttpClient client = new HttpClient();
+            var UserLoggedIn = (UserRegisterModel)Session["User"];
+            client.BaseAddress = new Uri("http://localhost:8080/springboot-crud-rest/api/v1/");
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            HttpResponseMessage response;
+            System.Diagnostics.Debug.Write("simplesimple");
+            response = client.GetAsync("stockbysupplier/"+UserLoggedIn.userId).Result;
+
+            IEnumerable<Stock> stocks = response.Content.ReadAsAsync<IEnumerable<Stock>>().Result;
+            return PartialView(stocks);
+        }
+        public void RemoveStock(long productid)
+        {
+            HttpClient client = new HttpClient();
+            var UserLoggedIn = (UserRegisterModel)Session["User"];
+            client.BaseAddress = new Uri("http://localhost:8080/springboot-crud-rest/api/v1/");
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            HttpResponseMessage response;
+            response = client.DeleteAsync("deletestockbysupplier/" + UserLoggedIn.userId + "/" + productid).Result;
+
+        }
+        public void UpdateAllStock()
+        {
+            HttpClient client = new HttpClient();
+            var UserLoggedIn = (UserRegisterModel)Session["User"];
+            client.BaseAddress = new Uri("http://localhost:8080/springboot-crud-rest/api/v1/");
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            HttpResponseMessage response;
+            response = client.GetAsync("stockbysupplier/" + UserLoggedIn.userId).Result;
+
+            context = new MyContext();
+            IEnumerable<Stock> stocks = response.Content.ReadAsAsync<IEnumerable<Stock>>().Result;
+            if (UserLoggedIn != null)
+            {
+                foreach(Stock stock in stocks)
+                {
+                    StockItem item = new StockItem();
+                    item.ProductId = stock.product.productId;
+                    item.Quantity = (int)stock.quantity;
+                    item.Price = (float)stock.price;
+                    item.UserID = UserLoggedIn.userId;
+                    item.Name = stock.product.productName;
+                    item.ImageUrl = stock.product.imageUrl;
+                    context.StockItems.Add(item);
+                    
+                }
+                context.SaveChanges();
+                UpdateStockCartNotification();
+
+            }
+        }
+
 
     }
 }

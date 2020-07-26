@@ -3,7 +3,7 @@
     ViewBag.Title = "Profile";
     Layout = "~/Views/Shared/_Layout2.cshtml";
 }
-@{ 
+@{
     ConsommiTounsi.Models.UserRegisterModel user = (ConsommiTounsi.Models.UserRegisterModel)Session["User"];
 }
 <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
@@ -24,17 +24,25 @@
                 <li class="active">
                     <a href="/Profile/Profile">My Profile</a>
                 </li>
-                @if (user!=null && user.role == "Customer")
+                @if (user != null && user.role == "Customer")
                 {
-                <li class="active">
-                    <a href="javascript:profilecart()">My Cart</a>
-                </li>
+                    <li class="active">
+                        <a href="javascript:profilecart()">My Cart</a>
+                    </li>
 
                 }
-                
-                <li>
-                    <a href="#">My Orders</a>
-                </li>
+                @if (user != null && user.role == "Supplier")
+                {
+                    <li>
+                        <a href="javascript:profilestock()">My Stock</a>
+                    </li>
+                }
+                @if (user != null && user.role == "Customer")
+                {
+                    <li>
+                        <a href="javascript:profileorder()">My Orders</a>
+                    </li>
+                }
                 <li>
                     <a href="#">My Participations</a>
                 </li>
@@ -81,10 +89,30 @@
         $.get("/Profile/ProfileCart", function (data) {
             $("#contentprofile").html(data);
             $(".animsition-loading-1").css("display", "none");
-            
+
         });
     }
 </script>
+<script>
+    function profilestock() {
+        $.get("/Stock/ProfileStock", function (data) {
+            $("#contentprofile").html(data);
+            $(".animsition-loading-1").css("display", "none");
+
+        });
+    }
+</script>
+<script>
+    function profileorder() {
+        $.get("/Order/IndexCustomer", function (data) {
+            $("#contentprofile").html(data);
+            $(".animsition-loading-1").css("display", "none");
+
+        });
+    }
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+
 <script src="~/ContentProfile/js/jquery.min.js"></script>
 <script src="~/ContentProfile/js/popper.js"></script>
 <script src="~/ContentProfile/js/bootstrap.min.js"></script>

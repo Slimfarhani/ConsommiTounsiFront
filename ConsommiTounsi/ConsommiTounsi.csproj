@@ -267,6 +267,7 @@
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\StockController.cs" />
@@ -286,6 +287,9 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Order.cs" />
+    <Compile Include="Models\OrderForm.cs" />
+    <Compile Include="Models\Order_Detail.cs" />
+    <Compile Include="Models\Order_State.cs" />
     <Compile Include="Models\Participation.cs" />
     <Compile Include="Models\ParticipationId.cs" />
     <Compile Include="Models\Post.cs" />
@@ -303,6 +307,8 @@
     <Content Include="Content2\images\icons\consommitounsilogo.png" />
     <Content Include="Content2\images\icons\favicon.ico" />
     <Content Include="Content2\images\icons\registerimage.jpg" />
+    <Content Include="Content2\images\icons\stock-icon.png" />
+    <Content Include="Content2\images\icons\stock-icon2.png" />
     <Content Include="Content2\images\img-01.png" />
     <Content Include="Content2\vendor\tilt\tilt.jquery.min.js" />
     <Content Include="ContentAdmin\build\images\american-express.png" />
@@ -8132,23 +8138,34 @@
     <Content Include="Views\Profile\Profile.cshtml" />
     <Content Include="Views\Profile\ProfileCart.cshtml" />
     <Content Include="Views\Profile\ProfileUser.cshtml" />
-    <Content Include="Views\Stock\Index.cshtml" />
-    <Content Include="Views\Stock\IndexDetail.cshtml" />
-    <Content Include="Views\Stock\_PartialStock.cshtml" />
-    <Content Include="Views\Admin\PageNotFound.cshtml" />
-    <Content Include="Views\Admin\UpdateAdmin.cshtml" />
-    <Content Include="Views\Event\AddEvent.cshtml" />
-    <Content Include="Views\Event\List.cshtml" />
-    <Content Include="Views\Event\DisplaySupplierEvents.cshtml" />
-    <Content Include="Views\Event\EventDetails.cshtml" />
-    <Content Include="Views\Event\DisplayAdminEvents.cshtml" />
-    <Content Include="Views\Event\DisplayClientEvents.cshtml" />
-    <Content Include="Views\Event\ParticipateEvent.cshtml" />
-	<Content Include="Views\Admin\BlockUser.cshtml" />
-  
+    <Content Include="Views\Profile\ProfileCart.cshtml" />
+    <Content Include="Views\Order\Create.cshtml" />
+    <Content Include="Views\Stock\StockCartIndex.cshtml" />
+    <Content Include="Views\Stock\UpdateStock.cshtml" />
+    <Content Include="Views\Stock\ProfileStock.cshtml" />
+    <Content Include="Views\Order\IndexCustomer.cshtml" />
+    <Content Include="Views\Blog\Index.cshtml" />
+    <Content Include="Views\Blog\PostCreate.cshtml" />
+    <Content Include="Views\Product\Index.cshtml" />
+    <Content Include="Views\Product\_PartialProduct.cshtml" />
+    <Content Include="Views\Stock\IndexByCategory.cshtml" />
+    <Content Include="Views\Product\IndexByCategory.cshtml" />
+	 <Content Include="Views\Admin\PageNotFound.cshtml" />
+	  <Content Include="Views\Admin\UpdateAdmin.cshtml" />
+	  <Content Include="Views\Event\AddEvent.cshtml" />
+	  <Content Include="Views\Event\List.cshtml" />
+	  <Content Include="Views\Event\DisplaySupplierEvents.cshtml" />
+	  <Content Include="Views\Event\EventDetails.cshtml" />
+	  <Content Include="Views\Event\DisplayAdminEvents.cshtml" />
+	  <Content Include="Views\Event\DisplayClientEvents.cshtml" />
+	  <Content Include="Views\Event\ParticipateEvent.cshtml" />
+	  <Content Include="Views\Admin\BlockUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="PostImages\" />
+    <Folder Include="ResizedProductImages\" />
+    <Folder Include="UserImages\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

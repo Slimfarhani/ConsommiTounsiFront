@@ -6,20 +6,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--===============================================================================================-->
     <link rel="icon" type="image/png" href="~/Content2/images/icons/favicon.png" />
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/ContentProfile/css/style.css">
+    <link rel="icon" type="image/png" sizes="16x16" href="~/TestProfil/assets/images/favicon.png">
+    <!-- Bootstrap Core CSS -->
+    <link href="~/TestProfil/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="~/TestProfil/css/style.css" rel="stylesheet">
+    <!-- You can change the theme colors from here -->
+    <link href="~/TestProfil/css/colors/blue.css" id="theme" rel="stylesheet">
     <!--===============================================================================================-->
     @Styles.Render("~/bundles/css2")
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @{ ConsommiTounsi.Models.UserRegisterModel user = (ConsommiTounsi.Models.UserRegisterModel)Session["User"];}
     @{int itemNumber = 0;}
-        @if (Session["ItemNumber"] != null)
-        {
-            itemNumber = (int)Session["ItemNumber"];
+    @if (Session["ItemNumber"] != null)
+    {
+        itemNumber = (int)Session["ItemNumber"];
     }
     <!--===============================================================================================-->
 </head>
 <body class="animsition">
 
+    <!-- header fixed -->
     <!-- header fixed -->
     <div class="wrap_header fixed-header2 trans-0-4">
         <!-- Logo -->
@@ -44,7 +56,7 @@
                     </li>
 
                     <li>
-                        <a href="blog.html">Blog</a>
+                        <a href="/Blog/Index">Blog</a>
                     </li>
                     @if (user != null)
                     {
@@ -99,7 +111,7 @@
                 {
                     if (user.urlImage != null)
                     {
-                        <img src="~/UserImages/@(user.urlImage) " class="header-icon1 js-show-header-dropdown" alt="ICON">
+                        <img src="~/UserImages/@(user.urlImage) " style="width: 27px;height: 27px;" class="img-circle img-circle header-icon1 js-show-header-dropdown" alt="ICON">
                     }
                     else
                     {
@@ -154,67 +166,136 @@
             <span class="linedivide1"></span>
             @if (user != null)
             {
-                <div class="header-wrapicon2" id="cartdiv1">
-                    <img src="~/Content2/images/icons/icon-header-02.png" class="header-icon1 js-show-header-dropdown" alt="ICON">
-                    <span class="header-icons-noti" id="cartnumber1">@((int)Session["ItemNumber"])</span>
+                if (user.role == "Customer")
+                {
 
-                    <!-- Header cart noti -->
-                    <div class="header-cart header-dropdown" id="cartnotif1">
-                        <ul class="header-cart-wrapitem">
-                            @if ((IEnumerable<Domain.Entities.OrderItem>)Session["ItemsInCartNotification"] != null)
-                            {
-                                foreach (var item in (IEnumerable<Domain.Entities.OrderItem>)Session["ItemsInCartNotification"])
+                    <div class="header-wrapicon2" id="cartdiv1">
+                        <img src="~/Content2/images/icons/icon-header-02.png" class="header-icon1 js-show-header-dropdown" alt="ICON">
+                        <span class="header-icons-noti" id="cartnumber1">@((int)Session["ItemNumber"])</span>
+
+                        <!-- Header cart noti -->
+                        <div class="header-cart header-dropdown" id="cartnotif1">
+                            <ul class="header-cart-wrapitem">
+                                @if ((IEnumerable<Domain.Entities.OrderItem>)Session["ItemsInCartNotification"] != null)
                                 {
-                                    <li class="header-cart-item">
-                                        <div class="header-cart-item-img" style="cursor: pointer;" onclick="removefromcartnotif('@(item.OrderItemId)')">
-                                            <img src="~/ResizedProductImagesForCartNotif/@(item.ImageUrl)" alt="IMG">
-                                        </div>
+                                    foreach (var item in (IEnumerable<Domain.Entities.OrderItem>)Session["ItemsInCartNotification"])
+                                    {
+                                        <li class="header-cart-item">
+                                            <div class="header-cart-item-img" style="cursor: pointer;" onclick="removefromcartnotif('@(item.OrderItemId)')">
+                                                <img src="~/ResizedProductImagesForCartNotif/@(item.ImageUrl)" alt="IMG">
+                                            </div>
 
-                                        <div class="header-cart-item-txt">
-                                            <a href="#" class="header-cart-item-name">
-                                                @(item.Name)
-                                            </a>
+                                            <div class="header-cart-item-txt">
+                                                <a href="#" class="header-cart-item-name">
+                                                    @(item.Name)
+                                                </a>
 
-                                            <span class="header-cart-item-info">
-                                                @(item.Quantity) x @(item.Total)
-                                            </span>
-                                        </div>
-                                    </li>
+                                                <span class="header-cart-item-info">
+                                                    @(item.Quantity) x @(item.Price)
+                                                </span>
+                                            </div>
+                                        </li>
+                                    }
                                 }
+
+                            </ul>
+                            @if ((float)Session["ItemsInCartTotal"] != 0)
+                            {
+                                <div class="header-cart-total" id="cartotal1">
+                                    Total: @((float)Session["ItemsInCartTotal"]) TND
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="header-cart-total" id="cartotal1">
+                                    Total: 0 TND
+                                </div>
                             }
 
-                        </ul>
-                        @if ((float)Session["ItemsInCartTotal"] != 0)
-                        {
-                            <div class="header-cart-total" id="cartotal1">
-                                Total: @((float)Session["ItemsInCartTotal"]) TND
-                            </div>
-                        }
-                        else
-                        {
-                            <div class="header-cart-total" id="cartotal1">
-                                Total: 0 TND
-                            </div>
-                        }
 
+                            <div class="header-cart-buttons">
+                                <div class="header-cart-wrapbtn">
+                                    <!-- Button -->
+                                    <a href="/Cart/Index" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
+                                        View Cart
+                                    </a>
+                                </div>
 
-                        <div class="header-cart-buttons">
-                            <div class="header-cart-wrapbtn">
-                                <!-- Button -->
-                                <a href="/Cart/Index" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
-                                    View Cart
-                                </a>
-                            </div>
-
-                            <div class="header-cart-wrapbtn">
-                                <!-- Button -->
-                                <a href="javascript:deleteallitemsincart();" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
-                                    Empty Cart
-                                </a>
+                                <div class="header-cart-wrapbtn">
+                                    <!-- Button -->
+                                    <a href="javascript:deleteallitemsincart();" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
+                                        Empty Cart
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                }
+                else if (user.role == "Supplier")
+                {
+
+                    <div class="header-wrapicon2" id="cartdiv1">
+                        <img src="~/Content2/images/icons/stock-icon2.png" class="header-icon1 js-show-header-dropdown" alt="ICON">
+                        <span class="header-icons-noti" id="cartnumber1">@((int)Session["StockItemNumber"])</span>
+
+                        <!-- Header cart noti -->
+                        <div class="header-cart header-dropdown" id="cartnotif1">
+                            <ul class="header-cart-wrapitem">
+                                @if ((IEnumerable<Domain.Entities.StockItem>)Session["StockItemsInStockCartNotification"] != null)
+                                {
+                                    foreach (var item in (IEnumerable<Domain.Entities.StockItem>)Session["StockItemsInStockCartNotification"])
+                                    {
+                                        <li class="header-cart-item">
+                                            <div class="header-cart-item-img" style="cursor: pointer;" onclick="removefromstockcartnotif('@(item.StockItemId)')">
+                                                <img src="~/ResizedProductImagesForCartNotif/@(item.ImageUrl)" alt="IMG">
+                                            </div>
+
+                                            <div class="header-cart-item-txt">
+                                                <a href="#" class="header-cart-item-name">
+                                                    @(item.Name)
+                                                </a>
+
+                                                <span class="header-cart-item-info">
+                                                    @(item.Quantity) x @(item.Price)
+                                                </span>
+                                            </div>
+                                        </li>
+                                    }
+                                }
+
+                            </ul>
+                            @if ((float)Session["StockItemsInStockCartTotal"] != 0)
+                            {
+                                <div class="header-cart-total" id="cartotal1">
+                                    Total: @((float)Session["StockItemsInStockCartTotal"]) TND
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="header-cart-total" id="cartotal1">
+                                    Total: 0 TND
+                                </div>
+                            }
+
+
+                            <div class="header-cart-buttons">
+                                <div class="header-cart-wrapbtn">
+                                    <!-- Button -->
+                                    <a href="/Stock/StockCartIndex" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
+                                        View Stock
+                                    </a>
+                                </div>
+
+                                <div class="header-cart-wrapbtn">
+                                    <!-- Button -->
+                                    <a href="javascript:deleteallstockitemsinstockcart();" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
+                                        Empty Stock
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
             }
 
 
@@ -271,7 +352,7 @@
                         {
                             if (user.urlImage != null)
                             {
-                                <img src="~/UserImages/@(user.urlImage) " class="header-icon1 js-show-header-dropdown" alt="ICON">
+                                <img src="~/UserImages/@(user.urlImage)" style="width: 27px;height: 27px;" class="img-circle header-icon1 js-show-header-dropdown" alt="ICON">
                             }
                             else
                             {
@@ -325,66 +406,133 @@
                     <span class="linedivide1"></span>
                     @if (user != null)
                     {
-                        <div class="header-wrapicon2 m-r-13" id="cartdiv2">
-                            <img src="~/Content2/images/icons/icon-header-02.png" class="header-icon1 js-show-header-dropdown" alt="ICON">
-                            <span class="header-icons-noti" id="cartnumber2">@((int)Session["ItemNumber"])</span>
+                        if (user.role == "Customer")
+                        {
+                            <div class="header-wrapicon2 m-r-13" id="cartdiv2">
+                                <img src="~/Content2/images/icons/icon-header-02.png" class="header-icon1 js-show-header-dropdown" alt="ICON">
+                                <span class="header-icons-noti" id="cartnumber2">@((int)Session["ItemNumber"])</span>
 
-                            <!-- Header cart noti -->
-                            <div class="header-cart header-dropdown" id="cartnotif2">
-                                <ul class="header-cart-wrapitem">
-                                    @if ((IEnumerable<Domain.Entities.OrderItem>)Session["ItemsInCartNotification"] != null)
-                                    {
-                                        foreach (var item in (IEnumerable<Domain.Entities.OrderItem>)Session["ItemsInCartNotification"])
+                                <!-- Header cart noti -->
+                                <div class="header-cart header-dropdown" id="cartnotif2">
+                                    <ul class="header-cart-wrapitem">
+                                        @if ((IEnumerable<Domain.Entities.OrderItem>)Session["ItemsInCartNotification"] != null)
                                         {
-                                            <li class="header-cart-item">
-                                                <div class="header-cart-item-img" style="cursor: pointer;" onclick="removefromcartnotif('@(item.OrderItemId)')">
-                                                    <img src="~/ResizedProductImagesForCartNotif/@(item.ImageUrl)" alt="IMG">
-                                                </div>
+                                            foreach (var item in (IEnumerable<Domain.Entities.OrderItem>)Session["ItemsInCartNotification"])
+                                            {
+                                                <li class="header-cart-item">
+                                                    <div class="header-cart-item-img" style="cursor: pointer;" onclick="removefromcartnotif('@(item.OrderItemId)')">
+                                                        <img src="~/ResizedProductImagesForCartNotif/@(item.ImageUrl)" alt="IMG">
+                                                    </div>
 
-                                                <div class="header-cart-item-txt">
-                                                    <a href="#" class="header-cart-item-name">
-                                                        @(item.Name)
-                                                    </a>
+                                                    <div class="header-cart-item-txt">
+                                                        <a href="#" class="header-cart-item-name">
+                                                            @(item.Name)
+                                                        </a>
 
-                                                    <span class="header-cart-item-info">
-                                                        @(item.Quantity) x @(item.Total)
-                                                    </span>
-                                                </div>
-                                            </li>
+                                                        <span class="header-cart-item-info">
+                                                            @(item.Quantity) x @(item.Price)
+                                                        </span>
+                                                    </div>
+                                                </li>
+                                            }
                                         }
+                                    </ul>
+                                    @if ((float)Session["ItemsInCartTotal"] != 0)
+                                    {
+                                        <div class="header-cart-total" id="carttotal2">
+                                            Total: @((float)Session["ItemsInCartTotal"]) TND
+                                        </div>
                                     }
-                                </ul>
-                                @if ((float)Session["ItemsInCartTotal"] != 0)
-                                {
-                                    <div class="header-cart-total" id="carttotal2">
-                                        Total: @((float)Session["ItemsInCartTotal"]) TND
-                                    </div>
-                                }
-                                else
-                                {
-                                    <div class="header-cart-total" id="carttotal2">
-                                        Total: 0 TND
-                                    </div>
-                                }
+                                    else
+                                    {
+                                        <div class="header-cart-total" id="carttotal2">
+                                            Total: 0 TND
+                                        </div>
+                                    }
 
 
-                                <div class="header-cart-buttons">
-                                    <div class="header-cart-wrapbtn">
-                                        <!-- Button -->
-                                        <a href="/Cart/Index" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
-                                            View Cart
-                                        </a>
-                                    </div>
+                                    <div class="header-cart-buttons">
+                                        <div class="header-cart-wrapbtn">
+                                            <!-- Button -->
+                                            <a href="/Cart/Index" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
+                                                View Cart
+                                            </a>
+                                        </div>
 
-                                    <div class="header-cart-wrapbtn">
-                                        <!-- Button -->
-                                        <a href="javascript:deleteallitemsincart();" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
-                                            Empty Cart
-                                        </a>
+                                        <div class="header-cart-wrapbtn">
+                                            <!-- Button -->
+                                            <a href="javascript:deleteallitemsincart();" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
+                                                Empty Cart
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        }
+                        else if (user.role == "Supplier")
+                        {
+                            <div class="header-wrapicon2 m-r-13" id="cartdiv2">
+                                <img src="~/Content2/images/icons/stock-icon2.png" class="header-icon1 js-show-header-dropdown" alt="ICON">
+                                <span class="header-icons-noti" id="cartnumber2">@((int)Session["StockItemNumber"])</span>
+
+                                <!-- Header cart noti -->
+                                <div class="header-cart header-dropdown" id="cartnotif2">
+                                    <ul class="header-cart-wrapitem">
+                                        @if ((IEnumerable<Domain.Entities.StockItem>)Session["StockItemsInStockCartNotification"] != null)
+                                        {
+                                            foreach (var item in (IEnumerable<Domain.Entities.StockItem>)Session["StockItemsInStockCartNotification"])
+                                            {
+                                                <li class="header-cart-item">
+                                                    <div class="header-cart-item-img" style="cursor: pointer;" onclick="removefromstockcartnotif('@(item.StockItemId)')">
+                                                        <img src="~/ResizedProductImagesForCartNotif/@(item.ImageUrl)" alt="IMG">
+                                                    </div>
+
+                                                    <div class="header-cart-item-txt">
+                                                        <a href="#" class="header-cart-item-name">
+                                                            @(item.Name)
+                                                        </a>
+
+                                                        <span class="header-cart-item-info">
+                                                            @(item.Quantity) x @(item.Price)
+                                                        </span>
+                                                    </div>
+                                                </li>
+                                            }
+                                        }
+                                    </ul>
+                                    @if ((float)Session["StockItemsInStockCartTotal"] != 0)
+                                    {
+                                        <div class="header-cart-total" id="carttotal2">
+                                            Total: @((float)Session["StockItemsInStockCartTotal"]) TND
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="header-cart-total" id="carttotal2">
+                                            Total: 0 TND
+                                        </div>
+                                    }
+
+
+                                    <div class="header-cart-buttons">
+                                        <div class="header-cart-wrapbtn">
+                                            <!-- Button -->
+                                            <a href="/Stock/StockCartIndex" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
+                                                View Stock
+                                            </a>
+                                        </div>
+
+                                        <div class="header-cart-wrapbtn">
+                                            <!-- Button -->
+                                            <a href="javascript:deleteallstockitemsinstockcart();" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
+                                                Empty Stock
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
                     }
 
                 </div>
@@ -418,7 +566,7 @@
                             </li>
 
                             <li>
-                                <a href="blog.html">Blog</a>
+                                <a href="/Blog/Index">Blog</a>
                             </li>
                             @if (user != null)
                             {
@@ -535,7 +683,6 @@
                                 </ul>
 
                                 <div class="header-cart-total">
-                                    Total: @((float)Session["ItemsInCartTotal"]) TND
                                 </div>
 
                                 <div class="header-cart-buttons">
@@ -856,62 +1003,127 @@
         });
     </script>
 
+    @if (user != null)
+    {
+        if (user.role == "Customer")
+        {
+            <script type="text/javascript">
+                $('.block2-btn-addcart').each(function () {
+                    var nameProduct = $(this).parent().parent().parent().find('.block2-name').html();
+                    $(this).on('click', function () {
+                        swal(nameProduct, "is added to shopping cart !", "success");
+                    });
+                });
 
-    <script type="text/javascript">
-        $('.block2-btn-addcart').each(function () {
-            var nameProduct = $(this).parent().parent().parent().find('.block2-name').html();
-            $(this).on('click', function () {
-                swal(nameProduct, "is added to cart !", "success");
-            });
-        });
+                $('.block2-btn-addwishlist').each(function () {
+                    var nameProduct = $(this).parent().parent().parent().find('.block2-name').html();
+                    $(this).on('click', function () {
+                        swal(nameProduct, "is added to wishlist !", "success");
+                    });
+                });
+            </script>
 
-        $('.block2-btn-addwishlist').each(function () {
-            var nameProduct = $(this).parent().parent().parent().find('.block2-name').html();
-            $(this).on('click', function () {
-                swal(nameProduct, "is added to wishlist !", "success");
-            });
-        });
-    </script>
+        }
+        else if (user.role == "Supplier")
+        {
+            <script type="text/javascript">
+                $('.block2-btn-addcart').each(function () {
+                    var nameProduct = $(this).parent().parent().parent().find('.block2-name').html();
+                    $(this).on('click', function () {
+                        swal(nameProduct, "is added to stock cart !", "success");
+                    });
+                });
 
+                $('.block2-btn-addwishlist').each(function () {
+                    var nameProduct = $(this).parent().parent().parent().find('.block2-name').html();
+                    $(this).on('click', function () {
+                        swal(nameProduct, "is added to wishlist !", "success");
+                    });
+                });
+            </script>
+        }
+
+    }
     <!--===============================================================================================-->
     <script type="text/javascript" src="vendor/parallax100/parallax100.js"></script>
     <script type="text/javascript">
         $('.parallax100').parallax100();
     </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-    <script>
-        function deleteallitemsincart() {
-            $.post("/Stock/DeleteAllItemsInCart", {
-            }, function (data) {
-                $("#cartnumber1").text("0");
-                $("#cartnumber2").text("0");
-                $("#cartnotif1").load(location.href + " #cartnotif1>*", "");
-                $("#cartnotif2").load(location.href + " #cartnotif2>*", "");
-                $("#cattotal1").load(location.href + " #cattotal1>*", "");
-                $("#cattotal2").load(location.href + " #cattotal2>*", "");
-
-            });
-
-
-        }
-    </script>
-    <script>
-        function removefromcartnotif(itemid) {
-            $.post("/Stock/RemoveItemFromCart", {
-                itemid: itemid
-            }, function (data) {
-                $("#cartnumber1").text(data);
-                $("#cartnumber2").text(data);
-                $("#cartnotif1").load(location.href + " #cartnotif1>*", "");
-                $("#cartnotif2").load(location.href + " #cartnotif2>*", "");
-                $("#cattotal1").load(location.href + " #cattotal1>*", "");
-                $("#cattotal2").load(location.href + " #cattotal2>*", "");
-
-            });
+    @if (user != null)
+    {
+        <script>
+            function deleteallitemsincart() {
+                $.post("/Cart/DeleteAllItemsInCart", {
+                }, function (data) {
+                    $("#cartnumber1").text("0");
+                    $("#cartnumber2").text("0");
+                    $("#cartnotif1").load(location.href + " #cartnotif1>*", "");
+                    $("#cartnotif2").load(location.href + " #cartnotif2>*", "");
+                    $("#cattotal1").load(location.href + " #cattotal1>*", "");
+                    $("#cattotal2").load(location.href + " #cattotal2>*", "");
+                    $("#orderitemlist").load(location.href + " #orderitemlist>*", "");
+                    $("#carttotalincart").text("0 TND")
+                });
 
 
-        }
-    </script>
+            }
+        </script>
+        <script>
+            function deleteallstockitemsinstockcart() {
+                $.post("/Stock/DeleteAllStockItemsInStockCart", {
+                }, function (data) {
+                    $("#cartnumber1").text("0");
+                    $("#cartnumber2").text("0");
+                    $("#cartnotif1").load(location.href + " #cartnotif1>*", "");
+                    $("#cartnotif2").load(location.href + " #cartnotif2>*", "");
+                    $("#cattotal1").load(location.href + " #cattotal1>*", "");
+                    $("#cattotal2").load(location.href + " #cattotal2>*", "");
+                    $("#orderitemlist").load(location.href + " #orderitemlist>*", "");
+                    $("#carttotalincart").text("0 TND")
+                });
+
+
+            }
+        </script>
+        <script>
+            function removefromcartnotif(itemid) {
+                $.post("/Cart/RemoveItemFromCart", {
+                    itemid: itemid
+                }, function (data) {
+                    $("#cartnumber1").text(data);
+                    $("#cartnumber2").text(data);
+                    $("#cartnotif1").load(location.href + " #cartnotif1>*", "");
+                    $("#cartnotif2").load(location.href + " #cartnotif2>*", "");
+                    $("#cattotal1").load(location.href + " #cattotal1>*", "");
+                    $("#cattotal2").load(location.href + " #cattotal2>*", "");
+                    $("#itemdivincart-" + itemid).remove();
+
+                });
+
+
+            }
+        </script>
+        <script>
+            function removefromstockcartnotif(itemid) {
+                $.post("/Stock/RemoveStockItemFromStockCart", {
+                    itemid: itemid
+                }, function (data) {
+                    $("#cartnumber1").text(data);
+                    $("#cartnumber2").text(data);
+                    $("#cartnotif1").load(location.href + " #cartnotif1>*", "");
+                    $("#cartnotif2").load(location.href + " #cartnotif2>*", "");
+                    $("#cattotal1").load(location.href + " #cattotal1>*", "");
+                    $("#cattotal2").load(location.href + " #cattotal2>*", "");
+                    $("#itemdivincart-" + itemid).remove();
+
+                });
+
+
+            }
+        </script>
+    }
+
     <!--===============================================================================================-->
 
 

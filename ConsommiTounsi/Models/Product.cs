@@ -7,7 +7,15 @@ using System.Web;
 
 namespace ConsommiTounsi.Models
 {
-    
+    public enum Categories
+    {
+        Clothes,
+        Jewelery,
+        Decoration,
+        Houseware,
+        Cosmetics
+
+    }
     public class Product
     {
         [JsonProperty("productId")]
@@ -20,7 +28,7 @@ namespace ConsommiTounsi.Models
         public string productName { get; set; }
         [JsonProperty("category")]
         [DisplayName("Category")]
-        public string category { get; set; }
+        public Categories category { get; set; }
         [JsonProperty("barCode")]
         [DisplayName("Bar Code")]
         public long barCode { get; set; }

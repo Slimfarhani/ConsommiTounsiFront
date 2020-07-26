@@ -60,7 +60,7 @@
                                     </div>
                                 </td>
                                 <td class="column-2">@(item.Name)</td>
-                                <td class="column-3">@(item.Total) TND</td>
+                                <td class="column-3">@(item.Price) TND</td>
                                 <td class="column-4">
 
                                     <div class="flex-w bo5 of-hidden w-size17">
@@ -75,7 +75,7 @@
                                         </button>
                                     </div>
                                 </td>
-                                <td class="column-5" id="itemtotalincart@(item.OrderItemId)">@(item.Total*item.Quantity) TND</td>
+                                <td class="column-5" id="itemtotalincart@(item.OrderItemId)">@(item.Price * item.Quantity) TND</td>
                             </tr>
                         }
                     }
@@ -110,21 +110,17 @@
                     </span>
 
                     <div class="rs2-select2 rs3-select2 rs4-select2 bo4 of-hidden w-size21 m-t-8 m-b-12">
-                        <select class="selection-2" name="country">
-                            <option>Select a country...</option>
-                            <option>US</option>
-                            <option>UK</option>
-                            <option>Japan</option>
+                        <select class="selection-2" id="zone" name="country" onchange="javascript:selectzone()">
+                            <option value="Shop">Shop</option>
+                            <option value="Ariana">Ariana</option>
+                            <option value="Marsa">Marsa</option>
+                            <option value="Mannouba">Mannouba</option>
+                            <option value="Rades">Rades</option>
+                            <option value="Lac">Lac</option>
                         </select>
                     </div>
 
-                    <div class="size13 bo4 m-b-12">
-                        <input class="sizefull s-text7 p-l-15 p-r-15" type="text" name="state" placeholder="State /  country">
-                    </div>
-
-                    <div class="size13 bo4 m-b-22">
-                        <input class="sizefull s-text7 p-l-15 p-r-15" type="text" name="postcode" placeholder="Postcode / Zip">
-                    </div>
+                    
 
 
                 </div>
@@ -150,13 +146,19 @@
                 }
 
             </div>
+            @if ((int)Session["ItemNumber"]>0){
+        <form action="/Order/Create">
+
 
             <div class="size15 trans-0-4">
                 <!-- Button -->
-                <button class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4">
-                    Proceed to Checkout
+                <button class="flex-c-m sizefull bg1 bo-rad-23 hov1 s-text1 trans-0-4" type="submit" onclick="javascript:selectzone()">
+                    Confirm Order
                 </button>
             </div>
+        </form>
+            }
+            
         </div>
     </div>
 </section>
@@ -202,11 +204,11 @@
 <script>
     function removefromcart(itemid) {
 
-        $.post("/Stock/RemoveItemFromCart", {
+        $.post("/Cart/RemoveItemFromCart", {
             itemid: itemid
         }, function (data) {
             $("#cartnumber1").text(data);
-            $("#cartnumber2").text(data);
+                $("#cartnumber2").text(data);
             $("#cartnotif1").load(location.href + " #cartnotif1>*", "");
             $("#cartnotif2").load(location.href + " #cartnotif2>*", "");
             $("#cattotal1").load(location.href + " #cattotal1>*", "");
@@ -223,12 +225,10 @@
 <script>
     function minusitemnumberincart(itemid) {
 
-        $.post("/Stock/MinusItemNumberInCart", {
+        $.post("/Cart/MinusItemNumberInCart", {
             itemid: itemid,
             number: $("#itemnumberincart-"+itemid).val()
         }, function (data) {
-            $("#cartnumber1").text(@((int)Session["ItemNumber"]));
-            $("#cartnumber2").text(@((int)Session["ItemNumber"]));
             $("#cartnotif1").load(location.href + " #cartnotif1>*", "");
             $("#cartnotif2").load(location.href + " #cartnotif2>*", "");
             $("#cattotal1").load(location.href + " #cattotal1>*", "");
@@ -243,12 +243,10 @@
 <script>
     function plusitemnumberincart(itemid) {
 
-        $.post("/Stock/PlusItemNumberInCart", {
+        $.post("/Cart/PlusItemNumberInCart", {
             itemid: itemid,
             number: $("#itemnumberincart-"+itemid).val()
         }, function (data) {
-            $("#cartnumber1").text(@((int)Session["ItemNumber"]));
-            $("#cartnumber2").text(@((int)Session["ItemNumber"]));
             $("#cartnotif1").load(location.href + " #cartnotif1>*", "");
             $("#cartnotif2").load(location.href + " #cartnotif2>*", "");
             $("#cattotal1").load(location.href + " #cattotal1>*", "");
@@ -260,5 +258,18 @@
 
     }
 </script>
+<script>
+    function selectzone() {
+
+        $.post("/Cart/SelectZone", {
+            zone: $("#zone").val()
+        }, function (data) {
+            
+        });
+
+
+    }
+</script>
+
 
 <script src="~/Content2/js/main.js"></script>

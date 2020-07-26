@@ -17,6 +17,7 @@ namespace Data
         // dbset
         //public DbSet<Entity> Entities { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
+        public DbSet<StockItem> StockItems { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             //ajouter les config + conv

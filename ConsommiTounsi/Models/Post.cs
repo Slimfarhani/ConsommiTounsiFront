@@ -19,5 +19,9 @@ namespace ConsommiTounsi.Models
         public int RatingTotal { get; set; }
         [JsonProperty("ratingNumber")]
         public int RatingNumber { get; set; }
+        [JsonProperty("user")]
+        public UserRegisterModel User { get; set; }
+        [JsonProperty("urlImage")]
+        public string imageUrl { get; set; }
     }
 }
