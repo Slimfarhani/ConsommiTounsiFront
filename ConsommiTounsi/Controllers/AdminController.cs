@@ -17,7 +17,13 @@ namespace ConsommiTounsi.Controllers
         // GET: Admin
         public ActionResult Index()
         {
-            return View();
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri("http://localhost:8080/springboot-crud-rest/api/v1/");
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            HttpResponseMessage response = client.GetAsync("modelKPI").Result;
+            ModelKPI ModelKPI = response.Content.ReadAsAsync<ModelKPI>().Result;
+
+            return View(ModelKPI);
         }
         public ActionResult CustomerManagement()
         {

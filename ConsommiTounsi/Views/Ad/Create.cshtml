@@ -24,7 +24,7 @@
                 <div class="x_content">
                     <br />
 
-                    @using (Html.BeginForm("Create", "Ad", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal form-label-left", role = "form" }))
+                    @using (Html.BeginForm("Create", "Ad", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal form-label-left", @enctype = "multipart/form-data", role = "form" }))
                     {
                         @Html.AntiForgeryToken()
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -39,26 +39,26 @@
 
 
                         </div>
-                            <div class="item form-group">
-                                <label class="col-form-label col-md-3 col-sm-3 label-align">
-                                    Start Date <span class="required">*</span>
-                                </label>
-                                <div class="col-md-6 col-sm-6 ">
-                                    @Html.TextBoxFor(m => m.startDateFormatted, "{0:dd/MM/yyyy}", new { @class = "date-picker form-control",@type="date", @placeholder = "StartDateString" })
-                                    @Html.ValidationMessageFor(m => m.startDateFormatted, "", new { @class = "text-danger" })
+                        <div class="item form-group">
+                            <label class="col-form-label col-md-3 col-sm-3 label-align">
+                                Start Date <span class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 ">
+                                @Html.TextBoxFor(m => m.startDateFormatted, "{0:dd/MM/yyyy}", new { @class = "date-picker form-control", @type = "date", @placeholder = "StartDateString" })
+                                @Html.ValidationMessageFor(m => m.startDateFormatted, "", new { @class = "text-danger" })
 
-                                </div>
                             </div>
+                        </div>
 
-                            <div class="item form-group">
-                                <label class="col-form-label col-md-3 col-sm-3 label-align">
-                                    End Date <span class="required">*</span>
-                                </label>
-                                <div class="col-md-6 col-sm-6 ">
-                                    @Html.TextBoxFor(m => m.endDateFormatted, "{0:dd/MM/yyyy}", new { @class = "date-picker form-control",@type="date", @placeholder = "EndDateString" })
-                                    @Html.ValidationMessageFor(m => m.endDateFormatted, "", new { @class = "text-danger" })
-                                </div>
+                        <div class="item form-group">
+                            <label class="col-form-label col-md-3 col-sm-3 label-align">
+                                End Date <span class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 ">
+                                @Html.TextBoxFor(m => m.endDateFormatted, "{0:dd/MM/yyyy}", new { @class = "date-picker form-control", @type = "date", @placeholder = "EndDateString" })
+                                @Html.ValidationMessageFor(m => m.endDateFormatted, "", new { @class = "text-danger" })
                             </div>
+                        </div>
                         <div class="item form-group">
                             <label class="col-form-label col-md-3 col-sm-3 label-align" for="estimatedViewNumber">
                                 Estimated View Number <span class="required">*</span>
@@ -85,6 +85,18 @@
                             <div class="col-md-6 col-sm-6 ">
                                 @Html.TextBoxFor(m => m.type, new { @class = "form-control", @placeholder = "Type" })
                                 @Html.ValidationMessageFor(m => m.type, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        
+                        <div class="item form-group">
+
+                            @Html.LabelFor(m => m.imageUrl, htmlAttributes: new { @class = "col-form-label col-md-3 col-sm-3 label-align" })
+                            <div class="col-form-label col-md-3 col-sm-3 label-align">
+                                <div class="col-md-6 col-sm-6">
+                                    @Html.TextBox("file", null, new { type = "file", @accept = "image/*" })
+                                    @Html.ValidationMessageFor(m => m.imageUrl, "", new { @class = "text-danger" })
+                                </div>
                             </div>
                         </div>
 
