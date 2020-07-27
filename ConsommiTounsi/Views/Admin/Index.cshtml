@@ -137,21 +137,25 @@
                                 <div class="clearfix"></div>
                             </div>
                             <ul class="list-unstyled top_profiles scroll-view">
-                                @foreach (var item in Model.topSelledPoducts)
+                                @if (Model.topSelledPoducts != null)
                                 {
-                                    <li class="media event">
-                                        <a class="pull-left border-aero profile_thumb">
-                                            <i class="fa fa-user aero"></i>
-                                        </a>
-                                        <div class="media-body">
-                                            <a class="title" href="#">Title : @item.productName</a>
-                                            <p><strong>Price per unit : @item.price </strong><br/>Description : @item.description </p>
-                                            <p>
-                                                <small>Quantity : @item.tQuantity</small>
-                                            </p>
-                                        </div>
-                                    </li>
+                                    foreach (var item in Model.topSelledPoducts)
+                                    {
+                                        <li class="media event">
+                                            <a class="pull-left border-aero profile_thumb">
+                                                <i class="fa fa-user aero"></i>
+                                            </a>
+                                            <div class="media-body">
+                                                <a class="title" href="#">Title : @item.productName</a>
+                                                <p><strong>Price per unit : @item.price </strong><br />Description : @item.description </p>
+                                                <p>
+                                                    <small>Quantity : @item.tQuantity</small>
+                                                </p>
+                                            </div>
+                                        </li>
+                                    }
                                 }
+
                             </ul>
                         </div>
                     </div>

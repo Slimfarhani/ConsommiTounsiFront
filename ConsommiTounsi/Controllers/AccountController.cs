@@ -15,8 +15,8 @@ using System.IO;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Collections.Generic;
-using Data;
 using Domain.Entities;
+using Data;
 
 namespace ConsommiTounsi.Controllers
 {
@@ -119,7 +119,6 @@ namespace ConsommiTounsi.Controllers
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             HttpResponseMessage response = client.GetAsync("user/"+model.userName+"/"+model.password).Result;
             UserRegisterModel User = response.Content.ReadAsAsync<UserRegisterModel>().Result;
-            System.Diagnostics.Debug.WriteLine("user  : " + User.userId);
             if (Isblocked(User.userId.ToString()))
             {
                 ViewData["error"] = "User is blocked until "+User.blockdate.Substring(0,10);

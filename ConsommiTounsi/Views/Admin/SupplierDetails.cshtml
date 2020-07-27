@@ -7,7 +7,7 @@
 @model ConsommiTounsi.Models.Supplier
 @{ ConsommiTounsi.Models.UserRegisterModel user = (ConsommiTounsi.Models.UserRegisterModel)Session["User"];}
 @{ IEnumerable<ConsommiTounsi.Models.Stock> stocks = (IEnumerable<ConsommiTounsi.Models.Stock>)ViewBag.stocks; }
-
+@{ IEnumerable<ConsommiTounsi.Models.Event> events = (IEnumerable<ConsommiTounsi.Models.Event>)ViewBag.events; }
 
 @if (user != null)
 {
@@ -53,14 +53,14 @@
                                 </ul>
                                 <a class="btn btn-success" href="@Url.Action("UpdateSupplier", "Admin",new { id = Model.userId })"><i class="fa fa-edit m-right-xs"></i>Edit Profile</a>
 
-                                @if(ViewBag.IsBlocked == true)
+                                @if (ViewBag.IsBlocked == true)
                                 {
-                                <a class="btn btn-success" href="@Url.Action("UnblockUser", "Admin",new { id = Model.userId })"><i class="fa fa-edit m-right-xs"></i>Unblock user</a>
+                                    <a class="btn btn-success" href="@Url.Action("UnblockUser", "Admin",new { id = Model.userId })"><i class="fa fa-edit m-right-xs"></i>Unblock user</a>
 
                                 }
                                 else
                                 {
-                                <a class="btn btn-block" href="@Url.Action("BlockUser", "Admin",new { id = Model.userId })"><i class="fa fa-edit m-right-xs"></i>Block user</a>
+                                    <a class="btn btn-danger" href="@Url.Action("BlockUser", "Admin",new { id = Model.userId })"><i class="fa fa-edit m-right-xs"></i>Block user</a>
 
                                 }
 
@@ -152,10 +152,34 @@
 
                                         </div>
                                         <div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="profile-tab">
-                                            <p>
-                                                xxFood truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui
-                                                photo booth letterpress, commodo enim craft beer mlkshk
-                                            </p>
+                                            <ul class="messages">
+
+                                                @if (events != null)
+                                                {
+                                                    foreach (var eventt in events)
+                                                    {
+                                        <li>
+                                            <img src="~/EventImages/@eventt.UrlImage" class="avatar" alt="Avatar">
+                                            <div class="message_date">
+                                                <h3 class="date text-info">@eventt.StartDatedateFormatted.Day</h3>
+                                                <p class="month">@eventt.StartDatedateFormatted.Month</p>
+                                            </div>
+                                            <div class="message_wrapper">
+                                                <h4 class="heading">@eventt.Title</h4>
+                                                <blockquote class="message">@eventt.Description</blockquote>
+                                                <br />
+
+                                                <p class="url">
+                                                    <span class="fs1 text-info" aria-hidden="true" data-icon=""></span>
+                                                    End date: @eventt.EndDatedateFormatted.ToString("dd/MM/yyyy")
+                                                </p>
+                                            </div>
+                                        </li>
+
+                                    }
+                                    }
+                                            </ul>
+                                            <!-- end recent activity -->
                                         </div>
                                     </div>
                                 </div>

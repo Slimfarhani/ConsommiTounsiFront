@@ -11,8 +11,10 @@ namespace ConsommiTounsi.Models
     {
         [JsonProperty("userId")]
         public long userId { get; set; }
+        [Required]
         [JsonProperty("userName")]
         public string userName { get; set; }
+        [Required]
         [JsonProperty("password")]
         [DataType(DataType.Password)]
         public string password { get; set; }

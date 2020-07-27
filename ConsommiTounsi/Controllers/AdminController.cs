@@ -107,17 +107,32 @@ namespace ConsommiTounsi.Controllers
             HttpResponseMessage response;
             response = client.GetAsync("supplier/search/" + id).Result;
             Supplier supplier = response.Content.ReadAsAsync<Supplier>().Result;
-            
+            System.Diagnostics.Debug.WriteLine("supplier : " +supplier.userId);
+
             response = client.GetAsync("stockBySupplier/"+supplier.userId).Result;
             
 
             IEnumerable<Stock> stocks = response.Content.ReadAsAsync<IEnumerable<Stock>>().Result;
             ViewBag.stocks = stocks;
-            System.Diagnostics.Debug.WriteLine("supplier is blocked : " + Isblocked(""+supplier.userId));
+
+            response = client.GetAsync("events/BySupplier"+supplier.userId).Result;
+
+
+            ViewBag.events = supplierEvents(supplier.userId);
             ViewBag.IsBlocked = Isblocked(""+supplier.userId);
 
             return View(supplier);
 
+        }
+        public IEnumerable<Event> supplierEvents (long id)
+        {
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri("http://localhost:8080/springboot-crud-rest/api/v1/events/");
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+
+            HttpResponseMessage response = client.GetAsync("BySupplier/" + id).Result;
+           return  response.Content.ReadAsAsync<IEnumerable<Event>>().Result;
         }
 
         public ActionResult UpdateCustomer( int id)
