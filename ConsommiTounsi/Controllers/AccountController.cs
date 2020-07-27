@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Globalization;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -12,21 +10,18 @@ using ConsommiTounsi.Models;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using Newtonsoft.Json;
-using System.Web.SessionState;
-using System.Security.Policy;
 using System.Text;
-using Microsoft.Owin.Security.Provider;
 using System.IO;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Collections.Generic;
 using Data;
 using Domain.Entities;
-using System.Collections.Generic;
 
 namespace ConsommiTounsi.Controllers
 {
 
-    
+
     public static class F
     {
         public static string Dump(object obj)
@@ -84,6 +79,29 @@ namespace ConsommiTounsi.Controllers
             return View();
         }
 
+        public Boolean Isblocked(string id)
+        {
+            HttpClient client2 = new HttpClient();
+            client2.BaseAddress = new Uri("http://localhost:8080/springboot-crud-rest/api/v1/");
+            client2.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            HttpResponseMessage response2;
+            response2 = client2.GetAsync("blocked/"+id).Result;
+            Boolean valid;
+            try
+            {
+                valid = response2.Content.ReadAsAsync<Boolean>().Result;
+
+            }
+            catch (Exception e)
+            {
+                valid = false;
+            }
+
+            System.Diagnostics.Debug.WriteLine("valid  : " + response2.ToString());
+
+            return valid;
+
+        }
         //
         // POST: /Account/Login
         [HttpPost]
@@ -95,23 +113,28 @@ namespace ConsommiTounsi.Controllers
             {
                 return View(model);
             }
+           
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri("http://localhost:8080/springboot-crud-rest/api/v1/");
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             HttpResponseMessage response = client.GetAsync("user/"+model.userName+"/"+model.password).Result;
             UserRegisterModel User = response.Content.ReadAsAsync<UserRegisterModel>().Result;
-            if ((int)User.birthdateFormatted.Day>0 && (int)User.birthdateFormatted.Day < 10)
+            System.Diagnostics.Debug.WriteLine("user  : " + User.userId);
+            if (Isblocked(User.userId.ToString()))
+            {
+                ViewData["error"] = "User is blocked until "+User.blockdate.Substring(0,10);
+                return View(model);
+            }
+                if ((int)User.birthdateFormatted.Day>0 && (int)User.birthdateFormatted.Day < 10)
             {
                 User.birthdateString = "0"+User.birthdateFormatted.Day.ToString() + "/" + User.birthdateFormatted.Month.ToString() + "/" + User.birthdateFormatted.Year.ToString();
-
             }
             else
             {
                 User.birthdateString = User.birthdateFormatted.Day.ToString() + "/" + User.birthdateFormatted.Month.ToString() + "/" + User.birthdateFormatted.Year.ToString();
-
             }
-            System.Diagnostics.Debug.WriteLine(User.birthdateString);
             context = new MyContext();
+            User.password = model.password;
             Session["User"] = User;
             var UserLoggedIn = Session["User"] as UserRegisterModel;
             if (UserLoggedIn.role == null)
@@ -166,6 +189,9 @@ namespace ConsommiTounsi.Controllers
         
         public void UpdateCartNotification()
         {
+            
+            UserRegisterModel user = (UserRegisterModel)Session["User"];
+           
             context = new MyContext();
             var UserLoggedIn = Session["User"] as UserRegisterModel;
             IEnumerable<OrderItem> items;
@@ -175,6 +201,11 @@ namespace ConsommiTounsi.Controllers
             Session["ItemNumber"] = context.OrderItems.Count(m => m.UserID == UserLoggedIn.userId);
             try
             {
+                System.Diagnostics.Debug.WriteLine("helloo");
+                user = (UserRegisterModel) Session["User"];
+                System.Diagnostics.Debug.WriteLine("role : "+user.role);
+
+
 
                 Session["ItemsInCartTotal"] = context.OrderItems.Where(o => o.UserID == UserLoggedIn.userId).Select(o => o.Price * o.Quantity).Sum();
             }

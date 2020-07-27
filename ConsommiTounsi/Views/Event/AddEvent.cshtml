@@ -1,0 +1,125 @@
+﻿@model ConsommiTounsi.Models.Event
+@{
+    ViewBag.Title = "Add Event";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="">
+    <div class="page-title">
+        <div class="title_left">
+            <h3>Add Event</h3>
+        </div>
+
+    </div>
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 ">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Event Informations <small> Insert event informations</small></h2>
+
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <br />
+
+                    @using (Html.BeginForm("AddEvent", "Event", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal form-label-left", @enctype = "multipart/form-data", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+                        <div class="item form-group">
+                            <label class="col-form-label col-md-3 col-sm-3 label-align" for="Title">
+                                Title <span class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 ">
+                                @Html.TextBoxFor(m => m.Title, new { @class = "form-control", @placeholder = "Title" })
+                                @Html.ValidationMessageFor(m => m.Title, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+
+                        <div class="item form-group">
+                            <label class="col-form-label col-md-3 col-sm-3 label-align" for="Description">
+                                Description <span class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 ">
+                                @Html.TextBoxFor(m => m.Description, new { @class = "form-control", @placeholder = "Description" })
+                                @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="item form-group">
+                            <label class="col-form-label col-md-3 col-sm-3 label-align" for="Location">
+                                Location : <span class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 ">
+                                @Html.EnumDropDownListFor(m => m.Location, new { @class = "form-control", @placeholder = "Location" })
+                                @Html.ValidationMessageFor(m => m.Location, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="item form-group">
+                            <label class="col-form-label col-md-3 col-sm-3 label-align" for="Startdate">
+                                Start date : <span class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 ">
+                                @Html.TextBoxFor(m => m.StartDateString, new { @id = "startdate", @class = "date-picker form-control", @placeholder = "dd-mm-yyyy", @required = "required", @type = "text", @onfocus = "this.type='date'", @onmouseover = "this.type='date'", @onclick = "this.type='date'", @onblur = "this.type='text'", @onmouseout = "timeFunctionLong(this)" })
+                                @Html.ValidationMessageFor(m => m.StartDateString, "", new { @class = "text-danger" })
+                                <script>
+                                    function timeFunctionLong(input) {
+                                        setTimeout(function () {
+                                            input.type = 'text';
+                                        }, 60000);
+                                    }</script>
+                            </div>
+                        </div>
+                        <div class="item form-group">
+                            <label class="col-form-label col-md-3 col-sm-3 label-align" for="Enddate">
+                                End date : <span class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 ">
+                                @Html.TextBoxFor(m => m.EndDateString, new { @id = "startdate", @class = "date-picker form-control", @placeholder = "dd-mm-yyyy", @required = "required", @type = "text", @onfocus = "this.type='date'", @onmouseover = "this.type='date'", @onclick = "this.type='date'", @onblur = "this.type='text'", @onmouseout = "timeFunctionLong(this)" })
+                                @Html.ValidationMessageFor(m => m.EndDateString, "", new { @class = "text-danger" })
+                                <script>
+                                    function timeFunctionLong(input) {
+                                        setTimeout(function () {
+                                            input.type = 'text';
+                                        }, 60000);
+                                    }</script>
+                            </div>
+                        </div>
+                        <div class="item form-group">
+                            <label class="col-form-label col-md-3 col-sm-3 label-align" for="UrlImage">
+                                Image : <span class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 ">
+                                @Html.TextBox("file", null, new { type = "file", @accept = "image/*" })
+                                @Html.ValidationMessageFor(model => model.UrlImage, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                 
+
+                        <div class="ln_solid"></div>
+                        <div class="item form-group">
+                            <div class="col-md-6 col-sm-6 offset-md-3">
+                                <button type="button" class="btn btn-primary" onclick="GO()">Cancel</button>
+                                <script type="text/javascript">
+                                function GO()
+                                {
+                                    window.location.href = "@Url.Action("Profile", "Supplier")";
+                                }
+                                </script>
+                                <button class="btn btn-primary" type="reset">Reset</button>
+                                <button type="submit" class="btn btn-success">Submit</button>
+                            </div>
+                        </div>
+
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

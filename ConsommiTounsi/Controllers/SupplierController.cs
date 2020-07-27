@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ConsommiTounsi.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -15,6 +16,7 @@ namespace ConsommiTounsi.Controllers
         }
         public new ActionResult Profile()
         {
+        
             return View();
         }
     }

@@ -69,13 +69,13 @@
                         else if (Convert.ToString(user.role) == "Customer")
                         {
                             <li class="sale-noti">
-                                <a href="/Profile/Profile">Profile</a>
+                                <a href="/Customer/Profile">Profile</a>
                             </li>
                         }
-                        else
+                        else if (Convert.ToString(user.role) == "Supplier")
                         {
                             <li class="sale-noti">
-                                <a href="/Profile/Profile">Profile</a>
+                                <a href="/Supplier/Profile">Profile</a>
                             </li>
                         }
                     }
@@ -85,6 +85,9 @@
 
                     <li>
                         <a href="contact.html">Contact</a>
+                    </li>
+                    <li>
+                        <a href="/Event/DisplayClientEvents">Events</a>
                     </li>
                 </ul>
             </nav>
@@ -576,20 +579,22 @@
                                 else if (Convert.ToString(user.role) == "Customer")
                                 {
                                     <li class="sale-noti">
-                                        <a href="/Profile/Profile">Profile</a>
+                                        <a href="/Customer/Profile">Profile</a>
                                     </li>
                                 }
-                                else
+                                else if (Convert.ToString(user.role) == "Supplier")
                                 {
                                     <li class="sale-noti">
-                                        <a href="/Profile/Profile">Profile</a>
+                                        <a href="/Supplier/Profile">Profile</a>
                                     </li>
                                 }
                             }
                             <li>
                                 <a href="about.html">About</a>
                             </li>
-
+                            <li>
+                                <a href="/Event/DisplayClientEvents">Events</a>
+                            </li>
 
 
                         </ul>

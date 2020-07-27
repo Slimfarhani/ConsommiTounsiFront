@@ -1,0 +1,129 @@
+﻿@model ConsommiTounsi.Models.Supplier
+@{
+    ViewBag.Title = "AddSupplier";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{ ConsommiTounsi.Models.UserRegisterModel user = (ConsommiTounsi.Models.UserRegisterModel)Session["User"];}
+@if (user != null)
+{
+    if (user.role == "Admin")
+    {
+        <div class="">
+            <div class="page-title">
+                <div class="title_left">
+                    <h3>Add Supplier</h3>
+                </div>
+
+            </div>
+            <div class="clearfix"></div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12 ">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>Customer Infos <small> Insert supplier infos</small></h2>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <br />
+
+                            @using (Html.BeginForm("AddSupplier", "Admin", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal form-label-left", @enctype = "multipart/form-data", role = "form" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                <div class="item form-group">
+                                    <label class="col-form-label col-md-3 col-sm-3 label-align" for="Company-name">
+                                        Company Name <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 ">
+                                        @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @placeholder = "First Name" })
+                                        @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+                                    </div>
+
+
+                                </div>
+
+                                <div class="item form-group">
+                                    <label for="login" class="col-form-label col-md-3 col-sm-3 label-align">Login</label>
+                                    <div class="col-md-6 col-sm-6 ">
+                                        @Html.TextBoxFor(m => m.userName, new { @class = "form-control", @placeholder = "Login" })
+                                        @Html.ValidationMessageFor(m => m.userName, "", new { @class = "text-danger" })
+                                        <div class="text-danger">@ViewData["errorLogin"]</div>
+                                    </div>
+                                </div>
+                                <div class="item form-group">
+                                    <label class="col-form-label col-md-3 col-sm-3 label-align" for="last-name">
+                                        Password <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 ">
+                                        @Html.TextBoxFor(m => m.password, new { @type = "password", @class = "form-control", @value = "passwordonetwo" })
+                                        @Html.ValidationMessageFor(m => m.password, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="item form-group">
+                                    <label class="col-form-label col-md-3 col-sm-3 label-align" for="phone">
+                                        Phone <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 ">
+                                        @Html.TextBoxFor(m => m.phone, new { @class = "form-control", @placeholder = "Phone", @type = "tel" })
+                                        @Html.ValidationMessageFor(m => m.phone, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="item form-group">
+                                    <label class="col-form-label col-md-3 col-sm-3 label-align" for="email">
+                                        E-mail <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 ">
+                                        @Html.TextBoxFor(m => m.mail, new { @type = "email", @class = "form-control", @placeholder = "E-mail" })
+                                        @Html.ValidationMessageFor(m => m.mail, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="item form-group">
+                                    <label class="col-form-label col-md-3 col-sm-3 label-align" for="adress">
+                                        Adress <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 ">
+                                        @Html.TextBoxFor(m => m.address, new { @class = "form-control", @placeholder = "Adress" })
+                                        @Html.ValidationMessageFor(m => m.address, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="item form-group">
+                                    <label class="col-form-label col-md-3 col-sm-3 label-align" for="email">
+                                        Photo :<span class="required">*</span>
+                                        <a class="btn" title="Insert picture (or just drag & drop)" id="pictureBtn"><i class="fa fa-picture-o"></i></a>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 ">
+
+                                        @Html.TextBox("file", null, new { type = "file", @accept = "image/*", @required = "true" })
+                                        @Html.ValidationMessageFor(model => model.urlImage, "", new { @class = "text-danger" })
+                                    </div>
+
+
+                                </div>
+
+
+                                <div class="ln_solid"></div>
+                                <div class="item form-group">
+                                    <div class="col-md-6 col-sm-6 offset-md-3">
+                                        <button type="button" class="btn btn-primary" onclick="GO()">Cancel</button>
+                                        <script type="text/javascript">
+                                function GO()
+                                {
+                                    window.location.href = "@Url.Action("SupplierManagement", "Admin")";
+                                }
+                                        </script>
+                                        <button class="btn btn-primary" type="reset">Reset</button>
+                                        <button type="submit" class="btn btn-success">Submit</button>
+                                    </div>
+                                </div>
+
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        }
+    }

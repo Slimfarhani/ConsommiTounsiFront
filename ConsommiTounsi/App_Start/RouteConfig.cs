@@ -29,6 +29,11 @@ namespace ConsommiTounsi
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "User", action = "Details", id = UrlParameter.Optional }
             );
+           routes.MapRoute(
+               name: "CustomerDetails",
+               url: "{controller}/{action}/{id}",
+               defaults: new { controller = "Admin", action = "CustomerDetails", id = UrlParameter.Optional }
+           );
             routes.MapRoute(
                 name: "Login",
                 url: "{controller}/{action}/{id}",

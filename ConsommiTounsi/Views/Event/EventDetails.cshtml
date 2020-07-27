@@ -1,0 +1,89 @@
+﻿
+@{
+    ViewBag.Title = "EventDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model ConsommiTounsi.Models.Event
+@{ ConsommiTounsi.Models.UserRegisterModel user = (ConsommiTounsi.Models.UserRegisterModel)Session["User"];}
+@{ string donation = (string)ViewBag.donation; }
+
+@if (user != null)
+{
+    if (user.role == "Supplier" || user.role == "Admin" )
+    {
+    <div class="row">
+        <div class="col-md-12 col-sm-12 ">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Event Details</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li>
+                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                      
+                        <li>
+                            <a class="close-link"><i class="fa fa-close"></i></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+
+                    <div class="col-md-7 col-sm-7 ">
+                        <div class="product-image">
+                            <img src="~/EventImages/@Model.UrlImage" alt="..." />
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-5 col-sm-5 " style="border:0px solid #e5e5e5;">
+
+                        <h3 class="prod_title">@Model.Title</h3>
+
+                        <p>@Model.Description</p>
+                        <br />
+
+                        <div class="">
+                            <h2>Start date  @Model.StartDatedateFormatted.ToString("dd/MM/yyyy")</h2>
+                            <h2>End date  @Model.EndDatedateFormatted.ToString("dd/MM/yyyy")</h2>
+                            <h2>Location   @Model.Location</h2>
+                        </div>
+                        <br />
+
+                        <div class="">
+
+
+                            @if (Model.state == 1)
+                            {
+                                <h2>Status<small style="color:green"> Accepted by admin</small></h2>
+                            }
+                            else if (Model.state == 2)
+                            {
+                                <h2>Status<small style="color:darkred"> Refused by Admin</small></h2>
+                            }
+                            else
+                            {
+                                <h2>Status<small style="color:orangered"> Admin decision in progress</small></h2>
+                            }
+
+
+                        </div>
+                        <br />
+
+                        <div class="">
+                            <div class="product_price">
+                                <h1 class="price">@donation TND</h1>
+                                <span class="price-tax">Total collected donations</span>
+                                <br>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    }
+}
